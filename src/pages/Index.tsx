@@ -1,5 +1,6 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Icon from "@/components/ui/icon";
+import CubeNav from "@/components/CubeNav";
 
 const PHOTO_URL = "https://cdn.poehali.dev/projects/6725aecc-6f9c-4bb1-9cad-3cce49e60509/files/0dc71764-d8aa-4cdd-a077-ac546ecdeec8.jpg";
 
@@ -282,6 +283,9 @@ export default function Index() {
   const [scrollY, setScrollY] = useState(0);
   const [mouse, setMouse] = useState({ x: 0.5, y: 0.5 });
   const [activeService, setActiveService] = useState(0);
+  const [currentFace, setCurrentFace] = useState(0);
+
+  const onFaceChange = useCallback((i: number) => setCurrentFace(i), []);
 
   useEffect(() => {
     const s = () => setScrollY(window.scrollY);
@@ -300,6 +304,321 @@ export default function Index() {
   const go = (id: string) => { document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }); setMenu(false); };
 
   const headerBg = `rgba(18,10,2,${Math.min(scrollY / 80, 0.96)})`;
+
+  // ── 6 граней куба ──
+  const cubeFaces = [
+    {
+      id: "hero",
+      label: "Главная",
+      content: (
+        <div className="relative w-full h-full flex items-center overflow-hidden"
+          style={{ background: "linear-gradient(145deg, hsl(28 70% 10%) 0%, hsl(33 65% 17%) 45%, hsl(28 70% 10%) 100%)" }}>
+          <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover pointer-events-none" style={{ opacity: 0.22, mixBlendMode: "luminosity" }}>
+            <source src="https://videos.pexels.com/video-files/3129671/3129671-uhd_2560_1440_30fps.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0" style={{ background: "linear-gradient(145deg,rgba(18,8,2,0.7) 0%,rgba(30,16,4,0.5) 50%,rgba(18,8,2,0.7) 100%)" }} />
+          <ParticleCanvas count={60} />
+          <div className="scan" />
+          <div className="relative z-10 max-w-7xl mx-auto px-8 pt-20 pb-24 w-full">
+            <p className="flex items-center gap-3 text-xs tracking-[0.4em] uppercase font-body font-light mb-8" style={{ color: "rgba(212,170,90,0.7)", opacity: 0, animation: "fadeIn 1s .2s ease forwards" }}>
+              <span className="w-8 h-px inline-block" style={{ background: "rgba(212,170,90,0.6)" }} />Клинический психолог
+            </p>
+            <h1 className="font-display font-light leading-[1.05] mb-10" style={{ fontSize: "clamp(3rem,7vw,6rem)", color: "white", opacity: 0, animation: "up60 1s .35s ease forwards" }}>
+              <span className="glitch shimmer" data-text="Олеся">Олеся</span><br />
+              <span style={{ color: "rgba(255,255,255,0.55)" }}>Гудкова</span>
+            </h1>
+            <p className="font-body font-light leading-[1.85] mb-12 max-w-md" style={{ fontSize: "clamp(0.9rem,1.5vw,1.05rem)", color: "rgba(255,255,255,0.45)", opacity: 0, animation: "fadeIn 1s .6s ease forwards" }}>
+              Помогаю людям обрести внутреннюю свободу и изменить жизнь. 10+ лет практики, 500+ клиентов.
+            </p>
+            <div className="flex flex-wrap gap-4" style={{ opacity: 0, animation: "fadeIn 1s .8s ease forwards" }}>
+              <Btn onClick={() => onFaceChange(5)} className="gold-grad glow-btn text-white text-xs tracking-[0.3em] uppercase px-10 py-4 font-body font-light hover:brightness-110 transition-all">Записаться</Btn>
+              <Btn onClick={() => onFaceChange(1)} className="text-xs tracking-[0.3em] uppercase px-8 py-4 font-body font-light transition-all hover:bg-white/5" style={{ border: "1px solid rgba(255,255,255,0.2)", color: "rgba(255,255,255,0.65)" }}>Обо мне</Btn>
+            </div>
+          </div>
+          <div className="absolute bottom-6 right-8 flex flex-col items-center gap-2 z-10" style={{ opacity: 0, animation: "fadeIn 1s 1.2s ease forwards" }}>
+            <span className="text-xs tracking-[0.3em] uppercase font-body" style={{ color: "rgba(212,170,90,0.45)" }}>скролл</span>
+            <div className="w-px h-10" style={{ background: "linear-gradient(to bottom, rgba(212,170,90,0.5), transparent)" }} />
+          </div>
+        </div>
+      ),
+    },
+    {
+      id: "about",
+      label: "Обо мне",
+      content: (
+        <div className="w-full min-h-full py-24 px-8 relative overflow-hidden" style={{ background: "hsl(40 35% 96%)" }}>
+          <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full pointer-events-none" style={{ background: "radial-gradient(circle,rgba(212,170,90,0.07) 0%,transparent 70%)" }} />
+          <div className="max-w-5xl mx-auto grid lg:grid-cols-2 gap-16 items-center pt-8">
+            <div>
+              <p className="flex items-center gap-3 text-xs tracking-[0.35em] uppercase font-body font-light mb-5" style={{ color: "hsl(38 70% 40%)" }}>
+                <span className="w-6 h-px bg-gold/80 inline-block" />Обо мне
+              </p>
+              <h2 className="font-display font-light leading-tight mb-2" style={{ fontSize: "clamp(2.4rem,5vw,3.8rem)", color: "hsl(28 60% 16%)" }}>Олеся Гудкова</h2>
+              <div className="w-14 h-0.5 mt-4 mb-8 rounded-full" style={{ background: "linear-gradient(90deg,hsl(38 75% 42%),transparent)" }} />
+              <div className="space-y-4 text-sm leading-[1.85] font-body font-light" style={{ color: "hsl(28 20% 32%)" }}>
+                {["Клинический психолог с опытом более 10 лет. Работаю с тревогой, депрессией, кризисными состояниями, отношениями и личностным ростом.",
+                  "Моя миссия — менять судьбы людей. Помогаю клиентам выйти из замкнутого круга повторяющихся сценариев и обрести внутреннюю свободу.",
+                  "Работаю с более чем 200 энергиями. Синтез классической психологии и работы с энергетическими состояниями даёт глубокие и устойчивые результаты."
+                ].map((t, i) => <p key={i}>{t}</p>)}
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              {[
+                { icon: "GraduationCap", title: "Образование", desc: "МГУ, кафедра клинической психологии. Повышение квалификации — Австрия, Израиль." },
+                { icon: "Award", title: "Сертификаты", desc: "Международная сертификация по КПТ и психоанализу." },
+                { icon: "Layers", title: "Подход", desc: "Интегративный метод: сознание, подсознание и энергетическое тело." },
+                { icon: "Globe", title: "Формат", desc: "Онлайн-консультации для клиентов по всему миру." },
+              ].map((c, i) => (
+                <TiltCard key={i} className="h-full">
+                  <div className="glass-light p-6 h-full hover:shadow-xl transition-all duration-300 group" style={{ borderRadius: 2 }}>
+                    <div className="w-9 h-9 rounded-full flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110" style={{ background: "linear-gradient(135deg,hsl(38 75% 42%),hsl(44 82% 52%))" }}>
+                      <Icon name={c.icon} size={16} className="text-white" />
+                    </div>
+                    <h4 className="font-display text-lg font-light mb-2" style={{ color: "hsl(28 60% 16%)" }}>{c.title}</h4>
+                    <p className="text-xs leading-relaxed font-body font-light" style={{ color: "hsl(28 15% 45%)" }}>{c.desc}</p>
+                  </div>
+                </TiltCard>
+              ))}
+            </div>
+          </div>
+        </div>
+      ),
+    },
+    {
+      id: "services",
+      label: "Услуги",
+      content: (
+        <div className="w-full min-h-full py-24 px-8 relative overflow-hidden" style={{ background: "hsl(28 25% 10%)" }}>
+          <ParticleCanvas count={40} />
+          <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at 20% 60%,rgba(212,150,30,0.06) 0%,transparent 55%)" }} />
+          <div className="max-w-5xl mx-auto relative z-10 pt-8">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+              <div>
+                <p className="flex items-center gap-3 text-xs tracking-[0.35em] uppercase font-body font-light mb-5" style={{ color: "rgba(212,170,90,0.75)" }}>
+                  <span className="w-6 h-px inline-block" style={{ background: "rgba(212,170,90,0.7)" }} />Услуги
+                </p>
+                <h2 className="font-display font-light" style={{ fontSize: "clamp(2rem,4vw,3rem)", color: "white" }}>Направления работы</h2>
+                <div className="w-14 h-0.5 mt-4 rounded-full" style={{ background: "linear-gradient(90deg,hsl(42 80% 50%),transparent)" }} />
+              </div>
+              <Btn onClick={() => onFaceChange(5)} className="self-start text-xs tracking-[0.28em] uppercase px-6 py-3 font-body font-light transition-all duration-300 hover:brightness-110" style={{ border: "1px solid rgba(212,170,90,0.45)", color: "hsl(42 80% 60%)" }}>Записаться</Btn>
+            </div>
+            <div className="flex gap-1 mb-8 overflow-x-auto pb-1">
+              {services.map((s, i) => (
+                <button key={i} onClick={() => setActiveService(i)}
+                  className={`service-tab text-xs tracking-[0.2em] uppercase px-5 py-3 font-body font-light whitespace-nowrap transition-all duration-300 ${activeService === i ? "active" : ""}`}
+                  style={{ color: activeService === i ? "hsl(42 80% 62%)" : "rgba(255,255,255,0.38)", background: activeService === i ? "rgba(212,170,90,0.1)" : "transparent", borderBottom: activeService === i ? "2px solid hsl(42 80% 50%)" : "2px solid transparent" }}>
+                  {s.title}
+                </button>
+              ))}
+            </div>
+            <TiltCard>
+              <div className="glass p-8 md:p-12 relative overflow-hidden" style={{ borderRadius: 2 }}>
+                <div className="absolute top-0 left-0 right-0 h-px" style={{ background: "linear-gradient(90deg,transparent,rgba(212,170,90,0.3),transparent)" }} />
+                <div className="grid md:grid-cols-2 gap-10 items-center relative z-10">
+                  <div>
+                    <div className="flex items-center gap-4 mb-6">
+                      <div className="w-12 h-12 flex items-center justify-center rounded-full gold-grad">
+                        <Icon name={services[activeService].icon} size={20} className="text-white" />
+                      </div>
+                      <span className="font-display text-6xl font-light opacity-15 select-none" style={{ color: "hsl(42 80% 58%)" }}>{String(activeService + 1).padStart(2, "0")}</span>
+                    </div>
+                    <h3 className="font-display font-light mb-4" style={{ fontSize: "clamp(1.4rem,3vw,2.2rem)", color: "white" }}>{services[activeService].title}</h3>
+                    <p className="text-sm leading-[1.8] font-body font-light mb-6" style={{ color: "rgba(255,255,255,0.55)" }}>{services[activeService].desc}</p>
+                    <div className="flex items-center gap-2 text-xs tracking-widest uppercase font-body font-light" style={{ color: "rgba(212,170,90,0.7)" }}>
+                      <Icon name="Clock" size={12} />{services[activeService].duration}
+                    </div>
+                  </div>
+                  <div className="flex flex-col items-center md:items-end gap-6">
+                    <div>
+                      <p className="text-xs tracking-widest uppercase font-body font-light mb-1 text-center md:text-right" style={{ color: "rgba(255,255,255,0.3)" }}>Стоимость</p>
+                      <p className="font-display font-light" style={{ fontSize: "3rem", color: "hsl(42 80% 60%)" }}>{services[activeService].price}</p>
+                    </div>
+                    <Btn onClick={() => onFaceChange(5)} className="gold-grad glow-btn text-white text-xs tracking-[0.28em] uppercase px-8 py-4 font-body font-light hover:brightness-110 transition-all">Записаться</Btn>
+                  </div>
+                </div>
+              </div>
+            </TiltCard>
+          </div>
+        </div>
+      ),
+    },
+    {
+      id: "reviews",
+      label: "Отзывы",
+      content: (
+        <div className="w-full min-h-full py-24 px-8 relative overflow-hidden" style={{ background: "hsl(40 35% 96%)" }}>
+          <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at 70% 40%,rgba(212,170,90,0.06) 0%,transparent 55%)" }} />
+          <div className="max-w-5xl mx-auto relative z-10 pt-8">
+            <div className="mb-14">
+              <p className="flex items-center gap-3 text-xs tracking-[0.35em] uppercase font-body font-light mb-5" style={{ color: "hsl(38 70% 40%)" }}>
+                <span className="w-6 h-px bg-gold/80 inline-block" />Отзывы
+              </p>
+              <h2 className="font-display font-light" style={{ fontSize: "clamp(2rem,4vw,3rem)", color: "hsl(28 60% 16%)" }}>Истории клиентов</h2>
+              <div className="w-14 h-0.5 mt-4 rounded-full" style={{ background: "linear-gradient(90deg,hsl(38 75% 42%),transparent)" }} />
+            </div>
+            <div className="grid md:grid-cols-3 gap-6">
+              {reviews.map((r, i) => (
+                <TiltCard key={i} className="h-full">
+                  <div className="review-card glass-light p-8 h-full flex flex-col" style={{ borderRadius: 2 }}>
+                    <div className="flex gap-1 mb-5">
+                      {Array.from({length:5}).map((_,k) => (
+                        <svg key={k} width="13" height="13" viewBox="0 0 24 24" fill="hsl(42 80% 52%)"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                      ))}
+                    </div>
+                    <p className="text-sm leading-[1.85] font-body font-light italic flex-1 mb-6" style={{ color: "hsl(28 20% 32%)" }}>"{r.text}"</p>
+                    <div className="flex items-center gap-3 pt-5" style={{ borderTop: "1px solid rgba(212,170,90,0.15)" }}>
+                      <div className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 text-sm font-display text-white gold-grad">{r.avatar}</div>
+                      <span className="font-body font-light text-sm" style={{ color: "hsl(28 40% 22%)" }}>{r.name}</span>
+                    </div>
+                  </div>
+                </TiltCard>
+              ))}
+            </div>
+          </div>
+        </div>
+      ),
+    },
+    {
+      id: "faq",
+      label: "FAQ",
+      content: (
+        <div className="w-full min-h-full py-24 px-8 relative overflow-hidden" style={{ background: "hsl(40 35% 96%)" }}>
+          <div className="max-w-3xl mx-auto pt-8">
+            <div className="mb-12">
+              <p className="flex items-center gap-3 text-xs tracking-[0.35em] uppercase font-body font-light mb-5" style={{ color: "hsl(38 70% 40%)" }}>
+                <span className="w-6 h-px bg-gold/80 inline-block" />FAQ
+              </p>
+              <h2 className="font-display font-light" style={{ fontSize: "clamp(2rem,4vw,3rem)", color: "hsl(28 60% 16%)" }}>Частые вопросы</h2>
+              <div className="w-14 h-0.5 mt-4 rounded-full" style={{ background: "linear-gradient(90deg,hsl(38 75% 42%),transparent)" }} />
+            </div>
+            {faqs.map((item, i) => (
+              <div key={i} className="faq-item px-2">
+                <button onClick={() => setFaq(faq === i ? null : i)} className="w-full py-6 flex items-center justify-between text-left group gap-6">
+                  <span className="font-display text-lg md:text-xl font-light transition-colors duration-200" style={{ color: faq === i ? "hsl(38 65% 35%)" : "hsl(28 55% 18%)" }}>{item.q}</span>
+                  <div className={`w-8 h-8 flex items-center justify-center flex-shrink-0 transition-all duration-300 ${faq === i ? "gold-grad rotate-45" : ""}`} style={{ border: faq === i ? "none" : "1px solid rgba(212,170,90,0.4)" }}>
+                    <Icon name="Plus" size={14} style={{ color: faq === i ? "white" : "hsl(38 65% 40%)" }} />
+                  </div>
+                </button>
+                {faq === i && (
+                  <p className="pb-6 text-sm leading-[1.85] font-body font-light" style={{ color: "hsl(28 15% 42%)", animation: "fadeIn .35s ease" }}>{item.a}</p>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      ),
+    },
+    {
+      id: "booking",
+      label: "Запись",
+      content: (
+        <div className="w-full min-h-full py-24 px-8 relative overflow-hidden" style={{ background: "hsl(28 25% 10%)" }}>
+          <ParticleCanvas count={30} />
+          <div className="max-w-5xl mx-auto relative z-10 pt-8">
+            <div className="mb-12">
+              <p className="flex items-center gap-3 text-xs tracking-[0.35em] uppercase font-body font-light mb-5" style={{ color: "rgba(212,170,90,0.75)" }}>
+                <span className="w-6 h-px inline-block" style={{ background: "rgba(212,170,90,0.7)" }} />Запись
+              </p>
+              <h2 className="font-display font-light" style={{ fontSize: "clamp(2rem,4vw,3rem)", color: "white" }}>Онлайн-запись</h2>
+              <div className="w-14 h-0.5 mt-4 rounded-full" style={{ background: "linear-gradient(90deg,hsl(42 80% 50%),transparent)" }} />
+            </div>
+            {sent ? (
+              <div className="max-w-md glass p-14 text-center glow-btn" style={{ borderRadius: 2 }}>
+                <div className="w-16 h-16 rounded-full gold-grad flex items-center justify-center mx-auto mb-6">
+                  <Icon name="Check" size={28} className="text-white" />
+                </div>
+                <h3 className="font-display text-3xl font-light mb-3 text-white">Заявка принята</h3>
+                <p className="text-sm font-body font-light leading-relaxed" style={{ color: "rgba(255,255,255,0.5)" }}>
+                  Олеся свяжется с вами в течение 2 часов.{" "}
+                  <span style={{ color: "hsl(42 80% 62%)" }}>{day} {MONTHS_SHORT[month]}, {time}</span>
+                </p>
+              </div>
+            ) : (
+              <div className="grid lg:grid-cols-2 gap-10">
+                <div className="glass p-7" style={{ borderRadius: 2 }}>
+                  <div className="flex items-center justify-between mb-7">
+                    <button onClick={prevM} className="w-9 h-9 flex items-center justify-center transition-all duration-200 hover:bg-white/8 rounded" style={{ color: "rgba(255,255,255,0.45)" }}>
+                      <Icon name="ChevronLeft" size={17} />
+                    </button>
+                    <span className="font-display text-xl font-light text-white">{MONTHS[month]} {year}</span>
+                    <button onClick={nextM} className="w-9 h-9 flex items-center justify-center transition-all duration-200 hover:bg-white/8 rounded" style={{ color: "rgba(255,255,255,0.45)" }}>
+                      <Icon name="ChevronRight" size={17} />
+                    </button>
+                  </div>
+                  <div className="grid grid-cols-7 gap-1 mb-3">
+                    {["Пн","Вт","Ср","Чт","Пт","Сб","Вс"].map(d => (
+                      <div key={d} className="text-center text-xs font-body py-1" style={{ color: "rgba(255,255,255,0.22)" }}>{d}</div>
+                    ))}
+                  </div>
+                  <div className="grid grid-cols-7 gap-1">
+                    {Array.from({length: first}).map((_,i) => <div key={`e${i}`} />)}
+                    {Array.from({length: days}).map((_,i) => {
+                      const d = i+1; const past = isPast(d);
+                      return (
+                        <button key={d} onClick={() => !past && setDay(d)} disabled={past}
+                          className="aspect-square flex items-center justify-center text-sm font-body font-light transition-all duration-200"
+                          style={{ background: day===d ? "linear-gradient(135deg,hsl(32 65% 28%),hsl(42 80% 44%))" : "transparent", color: past ? "rgba(255,255,255,0.12)" : day===d ? "white" : "rgba(255,255,255,0.6)", border: day===d ? "none" : "1px solid transparent", boxShadow: day===d ? "0 0 12px rgba(212,170,90,0.3)" : "none" }}
+                          onMouseEnter={e => { if (!past && day!==d) (e.currentTarget as HTMLElement).style.background = "rgba(212,170,90,0.1)"; }}
+                          onMouseLeave={e => { if (day!==d) (e.currentTarget as HTMLElement).style.background = "transparent"; }}>
+                          {d}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  {day && (
+                    <div className="mt-7 pt-6" style={{ borderTop: "1px solid rgba(212,170,90,0.12)" }}>
+                      <p className="text-xs tracking-widest uppercase mb-4 font-body" style={{ color: "rgba(255,255,255,0.3)" }}>Время</p>
+                      <div className="grid grid-cols-3 gap-2">
+                        {TIMES.map(t => (
+                          <button key={t} onClick={() => setTime(t)} className="py-2.5 text-xs font-body font-light tracking-wide transition-all duration-200"
+                            style={{ border: `1px solid ${time===t ? "hsl(42 80% 50%)" : "rgba(212,170,90,0.18)"}`, background: time===t ? "linear-gradient(135deg,hsl(32 65% 28%),hsl(42 80% 44%))" : "transparent", color: time===t ? "white" : "rgba(255,255,255,0.55)", boxShadow: time===t ? "0 0 12px rgba(212,170,90,0.25)" : "none" }}>
+                            {t}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+                <form onSubmit={submit} className="flex flex-col gap-5">
+                  {[{l:"Ваше имя *",k:"name",p:"Иван Иванов",t:"text"},{l:"Телефон *",k:"phone",p:"+7 (___) ___-__-__",t:"tel"}].map(f => (
+                    <div key={f.k}>
+                      <label className="block text-xs tracking-widest uppercase mb-2 font-body" style={{ color: "rgba(255,255,255,0.3)" }}>{f.l}</label>
+                      <input value={form[f.k as keyof typeof form]} onChange={e => setForm(p => ({...p,[f.k]:e.target.value}))}
+                        required={f.l.includes("*")} type={f.t} placeholder={f.p}
+                        className="w-full px-4 py-3.5 text-sm font-body font-light outline-none transition-all duration-300"
+                        style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(212,170,90,0.18)", color: "rgba(255,255,255,0.85)", borderRadius: 0 }}
+                        onFocus={e => e.target.style.borderColor = "hsl(42 80% 50%)"}
+                        onBlur={e => e.target.style.borderColor = "rgba(212,170,90,0.18)"} />
+                    </div>
+                  ))}
+                  <div>
+                    <label className="block text-xs tracking-widest uppercase mb-2 font-body" style={{ color: "rgba(255,255,255,0.3)" }}>Комментарий</label>
+                    <textarea value={form.comment} onChange={e => setForm(p => ({...p,comment:e.target.value}))} rows={3}
+                      placeholder="Кратко опишите ваш запрос..."
+                      className="w-full px-4 py-3.5 text-sm font-body font-light outline-none transition-all duration-300 resize-none"
+                      style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(212,170,90,0.18)", color: "rgba(255,255,255,0.85)", borderRadius: 0 }}
+                      onFocus={e => e.target.style.borderColor = "hsl(42 80% 50%)"}
+                      onBlur={e => e.target.style.borderColor = "rgba(212,170,90,0.18)"} />
+                  </div>
+                  {day && time && (
+                    <div className="flex items-center gap-3 px-4 py-3 text-sm font-body font-light" style={{ background: "rgba(212,170,90,0.08)", border: "1px solid rgba(212,170,90,0.2)" }}>
+                      <Icon name="CalendarCheck" size={15} className="text-gold flex-shrink-0" />
+                      <span style={{ color: "hsl(42 80% 65%)" }}>{day} {MONTHS_SHORT[month]}, {time}</span>
+                    </div>
+                  )}
+                  <Btn type="submit" disabled={!day || !time || !form.name || !form.phone}
+                    className="gold-grad glow-btn text-white text-xs tracking-[0.28em] uppercase px-8 py-4 font-body font-light disabled:opacity-25 disabled:cursor-not-allowed hover:brightness-110 transition-all duration-300 mt-1">
+                    Отправить заявку
+                  </Btn>
+                  <p className="text-xs font-body font-light" style={{ color: "rgba(255,255,255,0.2)" }}>Нажимая кнопку, вы соглашаетесь с обработкой персональных данных</p>
+                </form>
+              </div>
+            )}
+          </div>
+        </div>
+      ),
+    },
+  ];
 
   return (
     <>
@@ -365,7 +684,50 @@ export default function Index() {
 
       <CustomCursor />
 
-      <div className="min-h-screen font-body" style={{ background: "hsl(30 20% 97%)" }}>
+      {/* ── FIXED NAV поверх куба ── */}
+      <header className="fixed top-0 left-0 right-0 z-[100] transition-all duration-300"
+        style={{ background: "rgba(18,10,2,0.85)", backdropFilter: "blur(20px)", borderBottom: "1px solid rgba(212,170,90,0.15)" }}>
+        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+          <button onClick={() => onFaceChange(0)} className="font-display text-xl font-light tracking-[0.2em] uppercase relative" style={{ color: "white" }}>
+            Олеся Гудкова
+            <span className="absolute -bottom-0.5 left-0 h-px w-full bg-gradient-to-r from-gold to-transparent opacity-60" />
+          </button>
+          <nav className="hidden md:flex items-center gap-7">
+            {[["Обо мне",1],["Услуги",2],["Отзывы",3],["FAQ",4],["Запись",5]].map(([l,i]) => (
+              <button key={String(i)} onClick={() => onFaceChange(Number(i))}
+                className="nav-link text-xs tracking-[0.3em] uppercase font-body font-light transition-colors duration-200"
+                style={{ color: currentFace === Number(i) ? "hsl(42 80% 62%)" : "rgba(255,255,255,0.65)" }}>
+                {l}
+              </button>
+            ))}
+          </nav>
+          <Btn onClick={() => onFaceChange(5)}
+            className="hidden md:flex items-center gap-2 text-xs tracking-[0.25em] uppercase px-5 py-2.5 font-body font-light hover:brightness-110 transition-all"
+            style={{ background: "linear-gradient(135deg,hsl(32 65% 28%),hsl(42 80% 44%))", color: "white" }}>
+            Записаться
+          </Btn>
+          <button onClick={() => setMenu(m => !m)} className="md:hidden w-9 h-9 flex flex-col gap-1.5 items-center justify-center" style={{ color: "white" }}>
+            <span className="w-5 h-px bg-current" /><span className="w-5 h-px bg-current" /><span className="w-5 h-px bg-current" />
+          </button>
+        </div>
+        {menu && (
+          <div className="md:hidden px-6 pb-5 flex flex-col gap-4" style={{ background: "rgba(18,10,2,0.96)" }}>
+            {[["Обо мне",1],["Услуги",2],["Отзывы",3],["FAQ",4],["Запись",5]].map(([l,i]) => (
+              <button key={String(i)} onClick={() => { onFaceChange(Number(i)); setMenu(false); }} className="text-xs tracking-[0.3em] uppercase text-left transition-colors" style={{ color: "rgba(255,255,255,0.6)" }}>{l}</button>
+            ))}
+          </div>
+        )}
+      </header>
+
+      {/* ── 3D CUBE ── */}
+      <CubeNav
+        faces={cubeFaces}
+        currentFace={currentFace}
+        onFaceChange={onFaceChange}
+      />
+
+      {/* old layout removed */}
+      <div className="hidden">
 
         {/* ── NAV ── */}
         <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
