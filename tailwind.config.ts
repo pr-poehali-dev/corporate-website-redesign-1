@@ -57,9 +57,9 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				navy: 'hsl(220 40% 15%)',
-				gold: 'hsl(42 60% 50%)',
-				cream: 'hsl(40 30% 97%)',
+				navy: 'hsl(38 75% 38%)',
+				gold: 'hsl(42 80% 45%)',
+				cream: 'hsl(42 50% 93%)',
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',

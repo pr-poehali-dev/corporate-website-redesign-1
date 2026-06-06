@@ -129,7 +129,8 @@ export default function Index() {
     <div className="min-h-screen bg-background font-body text-foreground">
 
       {/* NAV */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-navy border-b border-white/10">
+      <header className="fixed top-0 left-0 right-0 z-50 border-b border-white/10" style={{background: 'hsl(32 60% 22%)'}}>
+
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <span className="font-display text-white text-xl font-light tracking-widest uppercase">
             Олеся Гудкова
@@ -151,7 +152,8 @@ export default function Index() {
           </button>
         </div>
         {menuOpen && (
-          <div className="md:hidden bg-navy border-t border-white/10 px-6 py-4 flex flex-col gap-4">
+          <div className="md:hidden border-t border-white/10 px-6 py-4 flex flex-col gap-4" style={{background: 'hsl(32 60% 22%)'}}>
+
             {[["Обо мне","about"],["Услуги","services"],["Отзывы","reviews"],["FAQ","faq"],["Запись","booking"]].map(([l,id]) => (
               <button key={id} onClick={() => scrollTo(id)}
                 className="text-white/70 hover:text-gold text-xs tracking-widest uppercase font-body text-left transition-colors">
@@ -163,7 +165,7 @@ export default function Index() {
       </header>
 
       {/* HERO */}
-      <section className="relative bg-navy min-h-screen flex items-center overflow-hidden">
+      <section className="relative min-h-screen flex items-center overflow-hidden" style={{background: 'linear-gradient(135deg, hsl(32 60% 18%) 0%, hsl(38 65% 28%) 50%, hsl(32 60% 18%) 100%)'}}>
         <div className="absolute inset-0 opacity-5"
           style={{backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(255,255,255,0.3) 60px, rgba(255,255,255,0.3) 61px), repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(255,255,255,0.3) 60px, rgba(255,255,255,0.3) 61px)"}} />
         <div className="relative max-w-6xl mx-auto px-6 pt-24 pb-32 w-full grid md:grid-cols-2 gap-12 items-center">
@@ -290,7 +292,8 @@ export default function Index() {
       </section>
 
       {/* REVIEWS */}
-      <section id="reviews" className="py-24 bg-navy">
+      <section id="reviews" className="py-24" style={{background: 'hsl(32 60% 22%)'}}>
+
         <div className="max-w-6xl mx-auto px-6">
           <div className="mb-16 text-center">
             <p className="text-gold text-xs tracking-[0.3em] uppercase font-body font-light mb-4">Отзывы</p>
@@ -489,7 +492,7 @@ export default function Index() {
       </section>
 
       {/* CTA */}
-      <section className="py-24 bg-navy relative overflow-hidden">
+      <section className="py-24 relative overflow-hidden" style={{background: 'linear-gradient(135deg, hsl(32 60% 18%) 0%, hsl(38 65% 28%) 50%, hsl(32 60% 18%) 100%)'}}>
         <div className="absolute inset-0 opacity-5"
           style={{backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(255,255,255,0.3) 60px, rgba(255,255,255,0.3) 61px), repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(255,255,255,0.3) 60px, rgba(255,255,255,0.3) 61px)"}} />
         <div className="relative max-w-6xl mx-auto px-6 text-center">
@@ -509,7 +512,8 @@ export default function Index() {
       </section>
 
       {/* FOOTER */}
-      <footer className="bg-foreground py-12">
+      <footer className="py-12" style={{background: 'hsl(30 55% 12%)'}}>
+
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid md:grid-cols-3 gap-8 mb-10">
             <div>
