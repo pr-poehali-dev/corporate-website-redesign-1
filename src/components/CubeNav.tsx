@@ -18,12 +18,12 @@ interface Props {
 // Но так как у нас 6 разделов — используем carousel по Y-оси, зацикленный
 
 const FACE_ROTATIONS = [
-  { rotX: 0,   rotY: 0   },   // 0: front
-  { rotX: 0,   rotY: -90 },   // 1: right
-  { rotX: 0,   rotY: -180 },  // 2: back
-  { rotX: 0,   rotY: -270 },  // 3: left
-  { rotX: -90, rotY: 0   },   // 4: top
-  { rotX: 90,  rotY: 0   },   // 5: bottom
+  { rotX: 0, rotY: 0    },   // 0
+  { rotX: 0, rotY: -60  },   // 1
+  { rotX: 0, rotY: -120 },   // 2
+  { rotX: 0, rotY: -180 },   // 3
+  { rotX: 0, rotY: -240 },   // 4
+  { rotX: 0, rotY: -300 },   // 5
 ];
 
 export default function CubeNav({ faces, currentFace, onFaceChange }: Props) {
@@ -101,15 +101,16 @@ export default function CubeNav({ faces, currentFace, onFaceChange }: Props) {
   }, [currentFace]);
 
   const rot = FACE_ROTATIONS[currentFace];
-  const half = size / 2;
+  // Радиус вписанной окружности для правильного шестиугольника: r = size * sqrt(3)/2
+  const radius = Math.round(size * 0.866);
 
   const facePositions = [
-    { transform: `translateZ(${half}px)` },
-    { transform: `rotateY(90deg) translateZ(${half}px)` },
-    { transform: `rotateY(180deg) translateZ(${half}px)` },
-    { transform: `rotateY(-90deg) translateZ(${half}px)` },
-    { transform: `rotateX(90deg) translateZ(${half}px)` },
-    { transform: `rotateX(-90deg) translateZ(${half}px)` },
+    { transform: `rotateY(0deg)   translateZ(${radius}px)` },
+    { transform: `rotateY(60deg)  translateZ(${radius}px)` },
+    { transform: `rotateY(120deg) translateZ(${radius}px)` },
+    { transform: `rotateY(180deg) translateZ(${radius}px)` },
+    { transform: `rotateY(240deg) translateZ(${radius}px)` },
+    { transform: `rotateY(300deg) translateZ(${radius}px)` },
   ];
 
   return (
@@ -124,7 +125,7 @@ export default function CubeNav({ faces, currentFace, onFaceChange }: Props) {
       }} />
 
       {/* 3D Scene */}
-      <div style={{ perspective: `${size * 2.5}px`, perspectiveOrigin: "50% 50%", marginTop: "64px" }}>
+      <div style={{ perspective: `${size * 4}px`, perspectiveOrigin: "50% 50%", marginTop: "64px" }}>
         <div
           style={{
             width: size,
