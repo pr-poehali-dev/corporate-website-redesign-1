@@ -4,862 +4,634 @@ import Icon from "@/components/ui/icon";
 const PHOTO_URL = "https://thb.tildacdn.com/tild3337-3066-4432-b163-363536663837/-/resize/504x/post0101.png";
 
 const services = [
-  { title: "Индивидуальная консультация", desc: "Работа с тревогой, страхами, депрессией, кризисными состояниями. Глубокий анализ ситуации и выработка стратегии.", duration: "60 мин", price: "5 000 ₽" },
-  { title: "Работа с отношениями", desc: "Партнёрские конфликты, созависимость, одиночество, развод. Восстановление ресурсного состояния и личных границ.", duration: "90 мин", price: "7 500 ₽" },
-  { title: "Личностный рост", desc: "Раскрытие потенциала, устранение блоков и ограничивающих убеждений. Программа работы на 8–12 сессий.", duration: "60 мин", price: "5 000 ₽" },
-  { title: "Психологическая диагностика", desc: "Комплексная оценка психологического состояния, выявление ключевых запросов и составление плана работы.", duration: "120 мин", price: "9 000 ₽" },
+  { title: "Индивидуальная консультация", desc: "Работа с тревогой, страхами, депрессией, кризисными состояниями. Глубокий анализ и выработка стратегии.", duration: "60 мин", price: "5 000 ₽", icon: "Brain" },
+  { title: "Работа с отношениями", desc: "Партнёрские конфликты, созависимость, одиночество, развод. Восстановление ресурсного состояния.", duration: "90 мин", price: "7 500 ₽", icon: "Heart" },
+  { title: "Личностный рост", desc: "Раскрытие потенциала, устранение блоков и ограничивающих убеждений. Программа 8–12 сессий.", duration: "60 мин", price: "5 000 ₽", icon: "Sparkles" },
+  { title: "Психологическая диагностика", desc: "Комплексная оценка состояния, выявление ключевых запросов и составление плана работы.", duration: "120 мин", price: "9 000 ₽", icon: "ScanSearch" },
 ];
 
 const reviews = [
-  { name: "Анатолий Шапчиц", text: "Светлый, добрый и очень позитивный человек, который может помочь каждому, кто способен поверить в себя и свои силы. Сеансы Олеси поднимают настроение, добавляют бодрости и уверенности. Отдельно хочу отметить чувствительность мастера — она всегда знает, когда тебе написать, что написать и как преподнести, чтобы до тебя это долетело.", date: "" },
-  { name: "Михаил В.", text: "Обратился в сложный период — развод и карьерный кризис одновременно. Работа с Олесей помогла расставить приоритеты и двигаться вперёд.", date: "" },
-  { name: "Елена С.", text: "Работаем уже полгода. Изменения колоссальные — и в отношениях с собой, и в семье. Рекомендую без оговорок.", date: "" },
+  { name: "Анатолий Шапчиц", text: "Светлый, добрый и очень позитивный человек, который может помочь каждому, кто способен поверить в себя. Сеансы Олеси поднимают настроение, добавляют бодрости и уверенности. Она всегда знает, когда тебе написать и как преподнести, чтобы до тебя это долетело.", avatar: "А" },
+  { name: "Михаил В.", text: "Обратился в сложный период — развод и карьерный кризис одновременно. Работа с Олесей помогла расставить приоритеты и двигаться вперёд.", avatar: "М" },
+  { name: "Елена С.", text: "Работаем уже полгода. Изменения колоссальные — и в отношениях с собой, и в семье. Рекомендую без оговорок.", avatar: "Е" },
 ];
 
 const faqs = [
-  { q: "Как проходит первая сессия?", a: "Первая встреча — это знакомство и диагностика. Мы обсудим ваш запрос, историю, ожидания от работы. Я сформирую план дальнейших сессий под вашу ситуацию." },
-  { q: "Консультации проходят онлайн или очно?", a: "Работаю в обоих форматах. Онлайн-сессии проводятся в Zoom или Skype, очные — по предварительной записи." },
-  { q: "Сколько сессий потребуется?", a: "Зависит от запроса. Краткосрочная работа — 4–8 встреч, глубинная проработка — от 3 месяцев. Обсудим на первой сессии." },
-  { q: "Конфиденциальность данных?", a: "Полная конфиденциальность. Всё сказанное на сессии остаётся между нами. Исключений нет." },
+  { q: "Как проходит первая сессия?", a: "Первая встреча — знакомство и диагностика. Мы обсудим ваш запрос, историю, ожидания. Я сформирую план дальнейших сессий под вашу ситуацию." },
+  { q: "Консультации онлайн или очно?", a: "Работаю в обоих форматах. Онлайн-сессии в Zoom или Skype, очные — по предварительной записи." },
+  { q: "Сколько сессий потребуется?", a: "Зависит от запроса. Краткосрочная работа — 4–8 встреч, глубинная проработка — от 3 месяцев." },
+  { q: "Конфиденциальность?", a: "Полная конфиденциальность. Всё сказанное на сессии остаётся между нами. Исключений нет." },
 ];
 
 const TIMES = ["10:00","11:00","12:00","14:00","15:00","16:00","17:00","18:00","19:00"];
 const MONTHS = ["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"];
+const MONTHS_SHORT = ["Янв","Фев","Мар","Апр","Май","Июн","Июл","Авг","Сен","Окт","Ноя","Дек"];
 
 function getDaysInMonth(y: number, m: number) { return new Date(y, m + 1, 0).getDate(); }
 function getFirstDay(y: number, m: number) { const d = new Date(y, m, 1).getDay(); return d === 0 ? 6 : d - 1; }
 
-/* ── Particle Canvas ── */
-function ParticleCanvas() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+/* ═══ PARTICLE CANVAS ═══ */
+function ParticleCanvas({ count = 80 }: { count?: number }) {
+  const ref = useRef<HTMLCanvasElement>(null);
   useEffect(() => {
-    const canvas = canvasRef.current; if (!canvas) return;
-    const ctx = canvas.getContext("2d")!;
-    let W = canvas.width = window.innerWidth;
-    let H = canvas.height = window.innerHeight;
-    const particles = Array.from({ length: 120 }, () => ({
+    const c = ref.current; if (!c) return;
+    const ctx = c.getContext("2d")!;
+    let W = c.width = window.innerWidth, H = c.height = window.innerHeight;
+    const pts = Array.from({ length: count }, () => ({
       x: Math.random() * W, y: Math.random() * H,
-      r: Math.random() * 1.5 + 0.3,
-      vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3,
-      o: Math.random() * 0.6 + 0.1,
+      vx: (Math.random() - 0.5) * 0.25, vy: (Math.random() - 0.5) * 0.25,
+      r: Math.random() * 1.2 + 0.3, o: Math.random() * 0.5 + 0.1,
     }));
     let raf: number;
     const draw = () => {
       ctx.clearRect(0, 0, W, H);
-      particles.forEach(p => {
-        p.x += p.vx; p.y += p.vy;
-        if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
-        if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(212,170,90,${p.o})`;
-        ctx.fill();
+      pts.forEach(p => {
+        p.x = (p.x + p.vx + W) % W; p.y = (p.y + p.vy + H) % H;
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(212,170,90,${p.o})`; ctx.fill();
       });
-      // draw connections
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 100) {
-            ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(212,170,90,${0.12 * (1 - dist / 100)})`;
-            ctx.lineWidth = 0.5;
-            ctx.stroke();
-          }
-        }
+      for (let i = 0; i < pts.length; i++) for (let j = i + 1; j < pts.length; j++) {
+        const dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y, d = Math.hypot(dx, dy);
+        if (d < 90) { ctx.beginPath(); ctx.moveTo(pts[i].x, pts[i].y); ctx.lineTo(pts[j].x, pts[j].y);
+          ctx.strokeStyle = `rgba(212,170,90,${0.1 * (1 - d / 90)})`; ctx.lineWidth = 0.4; ctx.stroke(); }
       }
       raf = requestAnimationFrame(draw);
     };
     draw();
-    const onResize = () => { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; };
-    window.addEventListener("resize", onResize);
-    return () => { cancelAnimationFrame(raf); window.removeEventListener("resize", onResize); };
-  }, []);
-  return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" />;
+    const resize = () => { W = c.width = window.innerWidth; H = c.height = window.innerHeight; };
+    window.addEventListener("resize", resize);
+    return () => { cancelAnimationFrame(raf); window.removeEventListener("resize", resize); };
+  }, [count]);
+  return <canvas ref={ref} className="absolute inset-0 w-full h-full pointer-events-none" />;
 }
 
-/* ── Floating Orbs ── */
-function FloatingOrbs() {
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {([
-        { w: 600, h: 600, top: "-10%", left: "-10%", right: undefined, bottom: undefined, dur: "18s", del: "0s" },
-        { w: 400, h: 400, top: "30%", left: undefined, right: "-5%", bottom: undefined, dur: "24s", del: "4s" },
-        { w: 300, h: 300, top: undefined, left: "20%", right: undefined, bottom: "10%", dur: "20s", del: "8s" },
-        { w: 200, h: 200, top: "60%", left: "60%", right: undefined, bottom: undefined, dur: "15s", del: "2s" },
-      ] as { w: number; h: number; top?: string; left?: string; right?: string; bottom?: string; dur: string; del: string }[]).map((o, i) => (
-        <div key={i} className="absolute rounded-full orb-float" style={{
-          width: o.w, height: o.h,
-          top: o.top, left: o.left, right: o.right, bottom: o.bottom,
-          background: i % 2 === 0
-            ? "radial-gradient(circle, rgba(212,170,90,0.15) 0%, transparent 70%)"
-            : "radial-gradient(circle, rgba(180,120,40,0.10) 0%, transparent 70%)",
-          animationDuration: o.dur, animationDelay: o.del,
-          filter: "blur(40px)",
-        }} />
-      ))}
-    </div>
-  );
-}
-
-/* ── Scroll reveal hook ── */
-function useReveal() {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-  useEffect(() => {
-    const el = ref.current; if (!el) return;
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setVisible(true); obs.disconnect(); } }, { threshold: 0.15 });
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-  return { ref, visible };
-}
-
-/* ── Spark Trail ── */
+/* ═══ SPARK TRAIL ═══ */
 function SparkTrail() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const ref = useRef<HTMLCanvasElement>(null);
   useEffect(() => {
-    const canvas = canvasRef.current; if (!canvas) return;
-    const ctx = canvas.getContext("2d")!;
-    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-    window.addEventListener("resize", () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
-    const sparks: { x: number; y: number; vx: number; vy: number; life: number; maxLife: number; size: number; hue: number }[] = [];
+    const c = ref.current; if (!c) return;
+    const ctx = c.getContext("2d")!;
+    c.width = window.innerWidth; c.height = window.innerHeight;
+    window.addEventListener("resize", () => { c.width = window.innerWidth; c.height = window.innerHeight; });
+    type Spark = { x: number; y: number; vx: number; vy: number; life: number; size: number; hue: number };
+    const sparks: Spark[] = [];
     let mx = -999, my = -999;
     window.addEventListener("mousemove", e => { mx = e.clientX; my = e.clientY; });
     let raf: number;
     const tick = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      for (let i = 0; i < 3; i++) {
-        sparks.push({
-          x: mx + (Math.random() - 0.5) * 8,
-          y: my + (Math.random() - 0.5) * 8,
-          vx: (Math.random() - 0.5) * 2.5,
-          vy: (Math.random() - 0.5) * 2.5 - 0.5,
-          life: 1, maxLife: 1,
-          size: Math.random() * 3 + 1,
-          hue: 35 + Math.random() * 20,
-        });
-      }
+      ctx.clearRect(0, 0, c.width, c.height);
+      for (let i = 0; i < 2; i++) sparks.push({ x: mx + (Math.random()-.5)*6, y: my + (Math.random()-.5)*6, vx: (Math.random()-.5)*2, vy: (Math.random()-.5)*2-.4, life: 1, size: Math.random()*2.5+0.5, hue: 35+Math.random()*20 });
       for (let i = sparks.length - 1; i >= 0; i--) {
-        const s = sparks[i];
-        s.x += s.vx; s.y += s.vy; s.vy += 0.05;
-        s.life -= 0.04;
+        const s = sparks[i]; s.x += s.vx; s.y += s.vy; s.vy += 0.04; s.life -= 0.035;
         if (s.life <= 0) { sparks.splice(i, 1); continue; }
-        const alpha = s.life;
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, s.size * s.life, 0, Math.PI * 2);
-        ctx.fillStyle = `hsla(${s.hue}, 90%, 65%, ${alpha})`;
-        ctx.shadowBlur = 8; ctx.shadowColor = `hsla(${s.hue}, 90%, 65%, 0.8)`;
-        ctx.fill();
-        ctx.shadowBlur = 0;
+        ctx.beginPath(); ctx.arc(s.x, s.y, s.size * s.life, 0, Math.PI * 2);
+        ctx.fillStyle = `hsla(${s.hue},90%,65%,${s.life})`; ctx.shadowBlur = 6;
+        ctx.shadowColor = `hsla(${s.hue},90%,65%,0.8)`; ctx.fill(); ctx.shadowBlur = 0;
       }
       raf = requestAnimationFrame(tick);
     };
     tick();
     return () => cancelAnimationFrame(raf);
   }, []);
-  return <canvas ref={canvasRef} className="fixed inset-0 z-[9998] pointer-events-none hidden md:block" style={{ mixBlendMode: "screen" }} />;
+  return <canvas ref={ref} className="fixed inset-0 z-[9998] pointer-events-none hidden md:block" style={{ mixBlendMode: "screen" }} />;
 }
 
-/* ── Diamond Cursor ── */
+/* ═══ DIAMOND CURSOR ═══ */
 function CustomCursor() {
-  const cursorRef = useRef<SVGSVGElement>(null);
-  const trailRef = useRef<HTMLDivElement>(null);
-  const posRef = useRef({ x: -200, y: -200 });
-  const trailPosRef = useRef({ x: -200, y: -200 });
-  const rafRef = useRef<number>(0);
-
+  const svgRef = useRef<SVGSVGElement>(null);
+  const ringRef = useRef<HTMLDivElement>(null);
+  const pos = useRef({ x: -200, y: -200 });
+  const lag = useRef({ x: -200, y: -200 });
+  const raf = useRef(0);
   useEffect(() => {
-    const move = (e: MouseEvent) => { posRef.current = { x: e.clientX, y: e.clientY }; };
-    window.addEventListener("mousemove", move);
-    const animate = () => {
-      const { x, y } = posRef.current;
-      const t = trailPosRef.current;
-      t.x += (x - t.x) * 0.08; t.y += (y - t.y) * 0.08;
-      if (cursorRef.current) cursorRef.current.style.transform = `translate(${x}px, ${y}px)`;
-      if (trailRef.current) trailRef.current.style.transform = `translate(${t.x - 20}px, ${t.y - 20}px)`;
-      rafRef.current = requestAnimationFrame(animate);
+    const onMove = (e: MouseEvent) => { pos.current = { x: e.clientX, y: e.clientY }; };
+    window.addEventListener("mousemove", onMove);
+    const loop = () => {
+      const { x, y } = pos.current; const l = lag.current;
+      l.x += (x - l.x) * 0.09; l.y += (y - l.y) * 0.09;
+      if (svgRef.current) svgRef.current.style.transform = `translate(${x + 4}px,${y - 16}px)`;
+      if (ringRef.current) ringRef.current.style.transform = `translate(${l.x - 20}px,${l.y - 20}px)`;
+      raf.current = requestAnimationFrame(loop);
     };
-    animate();
-    return () => { window.removeEventListener("mousemove", move); cancelAnimationFrame(rafRef.current); };
+    loop();
+    return () => { window.removeEventListener("mousemove", onMove); cancelAnimationFrame(raf.current); };
   }, []);
-
   return (
     <>
-      {/* Side-view diamond SVG */}
-      <svg
-        ref={cursorRef}
-        className="fixed top-0 left-0 z-[9999] pointer-events-none hidden md:block"
-        width="36" height="32"
-        viewBox="0 0 36 32"
-        style={{ willChange: "transform", marginLeft: 4, marginTop: -16, filter: "drop-shadow(0 0 6px rgba(245,200,66,0.9)) drop-shadow(0 0 14px rgba(212,150,30,0.6))" }}
-      >
+      <svg ref={svgRef} className="fixed top-0 left-0 z-[9999] pointer-events-none hidden md:block" width="36" height="32" viewBox="0 0 36 32"
+        style={{ willChange: "transform", filter: "drop-shadow(0 0 6px rgba(245,200,66,0.9)) drop-shadow(0 0 14px rgba(212,150,30,0.6))" }}>
         <defs>
-          <linearGradient id="dTop" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#fff9d0" />
-            <stop offset="40%" stopColor="#f5d060" />
-            <stop offset="100%" stopColor="#c8860a" />
-          </linearGradient>
-          <linearGradient id="dLeft" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#e8b830" />
-            <stop offset="100%" stopColor="#8a5500" />
-          </linearGradient>
-          <linearGradient id="dRight" x1="100%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#ffeaa0" />
-            <stop offset="100%" stopColor="#b07010" />
-          </linearGradient>
-          <linearGradient id="dBot" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#d4960a" />
-            <stop offset="100%" stopColor="#7a4400" />
-          </linearGradient>
+          <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#fff9d0"/><stop offset="40%" stopColor="#f5d060"/><stop offset="100%" stopColor="#c8860a"/></linearGradient>
+          <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#e8b830"/><stop offset="100%" stopColor="#8a5500"/></linearGradient>
+          <linearGradient id="g3" x1="100%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stopColor="#ffeaa0"/><stop offset="100%" stopColor="#b07010"/></linearGradient>
+          <linearGradient id="g4" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#d4960a"/><stop offset="100%" stopColor="#7a4400"/></linearGradient>
         </defs>
-        {/* Crown (top flat face) */}
-        <polygon points="8,11 28,11 32,6 4,6" fill="url(#dTop)" opacity="0.95" />
-        {/* Crown left facet */}
-        <polygon points="4,6 8,11 2,14" fill="url(#dLeft)" opacity="0.85" />
-        {/* Crown right facet */}
-        <polygon points="32,6 28,11 34,14" fill="url(#dRight)" opacity="0.9" />
-        {/* Girdle left */}
-        <polygon points="2,14 8,11 6,17" fill="#c8860a" opacity="0.7" />
-        {/* Girdle right */}
-        <polygon points="34,14 28,11 30,17" fill="#f0c040" opacity="0.7" />
-        {/* Pavilion top */}
-        <polygon points="8,11 28,11 30,17 6,17" fill="url(#dRight)" opacity="0.8" />
-        {/* Pavilion left */}
-        <polygon points="6,17 2,14 18,28" fill="url(#dLeft)" opacity="0.9" />
-        {/* Pavilion right */}
-        <polygon points="30,17 34,14 18,28" fill="url(#dRight)" opacity="0.85" />
-        {/* Pavilion center */}
-        <polygon points="6,17 30,17 18,28" fill="url(#dBot)" opacity="0.9" />
-        {/* Inner sparkle lines */}
-        <line x1="18" y1="11" x2="18" y2="17" stroke="rgba(255,255,255,0.5)" strokeWidth="0.5" />
-        <line x1="8" y1="11" x2="18" y2="17" stroke="rgba(255,255,255,0.3)" strokeWidth="0.5" />
-        <line x1="28" y1="11" x2="18" y2="17" stroke="rgba(255,255,255,0.3)" strokeWidth="0.5" />
-        {/* Top highlight */}
-        <polygon points="10,8 22,8 24,10 8,10" fill="rgba(255,255,255,0.35)" />
+        <polygon points="8,11 28,11 32,6 4,6" fill="url(#g1)" opacity="0.95"/>
+        <polygon points="4,6 8,11 2,14" fill="url(#g2)" opacity="0.85"/>
+        <polygon points="32,6 28,11 34,14" fill="url(#g3)" opacity="0.9"/>
+        <polygon points="2,14 8,11 6,17" fill="#c8860a" opacity="0.7"/>
+        <polygon points="34,14 28,11 30,17" fill="#f0c040" opacity="0.7"/>
+        <polygon points="8,11 28,11 30,17 6,17" fill="url(#g3)" opacity="0.8"/>
+        <polygon points="6,17 2,14 18,28" fill="url(#g2)" opacity="0.9"/>
+        <polygon points="30,17 34,14 18,28" fill="url(#g3)" opacity="0.85"/>
+        <polygon points="6,17 30,17 18,28" fill="url(#g4)" opacity="0.9"/>
+        <line x1="18" y1="11" x2="18" y2="17" stroke="rgba(255,255,255,0.5)" strokeWidth="0.5"/>
+        <line x1="8" y1="11" x2="18" y2="17" stroke="rgba(255,255,255,0.3)" strokeWidth="0.5"/>
+        <line x1="28" y1="11" x2="18" y2="17" stroke="rgba(255,255,255,0.3)" strokeWidth="0.5"/>
+        <polygon points="10,8 22,8 24,10 8,10" fill="rgba(255,255,255,0.35)"/>
       </svg>
-
-      {/* Trailing soft glow ring */}
-      <div ref={trailRef} className="fixed top-0 left-0 z-[9997] pointer-events-none hidden md:block"
-        style={{ width: 40, height: 40, willChange: "transform",
-          borderRadius: "50%",
-          border: "1px solid rgba(245,200,66,0.25)",
-          boxShadow: "0 0 12px rgba(212,170,90,0.15)",
-          background: "radial-gradient(circle, rgba(245,200,66,0.06) 0%, transparent 70%)",
-        }} />
+      <div ref={ringRef} className="fixed top-0 left-0 z-[9997] pointer-events-none hidden md:block w-10 h-10 rounded-full"
+        style={{ willChange: "transform", border: "1px solid rgba(245,200,66,0.2)", background: "radial-gradient(circle,rgba(245,200,66,0.05) 0%,transparent 70%)" }}/>
     </>
   );
 }
 
-/* ── Tilt Card ── */
+/* ═══ REVEAL HOOK ═══ */
+function useReveal() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [on, setOn] = useState(false);
+  useEffect(() => {
+    const el = ref.current; if (!el) return;
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setOn(true); obs.disconnect(); } }, { threshold: 0.12 });
+    obs.observe(el); return () => obs.disconnect();
+  }, []);
+  return { ref, on };
+}
+
+function Reveal({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
+  const { ref, on } = useReveal();
+  return (
+    <div ref={ref} className={className} style={{ opacity: on ? 1 : 0, transform: on ? "none" : "translateY(36px)", transition: `opacity 0.75s ease ${delay}ms, transform 0.75s cubic-bezier(0.16,1,0.3,1) ${delay}ms` }}>
+      {children}
+    </div>
+  );
+}
+
+/* ═══ TILT CARD ═══ */
 function TiltCard({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
-  const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const el = ref.current; if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-    el.style.transform = `perspective(600px) rotateY(${x * 12}deg) rotateX(${-y * 12}deg) translateZ(6px)`;
+    const r = el.getBoundingClientRect();
+    const x = ((e.clientX - r.left) / r.width - 0.5) * 14;
+    const y = ((e.clientY - r.top) / r.height - 0.5) * -14;
+    el.style.transform = `perspective(700px) rotateY(${x}deg) rotateX(${y}deg) translateZ(8px)`;
   };
-  const handleLeave = () => { if (ref.current) ref.current.style.transform = "perspective(600px) rotateY(0deg) rotateX(0deg) translateZ(0px)"; };
-  return (
-    <div ref={ref} className={`tilt-card ${className}`} onMouseMove={handleMove} onMouseLeave={handleLeave} style={{ transition: "transform 0.15s ease" }}>
-      {children}
-    </div>
-  );
+  const onLeave = () => { if (ref.current) ref.current.style.transform = "perspective(700px) rotateY(0) rotateX(0) translateZ(0)"; };
+  return <div ref={ref} className={className} onMouseMove={onMove} onMouseLeave={onLeave} style={{ transition: "transform 0.18s ease", transformStyle: "preserve-3d" }}>{children}</div>;
 }
 
-/* ── Ripple Button ── */
-function RippleBtn({ children, className = "", onClick, style, disabled = false, type = "button" }: {
-  children: React.ReactNode; className?: string; onClick?: () => void;
-  style?: React.CSSProperties; disabled?: boolean; type?: "button" | "submit";
-}) {
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+/* ═══ RIPPLE BUTTON ═══ */
+function Btn({ children, onClick, className = "", style, disabled = false, type = "button" as "button" | "submit" }) {
+  const handle = (e: React.MouseEvent<HTMLButtonElement>) => {
     const btn = e.currentTarget;
-    const circle = document.createElement("span");
-    const diameter = Math.max(btn.clientWidth, btn.clientHeight);
-    const rect = btn.getBoundingClientRect();
-    circle.className = "ripple-effect";
-    circle.style.cssText = `width:${diameter}px;height:${diameter}px;left:${e.clientX - rect.left - diameter/2}px;top:${e.clientY - rect.top - diameter/2}px`;
-    btn.querySelector(".ripple-effect")?.remove();
-    btn.appendChild(circle);
-    if (onClick) onClick();
+    const span = document.createElement("span");
+    const d = Math.max(btn.clientWidth, btn.clientHeight);
+    const r = btn.getBoundingClientRect();
+    span.style.cssText = `position:absolute;border-radius:50%;width:${d}px;height:${d}px;left:${e.clientX - r.left - d/2}px;top:${e.clientY - r.top - d/2}px;background:rgba(255,255,255,0.2);transform:scale(0);animation:ripple 0.65s linear;pointer-events:none`;
+    btn.appendChild(span);
+    setTimeout(() => span.remove(), 700);
+    onClick?.();
   };
-  return (
-    <button type={type} className={`ripple-btn ${className}`} onClick={handleClick} style={style} disabled={disabled}>
-      {children}
-    </button>
-  );
+  return <button type={type} className={className} style={{ position: "relative", overflow: "hidden", ...style }} onClick={handle} disabled={disabled}>{children}</button>;
 }
 
-/* ── Reveal Section wrapper ── */
-function Reveal({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
-  const { ref, visible } = useReveal();
-  return (
-    <div ref={ref} className={className} style={{
-      opacity: visible ? 1 : 0,
-      transform: visible ? "translateY(0)" : "translateY(40px)",
-      transition: `opacity 0.8s ease ${delay}ms, transform 0.8s ease ${delay}ms`,
-    }}>
-      {children}
-    </div>
-  );
-}
-
+/* ═══ MAIN ═══ */
 export default function Index() {
   const today = new Date();
-  const [calYear, setCalYear] = useState(today.getFullYear());
-  const [calMonth, setCalMonth] = useState(today.getMonth());
-  const [selectedDay, setSelectedDay] = useState<number | null>(null);
-  const [selectedTime, setSelectedTime] = useState<string | null>(null);
+  const [year, setYear] = useState(today.getFullYear());
+  const [month, setMonth] = useState(today.getMonth());
+  const [day, setDay] = useState<number | null>(null);
+  const [time, setTime] = useState<string | null>(null);
   const [form, setForm] = useState({ name: "", phone: "", comment: "" });
-  const [submitted, setSubmitted] = useState(false);
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [sent, setSent] = useState(false);
+  const [faq, setFaq] = useState<number | null>(null);
+  const [menu, setMenu] = useState(false);
   const [scrollY, setScrollY] = useState(0);
-  const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
+  const [mouse, setMouse] = useState({ x: 0.5, y: 0.5 });
+  const [activeService, setActiveService] = useState(0);
 
   useEffect(() => {
-    const onScroll = () => setScrollY(window.scrollY);
-    const onMouse = (e: MouseEvent) => setMousePos({ x: e.clientX / window.innerWidth, y: e.clientY / window.innerHeight });
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("mousemove", onMouse);
-    return () => { window.removeEventListener("scroll", onScroll); window.removeEventListener("mousemove", onMouse); };
+    const s = () => setScrollY(window.scrollY);
+    const m = (e: MouseEvent) => setMouse({ x: e.clientX / window.innerWidth, y: e.clientY / window.innerHeight });
+    window.addEventListener("scroll", s, { passive: true });
+    window.addEventListener("mousemove", m);
+    return () => { window.removeEventListener("scroll", s); window.removeEventListener("mousemove", m); };
   }, []);
 
-  const daysInMonth = getDaysInMonth(calYear, calMonth);
-  const firstDay = getFirstDay(calYear, calMonth);
+  const days = getDaysInMonth(year, month);
+  const first = getFirstDay(year, month);
+  const prevM = () => { if (month === 0) { setMonth(11); setYear(y => y-1); } else { setMonth(m => m-1); } setDay(null); setTime(null); };
+  const nextM = () => { if (month === 11) { setMonth(0); setYear(y => y+1); } else { setMonth(m => m+1); } setDay(null); setTime(null); };
+  const isPast = (d: number) => new Date(year, month, d) < new Date(new Date().setHours(0,0,0,0));
+  const submit = (e: React.FormEvent) => { e.preventDefault(); if (day && time && form.name && form.phone) setSent(true); };
+  const go = (id: string) => { document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }); setMenu(false); };
 
-  const prevMonth = () => { if (calMonth === 0) { setCalMonth(11); setCalYear(y => y-1); } else setCalMonth(m => m-1); setSelectedDay(null); setSelectedTime(null); };
-  const nextMonth = () => { if (calMonth === 11) { setCalMonth(0); setCalYear(y => y+1); } else setCalMonth(m => m+1); setSelectedDay(null); setSelectedTime(null); };
-  const isPast = (day: number) => { const d = new Date(calYear, calMonth, day); const t = new Date(); t.setHours(0,0,0,0); return d < t; };
-  const handleSubmit = (e: React.FormEvent) => { e.preventDefault(); if (!selectedDay || !selectedTime || !form.name || !form.phone) return; setSubmitted(true); };
-  const scrollTo = (id: string) => { document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }); setMenuOpen(false); };
-
-  const parallaxX = (mousePos.x - 0.5) * 30;
-  const parallaxY = (mousePos.y - 0.5) * 20;
+  const headerBg = `rgba(18,10,2,${Math.min(scrollY / 80, 0.96)})`;
 
   return (
     <>
       <style>{`
-        @keyframes orbFloat {
-          0%, 100% { transform: translateY(0px) scale(1); }
-          33% { transform: translateY(-30px) scale(1.05); }
-          66% { transform: translateY(15px) scale(0.97); }
-        }
-        .orb-float { animation: orbFloat linear infinite; }
+        @keyframes ripple { to { transform: scale(4); opacity: 0; } }
+        @keyframes orb { 0%,100%{transform:translateY(0) scale(1)} 40%{transform:translateY(-28px) scale(1.06)} 70%{transform:translateY(12px) scale(0.96)} }
+        @keyframes shimmer { 0%{background-position:-200% center} 100%{background-position:200% center} }
+        @keyframes glow { 0%,100%{box-shadow:0 0 12px rgba(212,170,90,0.25),0 0 30px rgba(212,170,90,0.08)} 50%{box-shadow:0 0 24px rgba(212,170,90,0.5),0 0 60px rgba(212,170,90,0.18)} }
+        @keyframes rotL { from{transform:rotate(0)} to{transform:rotate(360deg)} }
+        @keyframes rotR { from{transform:rotate(0)} to{transform:rotate(-360deg)} }
+        @keyframes up60 { from{opacity:0;transform:translateY(60px)} to{opacity:1;transform:none} }
+        @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+        @keyframes scanLine { 0%{top:-4%;opacity:.5} 100%{top:104%;opacity:0} }
+        @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+        @keyframes badgeFloat { 0%,100%{transform:translateY(0) rotate(-1deg)} 50%{transform:translateY(-8px) rotate(1deg)} }
+        @keyframes glitch1 { 0%,89%,100%{clip-path:inset(0 0 100% 0);transform:none} 91%{clip-path:inset(15% 0 65% 0);transform:translate(-3px,1px)} 94%{clip-path:inset(55% 0 25% 0);transform:translate(3px,-1px)} 97%{clip-path:inset(75% 0 5% 0);transform:translate(-2px,2px)} }
+        @keyframes glitch2 { 0%,89%,100%{clip-path:inset(0 0 100% 0);transform:none} 92%{clip-path:inset(35% 0 45% 0);transform:translate(3px,-2px);color:#ffd700} 95%{clip-path:inset(10% 0 75% 0);transform:translate(-2px,1px);color:#ff9900} 98%{clip-path:inset(85% 0 3% 0);transform:translate(2px,2px)} }
+        @keyframes aurora1 { 0%,100%{transform:translateX(-15%) translateY(0) rotate(0) scale(1)} 33%{transform:translateX(8%) translateY(-12%) rotate(12deg) scale(1.08)} 66%{transform:translateX(-4%) translateY(8%) rotate(-6deg) scale(0.94)} }
+        @keyframes aurora2 { 0%,100%{transform:translateX(15%) translateY(8%) rotate(0) scale(1)} 33%{transform:translateX(-10%) translateY(-4%) rotate(-10deg) scale(1.12)} 66%{transform:translateX(6%) translateY(12%) rotate(5deg) scale(0.9)} }
+        @keyframes dustUp { 0%{transform:translateY(100px) rotate(0);opacity:0} 10%{opacity:.7} 90%{opacity:.4} 100%{transform:translateY(-60px) rotate(540deg);opacity:0} }
+        @keyframes lineGrow { from{transform:scaleX(0)} to{transform:scaleX(1)} }
+        @keyframes countIn { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:none} }
+        @keyframes tabSlide { from{transform:scaleX(0)} to{transform:scaleX(1)} }
 
-        @keyframes shimmer {
-          0% { background-position: -200% center; }
-          100% { background-position: 200% center; }
-        }
-        .shimmer-text {
-          background: linear-gradient(90deg, hsl(42 80% 55%) 0%, hsl(42 100% 75%) 40%, hsl(38 90% 50%) 60%, hsl(42 80% 55%) 100%);
-          background-size: 200% auto;
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-          animation: shimmer 4s linear infinite;
-        }
+        .shimmer { background:linear-gradient(90deg,hsl(42 80% 55%) 0%,hsl(42 100% 78%) 38%,hsl(38 90% 52%) 62%,hsl(42 80% 55%) 100%);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 3.5s linear infinite; }
+        .glow-btn { animation: glow 3s ease-in-out infinite; }
+        .rot-l { animation: rotL 28s linear infinite; }
+        .rot-r { animation: rotR 38s linear infinite; }
+        .orb { animation: orb ease-in-out infinite; }
+        .float-y { animation: float 5s ease-in-out infinite; }
+        .badge { animation: badgeFloat 4s ease-in-out infinite; }
+        .glitch { position:relative;display:inline-block; }
+        .glitch::before,.glitch::after { content:attr(data-text);position:absolute;top:0;left:0;font:inherit; }
+        .glitch::before { animation:glitch1 9s infinite;color:#d4aa5a; }
+        .glitch::after { animation:glitch2 9s .15s infinite;color:#ffcc44; }
+        .aurora-a { animation:aurora1 20s ease-in-out infinite; }
+        .aurora-b { animation:aurora2 26s ease-in-out infinite; }
+        .line-grow { transform-origin:left;animation:lineGrow 1s ease forwards; }
+        .count-in { opacity:0;animation:countIn .7s ease forwards; }
+        .scan { position:absolute;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(212,170,90,.35),transparent);animation:scanLine 5s linear infinite;pointer-events:none;z-index:4; }
 
-        @keyframes borderGlow {
-          0%, 100% { box-shadow: 0 0 10px rgba(212,170,90,0.2), 0 0 30px rgba(212,170,90,0.05); }
-          50% { box-shadow: 0 0 20px rgba(212,170,90,0.4), 0 0 60px rgba(212,170,90,0.15), 0 0 100px rgba(212,170,90,0.05); }
-        }
-        .glow-border { animation: borderGlow 3s ease-in-out infinite; }
+        .glass { background:rgba(255,255,255,0.04);backdrop-filter:blur(16px);border:1px solid rgba(212,170,90,0.15); }
+        .glass-light { background:rgba(255,255,255,0.7);backdrop-filter:blur(20px);border:1px solid rgba(212,170,90,0.2); }
+        .gold-grad { background:linear-gradient(135deg,hsl(32 65% 28%),hsl(38 75% 42%),hsl(44 82% 52%)); }
+        .text-grad { background:linear-gradient(135deg,hsl(38 70% 30%),hsl(42 75% 44%));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
 
-        @keyframes rotateSlow {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-        .rotate-slow { animation: rotateSlow 30s linear infinite; }
-        .rotate-slow-rev { animation: rotateSlow 40s linear infinite reverse; }
+        .service-tab { transition:all .3s ease;position:relative;overflow:hidden; }
+        .service-tab.active::after { content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,hsl(42 80% 50%),transparent); }
+        .service-tab:not(.active):hover { background:rgba(212,170,90,0.06); }
 
-        @keyframes pulseGold {
-          0%, 100% { opacity: 0.4; transform: scale(1); }
-          50% { opacity: 0.8; transform: scale(1.1); }
-        }
-        .pulse-gold { animation: pulseGold 2.5s ease-in-out infinite; }
+        .review-card { transition:transform .35s ease,box-shadow .35s ease; }
+        .review-card:hover { transform:translateY(-6px);box-shadow:0 20px 50px rgba(0,0,0,0.2),0 0 30px rgba(212,170,90,0.08); }
 
-        @keyframes lineGrow {
-          from { transform: scaleX(0); }
-          to { transform: scaleX(1); }
-        }
-        .line-grow { transform-origin: left; animation: lineGrow 1.2s ease forwards; }
+        .faq-item { border-bottom:1px solid rgba(212,170,90,0.12);transition:background .2s; }
+        .faq-item:hover { background:rgba(212,170,90,0.03); }
 
-        @keyframes countUp {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
+        .nav-link { position:relative; }
+        .nav-link::after { content:'';position:absolute;bottom:-2px;left:0;right:0;height:1px;background:hsl(42 80% 50%);transform:scaleX(0);transform-origin:center;transition:transform .3s ease; }
+        .nav-link:hover::after { transform:scaleX(1); }
 
-        .service-card { transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease; }
-        .service-card:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 24px 60px rgba(0,0,0,0.15), 0 0 40px rgba(212,170,90,0.1); }
-
-        .review-card { transition: transform 0.4s ease, border-color 0.3s ease; }
-        .review-card:hover { transform: translateY(-6px); }
-
-        @keyframes textReveal {
-          from { clip-path: inset(0 100% 0 0); }
-          to { clip-path: inset(0 0% 0 0); }
-        }
-
-        @keyframes fadeSlideUp {
-          from { opacity: 0; transform: translateY(60px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-
-        .hero-title-word {
-          display: inline-block;
-          opacity: 0;
-          animation: fadeSlideUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        .btn-gold-fill {
-          position: relative;
-          overflow: hidden;
-        }
-        .btn-gold-fill::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
-          transform: translateX(-100%);
-          transition: transform 0.6s ease;
-        }
-        .btn-gold-fill:hover::before { transform: translateX(100%); }
-
-        @keyframes spinRing {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-
-        .noise-bg::after {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-          opacity: 0.4;
-          pointer-events: none;
-        }
-
-        @keyframes floatY {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-12px); }
-        }
-        .float-photo { animation: floatY 6s ease-in-out infinite; }
-
-        .stat-num {
-          opacity: 0;
-          animation: countUp 0.8s ease forwards;
-        }
-
-        /* ── Aurora background ── */
-        @keyframes aurora1 {
-          0%, 100% { transform: translateX(-20%) translateY(0%) rotate(0deg) scale(1); }
-          33% { transform: translateX(10%) translateY(-15%) rotate(15deg) scale(1.1); }
-          66% { transform: translateX(-5%) translateY(10%) rotate(-8deg) scale(0.95); }
-        }
-        @keyframes aurora2 {
-          0%, 100% { transform: translateX(20%) translateY(10%) rotate(0deg) scale(1); }
-          33% { transform: translateX(-15%) translateY(-5%) rotate(-12deg) scale(1.15); }
-          66% { transform: translateX(8%) translateY(15%) rotate(6deg) scale(0.9); }
-        }
-        .aurora-1 { animation: aurora1 18s ease-in-out infinite; }
-        .aurora-2 { animation: aurora2 22s ease-in-out infinite; }
-
-        /* ── Glitch text ── */
-        @keyframes glitch1 {
-          0%, 90%, 100% { clip-path: inset(0 0 100% 0); transform: translate(0); }
-          92% { clip-path: inset(20% 0 60% 0); transform: translate(-4px, 2px); }
-          94% { clip-path: inset(50% 0 30% 0); transform: translate(4px, -2px); }
-          96% { clip-path: inset(70% 0 10% 0); transform: translate(-2px, 1px); }
-          98% { clip-path: inset(10% 0 80% 0); transform: translate(3px, -1px); }
-        }
-        @keyframes glitch2 {
-          0%, 90%, 100% { clip-path: inset(0 0 100% 0); transform: translate(0); }
-          93% { clip-path: inset(40% 0 40% 0); transform: translate(4px, -2px); color: #ffd700; }
-          95% { clip-path: inset(15% 0 70% 0); transform: translate(-3px, 1px); color: #ff9900; }
-          97% { clip-path: inset(80% 0 5% 0); transform: translate(2px, 3px); color: #ffd700; }
-        }
-        .glitch-wrap { position: relative; display: inline-block; }
-        .glitch-wrap::before, .glitch-wrap::after {
-          content: attr(data-text);
-          position: absolute; top: 0; left: 0;
-          font-family: inherit; font-size: inherit; font-weight: inherit; font-style: inherit;
-          color: inherit;
-        }
-        .glitch-wrap::before { animation: glitch1 8s infinite; color: #d4aa5a; }
-        .glitch-wrap::after { animation: glitch2 8s infinite 0.1s; color: #ffcc44; }
-
-        /* ── Tilt card ── */
-        .tilt-card { transform-style: preserve-3d; transition: transform 0.15s ease; }
-        .tilt-card-inner { transform: translateZ(20px); }
-
-        /* ── Ripple ── */
-        .ripple-btn { position: relative; overflow: hidden; }
-        .ripple-btn .ripple-effect {
-          position: absolute; border-radius: 50%;
-          background: rgba(255,255,255,0.25);
-          transform: scale(0);
-          animation: rippleAnim 0.7s linear;
-          pointer-events: none;
-        }
-        @keyframes rippleAnim {
-          to { transform: scale(4); opacity: 0; }
-        }
-
-        /* ── Magnetic hover ── */
-        .mag-btn { transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
-
-        /* ── Number counter ── */
-        @keyframes flipNum {
-          from { transform: rotateX(-90deg) translateY(-20px); opacity: 0; }
-          to { transform: rotateX(0deg) translateY(0); opacity: 1; }
-        }
-        .flip-num { animation: flipNum 0.6s cubic-bezier(0.16,1,0.3,1) forwards; perspective: 400px; }
-
-        /* ── Scan line sweep ── */
-        @keyframes scanSweep {
-          0% { top: -10%; opacity: 0.6; }
-          100% { top: 110%; opacity: 0; }
-        }
-        .scan-line {
-          position: absolute; left: 0; right: 0; height: 2px;
-          background: linear-gradient(90deg, transparent, rgba(212,170,90,0.4), transparent);
-          animation: scanSweep 4s linear infinite;
-          pointer-events: none;
-          z-index: 5;
-        }
-
-        /* ── Gold dust ── */
-        @keyframes dustFloat {
-          0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-          10% { opacity: 0.7; }
-          90% { opacity: 0.5; }
-          100% { transform: translateY(-20px) rotate(720deg); opacity: 0; }
-        }
-        .dust-particle {
-          position: absolute; width: 3px; height: 3px;
-          background: rgba(212,180,80,0.8);
-          animation: dustFloat linear infinite;
-          clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-        }
-
-        /* ── Section divider wave ── */
-        .wave-divider { position: relative; overflow: hidden; }
-        .wave-divider::after {
-          content: '';
-          position: absolute; bottom: -1px; left: 0; right: 0; height: 60px;
-          background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 60'%3E%3Cpath fill='%23fdf8ef' d='M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z'/%3E%3C/svg%3E") no-repeat bottom;
-          background-size: cover;
-          pointer-events: none;
-        }
-
-        /* ── Spotlight hover ── */
-        .spotlight-card {
-          position: relative;
-          overflow: hidden;
-        }
-        .spotlight-card::before {
-          content: '';
-          position: absolute;
-          width: 200px; height: 200px;
-          background: radial-gradient(circle, rgba(212,170,90,0.12) 0%, transparent 70%);
-          border-radius: 50%;
-          pointer-events: none;
-          transform: translate(-50%, -50%);
-          transition: opacity 0.3s;
-          opacity: 0;
-          z-index: 0;
-        }
-        .spotlight-card:hover::before { opacity: 1; }
-
-        /* ── Text gradient reveal ── */
-        @keyframes gradReveal {
-          from { background-position: 100% 0; }
-          to { background-position: 0% 0; }
-        }
-        .grad-reveal {
-          background: linear-gradient(90deg, hsl(32 60% 18%) 50%, transparent 50%);
-          background-size: 200% 100%;
-          background-clip: text;
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-        }
-        .grad-reveal.visible {
-          animation: gradReveal 1s ease forwards;
-        }
-
-        /* ── Floating badge ── */
-        @keyframes badgeFloat {
-          0%, 100% { transform: translateY(0) rotate(-2deg); }
-          50% { transform: translateY(-8px) rotate(2deg); }
-        }
-        .badge-float { animation: badgeFloat 4s ease-in-out infinite; }
+        * { cursor: none !important; }
       `}</style>
 
       <CustomCursor />
       <SparkTrail />
 
-      <div className="min-h-screen bg-background font-body text-foreground" style={{ cursor: "none" }}>
+      <div className="min-h-screen font-body" style={{ background: "hsl(30 20% 97%)" }}>
 
-        {/* NAV */}
-        <header className="fixed top-0 left-0 right-0 z-50 border-b border-white/10 backdrop-blur-sm"
-          style={{ background: `rgba(82,52,18,${Math.min(scrollY / 100, 0.97)})`, transition: "background 0.3s" }}>
-          <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-            <span className="font-display text-white text-xl font-light tracking-widest uppercase relative">
+        {/* ── NAV ── */}
+        <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+          style={{ background: headerBg, backdropFilter: scrollY > 20 ? "blur(20px)" : "none", borderBottom: scrollY > 20 ? "1px solid rgba(212,170,90,0.15)" : "none" }}>
+          <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <button onClick={() => go("hero")} className="font-display text-xl font-light tracking-[0.2em] uppercase relative"
+              style={{ color: scrollY > 20 ? "white" : "white" }}>
               Олеся Гудкова
-              <span className="absolute -bottom-1 left-0 h-px bg-gradient-to-r from-gold to-transparent w-full" />
-            </span>
-            <nav className="hidden md:flex items-center gap-8">
+              <span className="absolute -bottom-0.5 left-0 h-px w-full bg-gradient-to-r from-gold to-transparent opacity-60" />
+            </button>
+            <nav className="hidden md:flex items-center gap-7">
               {[["Обо мне","about"],["Услуги","services"],["Отзывы","reviews"],["FAQ","faq"],["Запись","booking"]].map(([l,id]) => (
-                <button key={id} onClick={() => scrollTo(id)}
-                  className="text-white/70 hover:text-gold text-xs tracking-widest uppercase font-body font-light transition-all hover:tracking-[0.35em] duration-300">
+                <button key={id} onClick={() => go(id)}
+                  className="nav-link text-xs tracking-[0.3em] uppercase font-body font-light transition-colors duration-200"
+                  style={{ color: "rgba(255,255,255,0.65)" }}>
                   {l}
                 </button>
               ))}
             </nav>
-            <button onClick={() => scrollTo("booking")}
-              className="hidden md:block btn-gold-fill border border-gold text-gold text-xs tracking-widest uppercase px-5 py-2 hover:bg-gold hover:text-white transition-all font-body font-light glow-border">
+            <Btn onClick={() => go("booking")}
+              className="hidden md:flex items-center gap-2 text-xs tracking-[0.25em] uppercase px-5 py-2.5 font-body font-light transition-all duration-300 hover:scale-105"
+              style={{ border: "1px solid rgba(212,170,90,0.6)", color: "hsl(42 80% 65%)" }}>
+              <Icon name="CalendarDays" size={13} />
               Записаться
-            </button>
-            <button className="md:hidden text-white" onClick={() => setMenuOpen(o => !o)}>
-              <Icon name={menuOpen ? "X" : "Menu"} size={22} />
+            </Btn>
+            <button className="md:hidden" onClick={() => setMenu(o => !o)} style={{ color: "white" }}>
+              <Icon name={menu ? "X" : "Menu"} size={20} />
             </button>
           </div>
-          {menuOpen && (
-            <div className="md:hidden border-t border-white/10 px-6 py-4 flex flex-col gap-4" style={{ background: "hsl(32 60% 15%)" }}>
+          {menu && (
+            <div className="md:hidden px-6 pb-5 pt-2 flex flex-col gap-4 border-t border-white/10" style={{ background: "rgba(18,10,2,0.97)" }}>
               {[["Обо мне","about"],["Услуги","services"],["Отзывы","reviews"],["FAQ","faq"],["Запись","booking"]].map(([l,id]) => (
-                <button key={id} onClick={() => scrollTo(id)}
-                  className="text-white/70 hover:text-gold text-xs tracking-widest uppercase font-body text-left transition-colors">
-                  {l}
-                </button>
+                <button key={id} onClick={() => go(id)} className="text-xs tracking-[0.3em] uppercase text-left transition-colors" style={{ color: "rgba(255,255,255,0.6)" }}>{l}</button>
               ))}
             </div>
           )}
         </header>
 
-        {/* HERO */}
-        <section className="relative min-h-screen flex items-center overflow-hidden noise-bg"
-          style={{ background: "linear-gradient(135deg, hsl(30 65% 12%) 0%, hsl(35 60% 20%) 40%, hsl(30 65% 12%) 100%)" }}>
+        {/* ── HERO ── */}
+        <section id="hero" className="relative min-h-screen flex items-center overflow-hidden"
+          style={{ background: "linear-gradient(145deg, hsl(28 70% 10%) 0%, hsl(33 65% 17%) 45%, hsl(28 70% 10%) 100%)" }}>
 
-          <ParticleCanvas />
-          <FloatingOrbs />
+          <ParticleCanvas count={90} />
 
-          {/* Aurora layers */}
+          {/* Aurora */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <div className="aurora-1 absolute w-[900px] h-[500px] rounded-full opacity-30"
-              style={{ top: "10%", left: "-10%", background: "radial-gradient(ellipse, rgba(212,150,30,0.25) 0%, rgba(180,100,20,0.1) 40%, transparent 70%)", filter: "blur(60px)" }} />
-            <div className="aurora-2 absolute w-[700px] h-[400px] rounded-full opacity-25"
-              style={{ bottom: "5%", right: "-5%", background: "radial-gradient(ellipse, rgba(255,200,80,0.2) 0%, rgba(200,130,30,0.08) 40%, transparent 70%)", filter: "blur(50px)" }} />
+            <div className="aurora-a absolute rounded-full opacity-25" style={{ width: 800, height: 450, top: "5%", left: "-8%", background: "radial-gradient(ellipse,rgba(212,150,30,0.3) 0%,rgba(180,100,20,0.1) 40%,transparent 70%)", filter: "blur(55px)" }} />
+            <div className="aurora-b absolute rounded-full opacity-20" style={{ width: 600, height: 380, bottom: "8%", right: "-4%", background: "radial-gradient(ellipse,rgba(255,200,80,0.22) 0%,rgba(200,130,30,0.08) 40%,transparent 70%)", filter: "blur(50px)" }} />
           </div>
 
-          {/* Gold dust particles */}
+          {/* Dust */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            {Array.from({ length: 12 }).map((_, i) => (
-              <div key={i} className="dust-particle" style={{
-                left: `${(i * 8.3) % 100}%`,
-                animationDuration: `${8 + (i % 5) * 2}s`,
-                animationDelay: `${i * 0.8}s`,
-                width: i % 3 === 0 ? 4 : 2, height: i % 3 === 0 ? 4 : 2,
-              }} />
+            {Array.from({ length: 10 }).map((_, i) => (
+              <div key={i} style={{ position: "absolute", left: `${(i * 10.1) % 100}%`, width: i%3===0?4:2, height: i%3===0?4:2, background: "rgba(212,180,80,0.75)", clipPath: "polygon(50% 0%,100% 50%,50% 100%,0% 50%)", animation: `dustUp ${9 + (i%5)*2}s ${i*0.9}s linear infinite` }} />
             ))}
           </div>
 
-          {/* Scan line */}
-          <div className="scan-line" />
+          {/* Scan */}
+          <div className="scan" />
 
-          {/* Decorative rotating rings */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
-            <div className="rotate-slow w-[700px] h-[700px] rounded-full border border-gold/5" />
-          </div>
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
-            <div className="rotate-slow-rev w-[500px] h-[500px] rounded-full border border-gold/8" style={{ borderStyle: "dashed" }} />
+          {/* Rotating rings */}
+          <div className="absolute top-1/2 right-16 -translate-y-1/2 pointer-events-none hidden lg:block" style={{ transform: "translateY(-50%)" }}>
+            <div className="rot-l absolute rounded-full" style={{ width: 480, height: 480, top: -240, right: -120, border: "1px solid rgba(212,170,90,0.08)" }} />
+            <div className="rot-r absolute rounded-full" style={{ width: 320, height: 320, top: -160, right: -40, border: "1px dashed rgba(212,170,90,0.12)" }} />
           </div>
 
-          {/* Radial glow from mouse */}
-          <div className="absolute inset-0 pointer-events-none" style={{
-            background: `radial-gradient(600px circle at ${mousePos.x * 100}% ${mousePos.y * 100}%, rgba(212,170,90,0.08), transparent 60%)`,
-            transition: "background 0.3s ease",
-          }} />
+          {/* Mouse spotlight */}
+          <div className="absolute inset-0 pointer-events-none" style={{ background: `radial-gradient(600px circle at ${mouse.x*100}% ${mouse.y*100}%,rgba(212,170,90,0.07),transparent 60%)` }} />
 
-          <div className="relative max-w-6xl mx-auto px-6 pt-24 pb-32 w-full grid md:grid-cols-2 gap-12 items-center z-10">
+          <div className="relative max-w-7xl mx-auto px-6 pt-20 pb-28 w-full grid lg:grid-cols-2 gap-16 items-center z-10">
+
+            {/* Left */}
             <div>
-              <div style={{ animationDelay: "0.1s" }} className="animate-fade-in">
-                <p className="text-gold text-xs tracking-[0.4em] uppercase font-body font-light mb-6 flex items-center gap-3">
-                  <span className="w-8 h-px bg-gold/60 line-grow" />
-                  Клинический психолог · Онлайн по всему миру
-                </p>
+              <div style={{ opacity: 0, animation: "fadeIn .6s .1s ease forwards" }}>
+                <div className="flex items-center gap-3 mb-7">
+                  <span className="line-grow h-px w-10 bg-gold opacity-70 inline-block" />
+                  <span className="text-xs tracking-[0.38em] uppercase font-body font-light" style={{ color: "rgba(212,170,90,0.8)" }}>
+                    Проводник энергии света
+                  </span>
+                </div>
               </div>
-              <h1 className="font-display text-5xl md:text-7xl font-light leading-[1.05] mb-8">
-                <span className="hero-title-word text-white" style={{ animationDelay: "0.3s" }}>Меняю</span>
-                <br />
-                <span className="hero-title-word shimmer-text italic text-6xl md:text-8xl glitch-wrap" data-text="судьбы" style={{ animationDelay: "0.5s" }}>судьбы</span>
-                <br />
-                <span className="hero-title-word text-white" style={{ animationDelay: "0.7s" }}>людей</span>
+
+              <h1 className="font-display font-light leading-[1.04] mb-8">
+                <span className="block text-white" style={{ fontSize: "clamp(3rem,7vw,5.5rem)", opacity: 0, animation: "up60 .9s .3s cubic-bezier(0.16,1,0.3,1) forwards" }}>Меняю</span>
+                <span className="block shimmer glitch italic" data-text="судьбы" style={{ fontSize: "clamp(3.5rem,8.5vw,6.5rem)", opacity: 0, animation: "up60 .9s .5s cubic-bezier(0.16,1,0.3,1) forwards" }}>судьбы</span>
+                <span className="block text-white" style={{ fontSize: "clamp(3rem,7vw,5.5rem)", opacity: 0, animation: "up60 .9s .7s cubic-bezier(0.16,1,0.3,1) forwards" }}>людей</span>
               </h1>
-              <p className="text-white/50 text-sm leading-relaxed font-body font-light max-w-sm mb-10"
-                style={{ opacity: 0, animation: "fadeSlideUp 0.9s 0.9s ease forwards" }}>
-                Проводник энергии света. Работа с более чем 200 энергиями.
-                Индивидуальный подход к каждому клиенту.
+
+              <p className="text-sm leading-relaxed font-body font-light max-w-md mb-10" style={{ color: "rgba(255,255,255,0.45)", opacity: 0, animation: "up60 .9s .9s ease forwards" }}>
+                Клинический психолог. Работа с более чем 200 энергиями.<br />
+                Онлайн по всему миру — безопасно и конфиденциально.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4" style={{ opacity: 0, animation: "fadeSlideUp 0.9s 1.1s ease forwards" }}>
-                <RippleBtn onClick={() => scrollTo("booking")}
-                  className="btn-gold-fill mag-btn relative text-white text-xs tracking-widest uppercase px-8 py-4 font-body font-light glow-border"
-                  style={{ background: "linear-gradient(135deg, hsl(32 65% 28%), hsl(38 75% 42%), hsl(42 80% 48%))" }}>
+
+              <div className="flex flex-wrap gap-4" style={{ opacity: 0, animation: "up60 .9s 1.05s ease forwards" }}>
+                <Btn onClick={() => go("booking")}
+                  className="gold-grad glow-btn text-white text-xs tracking-[0.28em] uppercase px-8 py-4 font-body font-light hover:brightness-110 transition-all duration-300">
                   Записаться на консультацию
-                </RippleBtn>
-                <RippleBtn onClick={() => scrollTo("about")}
-                  className="mag-btn border border-white/20 text-white text-xs tracking-widest uppercase px-8 py-4 hover:border-gold/50 hover:bg-white/5 transition-all font-body font-light duration-300">
-                  Узнать больше
-                </RippleBtn>
+                </Btn>
+                <Btn onClick={() => go("about")}
+                  className="text-xs tracking-[0.28em] uppercase px-8 py-4 font-body font-light transition-all duration-300 hover:bg-white/5"
+                  style={{ border: "1px solid rgba(255,255,255,0.18)", color: "rgba(255,255,255,0.7)" }}>
+                  Обо мне
+                </Btn>
               </div>
             </div>
 
-            {/* Photo with effects */}
-            <div className="flex justify-center md:justify-end" style={{ opacity: 0, animation: "fadeSlideUp 1s 0.4s ease forwards" }}>
-              <div className="relative float-photo"
-                style={{ transform: `translate(${parallaxX * 0.3}px, ${parallaxY * 0.3}px)`, transition: "transform 0.4s ease" }}>
-                {/* Glow behind photo */}
-                <div className="absolute inset-0 blur-3xl scale-110 rounded-full"
-                  style={{ background: "radial-gradient(circle, rgba(212,170,90,0.25) 0%, transparent 70%)" }} />
-                {/* Spinning decorative ring */}
-                <div className="absolute -inset-8 rounded-full border border-gold/15 rotate-slow pointer-events-none" />
-                <div className="absolute -inset-14 rounded-full border border-gold/8 rotate-slow-rev pointer-events-none" />
-                {/* Corner accents */}
-                <div className="absolute -top-3 -left-3 w-8 h-8 border-t-2 border-l-2 border-gold/60" />
-                <div className="absolute -top-3 -right-3 w-8 h-8 border-t-2 border-r-2 border-gold/60" />
-                <div className="absolute -bottom-3 -left-3 w-8 h-8 border-b-2 border-l-2 border-gold/60" />
-                <div className="absolute -bottom-3 -right-3 w-8 h-8 border-b-2 border-r-2 border-gold/60" />
+            {/* Right — Photo */}
+            <div className="flex justify-center lg:justify-end" style={{ opacity: 0, animation: "fadeIn 1s .4s ease forwards" }}>
+              <div className="relative float-y">
+                {/* Glow halo */}
+                <div className="absolute inset-0 scale-125 blur-3xl rounded-full pointer-events-none"
+                  style={{ background: "radial-gradient(circle,rgba(212,170,90,0.22) 0%,transparent 70%)" }} />
+                {/* Corner brackets */}
+                {["-top-3 -left-3 border-t-2 border-l-2","-top-3 -right-3 border-t-2 border-r-2","-bottom-3 -left-3 border-b-2 border-l-2","-bottom-3 -right-3 border-b-2 border-r-2"].map((cls,i) => (
+                  <div key={i} className={`absolute ${cls} w-7 h-7 border-gold/70`} />
+                ))}
+                {/* Spinning rings */}
+                <div className="rot-l absolute -inset-8 rounded-full pointer-events-none" style={{ border: "1px solid rgba(212,170,90,0.12)" }} />
+                <div className="rot-r absolute -inset-14 rounded-full pointer-events-none" style={{ border: "1px dashed rgba(212,170,90,0.07)" }} />
+
                 <img src={PHOTO_URL} alt="Олеся Гудкова"
-                  className="w-72 md:w-80 h-auto object-cover relative z-10 grayscale hover:grayscale-0 transition-all duration-1000 hover:scale-105"
-                  style={{ filter: "sepia(20%) contrast(1.05)" }} />
-                {/* Scanline overlay */}
-                <div className="absolute inset-0 z-20 pointer-events-none"
-                  style={{ backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.03) 3px, rgba(0,0,0,0.03) 4px)" }} />
+                  className="relative z-10 object-cover grayscale hover:grayscale-0 transition-all duration-1000"
+                  style={{ width: "min(280px,70vw)", filter: "sepia(15%) contrast(1.05)" }} />
+
+                {/* Scanlines */}
+                <div className="absolute inset-0 z-20 pointer-events-none" style={{ backgroundImage: "repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.025) 3px,rgba(0,0,0,0.025) 4px)" }} />
+
                 {/* Floating badges */}
-                <div className="badge-float absolute -left-16 top-1/4 z-30 hidden md:block"
-                  style={{ background: "rgba(0,0,0,0.5)", backdropFilter: "blur(10px)", border: "1px solid rgba(212,170,90,0.3)", padding: "8px 14px", whiteSpace: "nowrap" }}>
-                  <p className="text-gold text-xs font-body tracking-widest">✦ 10+ лет</p>
+                <div className="badge absolute -left-20 top-1/4 z-30 hidden lg:block glass px-3.5 py-2 rounded-lg">
+                  <p className="text-xs font-body tracking-widest" style={{ color: "hsl(42 80% 65%)" }}>✦ 10+ лет</p>
                 </div>
-                <div className="badge-float absolute -right-14 bottom-1/3 z-30 hidden md:block" style={{ animationDelay: "2s", background: "rgba(0,0,0,0.5)", backdropFilter: "blur(10px)", border: "1px solid rgba(212,170,90,0.3)", padding: "8px 14px", whiteSpace: "nowrap" }}>
-                  <p className="text-gold text-xs font-body tracking-widest">✦ 500+ клиентов</p>
+                <div className="badge absolute -right-20 bottom-1/3 z-30 hidden lg:block glass px-3.5 py-2 rounded-lg" style={{ animationDelay: "2.1s" }}>
+                  <p className="text-xs font-body tracking-widest" style={{ color: "hsl(42 80% 65%)" }}>✦ 500+ клиентов</p>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Stats bar */}
-          <div className="absolute bottom-0 left-0 right-0 border-t border-white/10 backdrop-blur-sm" style={{ background: "rgba(0,0,0,0.2)" }}>
-            <div className="max-w-6xl mx-auto px-6 grid grid-cols-3 divide-x divide-white/10">
-              {[["10+","лет практики"],["500+","клиентов"],["200+","энергий"]].map(([num, label], i) => (
-                <div key={label} className="py-6 px-4 md:px-8 text-center group">
-                  <p className="font-display text-gold text-3xl font-light stat-num group-hover:scale-110 transition-transform duration-300 inline-block"
-                    style={{ animationDelay: `${1.3 + i * 0.15}s` }}>{num}</p>
-                  <p className="text-white/30 text-xs tracking-widest uppercase mt-1 font-body">{label}</p>
+          {/* Stats strip */}
+          <div className="absolute bottom-0 left-0 right-0" style={{ borderTop: "1px solid rgba(255,255,255,0.06)", background: "rgba(0,0,0,0.25)", backdropFilter: "blur(10px)" }}>
+            <div className="max-w-7xl mx-auto px-6 grid grid-cols-3 divide-x" style={{ borderColor: "rgba(255,255,255,0.07)" }}>
+              {[["10+","лет практики"],["500+","клиентов"],["200+","энергий"]].map(([n,l], i) => (
+                <div key={l} className="py-5 text-center group">
+                  <p className="font-display text-3xl font-light count-in group-hover:scale-110 transition-transform duration-300 inline-block"
+                    style={{ color: "hsl(42 80% 58%)", animationDelay: `${1.2 + i*.15}s` }}>{n}</p>
+                  <p className="text-xs tracking-widest uppercase mt-0.5 font-body" style={{ color: "rgba(255,255,255,0.28)" }}>{l}</p>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Scroll indicator */}
-          <div className="absolute bottom-20 right-8 flex flex-col items-center gap-2 pulse-gold pointer-events-none hidden md:flex">
-            <span className="text-gold/60 text-xs tracking-widest uppercase font-body" style={{ writingMode: "vertical-rl" }}>scroll</span>
-            <div className="w-px h-12 bg-gradient-to-b from-gold/40 to-transparent" />
+          {/* Scroll hint */}
+          <div className="absolute bottom-20 right-8 hidden md:flex flex-col items-center gap-2" style={{ opacity: 0.45 }}>
+            <span className="text-xs tracking-widest uppercase font-body" style={{ color: "hsl(42 70% 58%)", writingMode: "vertical-rl" }}>scroll</span>
+            <div className="w-px h-10 bg-gradient-to-b from-gold/50 to-transparent" />
           </div>
         </section>
 
-        {/* ABOUT */}
-        <section id="about" className="py-24 relative overflow-hidden" style={{ background: "hsl(42 35% 95%)" }}>
-          <div className="absolute top-0 right-0 w-96 h-96 rounded-full pointer-events-none"
-            style={{ background: "radial-gradient(circle, rgba(212,170,90,0.08) 0%, transparent 70%)", transform: "translate(30%, -30%)" }} />
-          <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center relative z-10">
+        {/* ── ABOUT ── */}
+        <section id="about" className="py-28 relative overflow-hidden" style={{ background: "hsl(40 35% 96%)" }}>
+          <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full pointer-events-none" style={{ background: "radial-gradient(circle,rgba(212,170,90,0.07) 0%,transparent 70%)" }} />
+          <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-20 items-center">
             <div>
               <Reveal>
-                <p className="text-gold text-xs tracking-[0.3em] uppercase font-body font-light mb-4 flex items-center gap-3">
-                  <span className="w-6 h-px bg-gold" />
-                  Обо мне
+                <p className="flex items-center gap-3 text-xs tracking-[0.35em] uppercase font-body font-light mb-5" style={{ color: "hsl(38 70% 40%)" }}>
+                  <span className="w-6 h-px bg-gold/80 line-grow inline-block" />Обо мне
                 </p>
-                <h2 className="font-display text-4xl md:text-5xl font-light leading-tight mb-2 gold-line" style={{ color: "hsl(32 60% 18%)" }}>
+                <h2 className="font-display font-light leading-tight mb-2" style={{ fontSize: "clamp(2.4rem,5vw,3.8rem)", color: "hsl(28 60% 16%)" }}>
                   Олеся Гудкова
                 </h2>
+                <div className="w-14 h-0.5 mt-4 mb-8 rounded-full" style={{ background: "linear-gradient(90deg,hsl(38 75% 42%),transparent)" }} />
               </Reveal>
-              <div className="mt-8 space-y-4 text-sm leading-relaxed font-body font-light" style={{ color: "hsl(30 20% 30%)" }}>
+              <div className="space-y-4 text-sm leading-[1.85] font-body font-light" style={{ color: "hsl(28 20% 32%)" }}>
                 {["Клинический психолог с опытом более 10 лет. Работаю с тревогой, депрессией, кризисными состояниями, отношениями и личностным ростом.",
-                  "Моя миссия — менять судьбы людей. Я помогаю клиентам выйти из замкнутого круга повторяющихся сценариев и обрести внутреннюю свободу.",
-                  "Работаю с более чем 200 энергиями и являюсь проводником энергии света. Синтез классической психологии и работы с энергетическими состояниями даёт глубокие и устойчивые результаты."
-                ].map((text, i) => (
-                  <Reveal key={i} delay={i * 150}>
-                    <p>{text}</p>
-                  </Reveal>
-                ))}
+                  "Моя миссия — менять судьбы людей. Помогаю клиентам выйти из замкнутого круга повторяющихся сценариев и обрести внутреннюю свободу.",
+                  "Работаю с более чем 200 энергиями. Синтез классической психологии и работы с энергетическими состояниями даёт глубокие и устойчивые результаты."
+                ].map((t, i) => <Reveal key={i} delay={i * 130}><p>{t}</p></Reveal>)}
               </div>
             </div>
+
             <div className="grid grid-cols-2 gap-4">
               {[
                 { icon: "GraduationCap", title: "Образование", desc: "МГУ, кафедра клинической психологии. Повышение квалификации — Австрия, Израиль." },
-                { icon: "Award", title: "Сертификаты", desc: "Международная сертификация по когнитивно-поведенческой терапии, психоанализу." },
-                { icon: "Users", title: "Подход", desc: "Интегративный метод. Работа с сознанием, подсознанием и энергетическим телом." },
+                { icon: "Award", title: "Сертификаты", desc: "Международная сертификация по КПТ и психоанализу." },
+                { icon: "Layers", title: "Подход", desc: "Интегративный метод: сознание, подсознание и энергетическое тело." },
                 { icon: "Globe", title: "Формат", desc: "Онлайн-консультации для клиентов по всему миру." },
-              ].map((item, i) => (
-                <Reveal key={item.title} delay={i * 100}>
-                  <div className="bg-white p-6 border border-amber-100 hover:border-gold/50 transition-all duration-300 group hover:shadow-lg hover:shadow-amber-100/50 hover:-translate-y-1">
-                    <Icon name={item.icon} size={20} className="text-gold mb-3 group-hover:scale-110 transition-transform duration-300" />
-                    <h4 className="font-display text-lg font-light mb-2" style={{ color: "hsl(32 60% 18%)" }}>{item.title}</h4>
-                    <p className="text-xs leading-relaxed font-body font-light" style={{ color: "hsl(30 15% 45%)" }}>{item.desc}</p>
-                  </div>
+              ].map((c, i) => (
+                <Reveal key={c.title} delay={i * 90}>
+                  <TiltCard className="h-full">
+                    <div className="glass-light p-6 h-full hover:shadow-xl transition-all duration-300 group" style={{ borderRadius: 2 }}>
+                      <div className="w-9 h-9 rounded-full flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110"
+                        style={{ background: "linear-gradient(135deg,hsl(38 75% 42%),hsl(44 82% 52%))" }}>
+                        <Icon name={c.icon} size={16} className="text-white" />
+                      </div>
+                      <h4 className="font-display text-lg font-light mb-2" style={{ color: "hsl(28 60% 16%)" }}>{c.title}</h4>
+                      <p className="text-xs leading-relaxed font-body font-light" style={{ color: "hsl(28 15% 45%)" }}>{c.desc}</p>
+                    </div>
+                  </TiltCard>
                 </Reveal>
               ))}
             </div>
           </div>
         </section>
 
-        {/* SERVICES */}
-        <section id="services" className="py-24 bg-white relative overflow-hidden">
-          <div className="absolute inset-0 pointer-events-none"
-            style={{ backgroundImage: "radial-gradient(circle at 20% 80%, rgba(212,170,90,0.04) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(180,120,40,0.04) 0%, transparent 50%)" }} />
-          <div className="max-w-6xl mx-auto px-6 relative z-10">
-            <div className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6">
+        {/* ── SERVICES ── */}
+        <section id="services" className="py-28 relative overflow-hidden" style={{ background: "hsl(28 25% 10%)" }}>
+          <ParticleCanvas count={50} />
+          <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at 20% 60%,rgba(212,150,30,0.06) 0%,transparent 55%)" }} />
+
+          <div className="max-w-7xl mx-auto px-6 relative z-10">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
               <Reveal>
                 <div>
-                  <p className="text-gold text-xs tracking-[0.3em] uppercase font-body font-light mb-4 flex items-center gap-3">
-                    <span className="w-6 h-px bg-gold" />Услуги
+                  <p className="flex items-center gap-3 text-xs tracking-[0.35em] uppercase font-body font-light mb-5" style={{ color: "rgba(212,170,90,0.75)" }}>
+                    <span className="w-6 h-px inline-block line-grow" style={{ background: "rgba(212,170,90,0.7)" }} />Услуги
                   </p>
-                  <h2 className="font-display text-4xl md:text-5xl font-light gold-line" style={{ color: "hsl(32 60% 18%)" }}>
+                  <h2 className="font-display font-light" style={{ fontSize: "clamp(2.2rem,5vw,3.5rem)", color: "white" }}>
                     Направления работы
                   </h2>
+                  <div className="w-14 h-0.5 mt-4 rounded-full" style={{ background: "linear-gradient(90deg,hsl(42 80% 50%),transparent)" }} />
                 </div>
               </Reveal>
-              <Reveal delay={200}>
-                <button onClick={() => scrollTo("booking")}
-                  className="btn-gold-fill self-start md:self-auto border border-amber-700 text-amber-800 text-xs tracking-widest uppercase px-6 py-3 hover:bg-amber-800 hover:text-white transition-all font-body font-light whitespace-nowrap duration-300">
+              <Reveal delay={150}>
+                <Btn onClick={() => go("booking")}
+                  className="self-start text-xs tracking-[0.28em] uppercase px-6 py-3 font-body font-light transition-all duration-300 hover:brightness-110"
+                  style={{ border: "1px solid rgba(212,170,90,0.45)", color: "hsl(42 80% 60%)" }}>
                   Записаться
-                </button>
+                </Btn>
               </Reveal>
             </div>
-            <div className="grid md:grid-cols-2 gap-4">
-              {services.map((s, i) => (
-                <Reveal key={i} delay={i * 120}>
-                  <TiltCard>
-                    <div className="spotlight-card service-card bg-white border border-amber-100 p-8 group relative overflow-hidden cursor-pointer h-full">
-                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                        style={{ background: "linear-gradient(135deg, rgba(212,170,90,0.05) 0%, transparent 60%)" }} />
-                      <div className="absolute top-0 left-0 w-0 h-0.5 bg-gradient-to-r from-gold to-amber-400 group-hover:w-full transition-all duration-500" />
-                      <div className="absolute bottom-0 right-0 w-0 h-0.5 bg-gradient-to-l from-gold/40 to-transparent group-hover:w-full transition-all duration-700" />
-                      <div className="flex items-start justify-between mb-4 relative z-10">
-                        <span className="font-display text-gold text-5xl font-light opacity-15 group-hover:opacity-50 transition-opacity duration-300 select-none">
-                          {String(i + 1).padStart(2, "0")}
+
+            {/* Tab nav */}
+            <Reveal>
+              <div className="flex gap-1 mb-8 overflow-x-auto pb-1">
+                {services.map((s, i) => (
+                  <button key={i} onClick={() => setActiveService(i)}
+                    className={`service-tab text-xs tracking-[0.2em] uppercase px-5 py-3 font-body font-light whitespace-nowrap transition-all duration-300 ${activeService === i ? "active" : ""}`}
+                    style={{ color: activeService === i ? "hsl(42 80% 62%)" : "rgba(255,255,255,0.38)", background: activeService === i ? "rgba(212,170,90,0.1)" : "transparent", borderBottom: activeService === i ? "2px solid hsl(42 80% 50%)" : "2px solid transparent" }}>
+                    {s.title}
+                  </button>
+                ))}
+              </div>
+            </Reveal>
+
+            {/* Active service card */}
+            <Reveal>
+              <TiltCard>
+                <div className="glass p-10 md:p-14 relative overflow-hidden" style={{ borderRadius: 2 }}>
+                  <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(circle at 80% 20%,rgba(212,170,90,0.06) 0%,transparent 60%)" }} />
+                  <div className="absolute top-0 left-0 right-0 h-px" style={{ background: "linear-gradient(90deg,transparent,rgba(212,170,90,0.3),transparent)" }} />
+                  <div className="grid md:grid-cols-2 gap-10 items-center relative z-10">
+                    <div>
+                      <div className="flex items-center gap-4 mb-6">
+                        <div className="w-12 h-12 flex items-center justify-center rounded-full gold-grad">
+                          <Icon name={services[activeService].icon} size={20} className="text-white" />
+                        </div>
+                        <span className="font-display text-6xl font-light opacity-15 select-none" style={{ color: "hsl(42 80% 58%)" }}>
+                          {String(activeService + 1).padStart(2, "0")}
                         </span>
-                        <span className="font-display text-2xl font-light" style={{ color: "hsl(32 60% 22%)" }}>{s.price}</span>
                       </div>
-                      <h3 className="font-display text-2xl font-light mb-3 relative z-10" style={{ color: "hsl(32 60% 18%)" }}>{s.title}</h3>
-                      <p className="text-sm leading-relaxed font-body font-light mb-4 relative z-10" style={{ color: "hsl(30 15% 45%)" }}>{s.desc}</p>
-                      <div className="flex items-center gap-2 text-gold text-xs tracking-widest uppercase font-body font-light relative z-10">
-                        <Icon name="Clock" size={12} />
-                        <span>{s.duration}</span>
+                      <h3 className="font-display font-light mb-4" style={{ fontSize: "clamp(1.6rem,3.5vw,2.4rem)", color: "white" }}>
+                        {services[activeService].title}
+                      </h3>
+                      <p className="text-sm leading-[1.8] font-body font-light mb-6" style={{ color: "rgba(255,255,255,0.55)" }}>
+                        {services[activeService].desc}
+                      </p>
+                      <div className="flex items-center gap-6">
+                        <div className="flex items-center gap-2 text-xs tracking-widest uppercase font-body font-light" style={{ color: "rgba(212,170,90,0.7)" }}>
+                          <Icon name="Clock" size={12} />{services[activeService].duration}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex flex-col items-center md:items-end gap-6">
+                      <div>
+                        <p className="text-xs tracking-widest uppercase font-body font-light mb-1 text-center md:text-right" style={{ color: "rgba(255,255,255,0.3)" }}>Стоимость</p>
+                        <p className="font-display font-light text-right" style={{ fontSize: "3rem", color: "hsl(42 80% 60%)" }}>
+                          {services[activeService].price}
+                        </p>
+                      </div>
+                      <Btn onClick={() => go("booking")}
+                        className="gold-grad glow-btn text-white text-xs tracking-[0.28em] uppercase px-8 py-4 font-body font-light hover:brightness-110 transition-all">
+                        Записаться
+                      </Btn>
+                    </div>
+                  </div>
+                  {/* Other services mini list */}
+                  <div className="mt-10 pt-8 grid grid-cols-3 gap-3 relative z-10" style={{ borderTop: "1px solid rgba(212,170,90,0.1)" }}>
+                    {services.map((s, i) => i !== activeService && (
+                      <button key={i} onClick={() => setActiveService(i)}
+                        className="text-left px-4 py-3 transition-all duration-200 hover:bg-white/5 group"
+                        style={{ border: "1px solid rgba(212,170,90,0.08)" }}>
+                        <p className="text-xs font-body font-light leading-snug group-hover:text-gold transition-colors" style={{ color: "rgba(255,255,255,0.35)" }}>{s.title}</p>
+                        <p className="text-xs font-display font-light mt-1" style={{ color: "hsl(42 75% 50%)" }}>{s.price}</p>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </TiltCard>
+            </Reveal>
+          </div>
+        </section>
+
+        {/* ── REVIEWS ── */}
+        <section id="reviews" className="py-28 relative overflow-hidden" style={{ background: "hsl(40 35% 96%)" }}>
+          <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at 70% 40%,rgba(212,170,90,0.06) 0%,transparent 55%)" }} />
+          <div className="max-w-7xl mx-auto px-6 relative z-10">
+            <Reveal>
+              <div className="mb-16">
+                <p className="flex items-center gap-3 text-xs tracking-[0.35em] uppercase font-body font-light mb-5" style={{ color: "hsl(38 70% 40%)" }}>
+                  <span className="w-6 h-px bg-gold/80 line-grow inline-block" />Отзывы
+                </p>
+                <h2 className="font-display font-light" style={{ fontSize: "clamp(2.2rem,5vw,3.5rem)", color: "hsl(28 60% 16%)" }}>
+                  Истории клиентов
+                </h2>
+                <div className="w-14 h-0.5 mt-4 rounded-full" style={{ background: "linear-gradient(90deg,hsl(38 75% 42%),transparent)" }} />
+              </div>
+            </Reveal>
+
+            <div className="grid md:grid-cols-3 gap-6">
+              {reviews.map((r, i) => (
+                <Reveal key={i} delay={i * 130}>
+                  <TiltCard className="h-full">
+                    <div className="review-card glass-light p-8 h-full flex flex-col" style={{ borderRadius: 2 }}>
+                      {/* Stars */}
+                      <div className="flex gap-1 mb-5">
+                        {Array.from({length:5}).map((_,k) => (
+                          <svg key={k} width="13" height="13" viewBox="0 0 24 24" fill="hsl(42 80% 52%)"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        ))}
+                      </div>
+                      <p className="text-sm leading-[1.85] font-body font-light italic flex-1 mb-6" style={{ color: "hsl(28 20% 32%)" }}>
+                        "{r.text}"
+                      </p>
+                      <div className="flex items-center gap-3 pt-5" style={{ borderTop: "1px solid rgba(212,170,90,0.15)" }}>
+                        <div className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 text-sm font-display text-white gold-grad">
+                          {r.avatar}
+                        </div>
+                        <span className="font-body font-light text-sm" style={{ color: "hsl(28 40% 22%)" }}>{r.name}</span>
                       </div>
                     </div>
                   </TiltCard>
@@ -869,131 +641,78 @@ export default function Index() {
           </div>
         </section>
 
-        {/* REVIEWS */}
-        <section id="reviews" className="py-24 relative overflow-hidden noise-bg" style={{ background: "linear-gradient(160deg, hsl(30 65% 14%) 0%, hsl(35 60% 22%) 50%, hsl(30 65% 14%) 100%)" }}>
-          <FloatingOrbs />
-          <ParticleCanvas />
-          <div className="max-w-6xl mx-auto px-6 relative z-10">
-            <Reveal>
-              <div className="mb-16 text-center">
-                <p className="text-gold text-xs tracking-[0.3em] uppercase font-body font-light mb-4">Отзывы</p>
-                <h2 className="font-display text-white text-4xl md:text-5xl font-light gold-line-center">
-                  Истории клиентов
-                </h2>
-              </div>
-            </Reveal>
-            <div className="grid md:grid-cols-3 gap-6">
-              {reviews.map((r, i) => (
-                <Reveal key={i} delay={i * 150}>
-                  <div className="review-card border border-white/10 hover:border-gold/40 p-8 relative overflow-hidden group"
-                    style={{ background: "rgba(255,255,255,0.03)", backdropFilter: "blur(10px)" }}>
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                      style={{ background: "radial-gradient(circle at 50% 0%, rgba(212,170,90,0.07), transparent 70%)" }} />
-                    <div className="absolute top-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-gold/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    <Icon name="Quote" size={28} className="text-gold/30 mb-6 group-hover:text-gold/60 transition-colors duration-300" />
-                    <p className="text-white/65 text-sm leading-relaxed font-body font-light mb-8 italic relative z-10">
-                      "{r.text}"
-                    </p>
-                    <div className="flex items-center justify-between border-t border-white/10 pt-4 relative z-10">
-                      <span className="text-white font-body font-light text-sm">{r.name}</span>
-                      <span className="text-white/30 text-xs font-body">{r.date}</span>
-                    </div>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        </section>
+        {/* ── BOOKING ── */}
+        <section id="booking" className="py-28 relative overflow-hidden" style={{ background: "hsl(28 25% 10%)" }}>
+          <ParticleCanvas count={40} />
+          <div className="absolute inset-0 pointer-events-none" style={{ background: `radial-gradient(700px circle at ${mouse.x*100}% ${mouse.y*100}%,rgba(212,170,90,0.08),transparent 60%)` }} />
 
-        {/* BOOKING */}
-        <section id="booking" className="py-24 relative overflow-hidden" style={{ background: "hsl(42 35% 95%)" }}>
-          <div className="absolute bottom-0 left-0 w-96 h-96 pointer-events-none"
-            style={{ background: "radial-gradient(circle, rgba(212,170,90,0.07) 0%, transparent 70%)", transform: "translate(-30%, 30%)" }} />
-          <div className="max-w-6xl mx-auto px-6 relative z-10">
+          <div className="max-w-7xl mx-auto px-6 relative z-10">
             <Reveal>
-              <div className="mb-16">
-                <p className="text-gold text-xs tracking-[0.3em] uppercase font-body font-light mb-4 flex items-center gap-3">
-                  <span className="w-6 h-px bg-gold" />Запись
+              <div className="mb-14">
+                <p className="flex items-center gap-3 text-xs tracking-[0.35em] uppercase font-body font-light mb-5" style={{ color: "rgba(212,170,90,0.75)" }}>
+                  <span className="w-6 h-px inline-block line-grow" style={{ background: "rgba(212,170,90,0.7)" }} />Запись
                 </p>
-                <h2 className="font-display text-4xl md:text-5xl font-light gold-line" style={{ color: "hsl(32 60% 18%)" }}>
+                <h2 className="font-display font-light" style={{ fontSize: "clamp(2.2rem,5vw,3.5rem)", color: "white" }}>
                   Онлайн-запись
                 </h2>
+                <div className="w-14 h-0.5 mt-4 rounded-full" style={{ background: "linear-gradient(90deg,hsl(42 80% 50%),transparent)" }} />
               </div>
             </Reveal>
 
-            {submitted ? (
+            {sent ? (
               <Reveal>
-                <div className="max-w-lg border border-gold/40 p-12 text-center glow-border" style={{ background: "rgba(255,255,255,0.6)", backdropFilter: "blur(10px)" }}>
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-amber-400 to-yellow-500 flex items-center justify-center mx-auto mb-6 pulse-gold">
-                    <Icon name="CheckCircle" size={32} className="text-white" />
+                <div className="max-w-md glass p-14 text-center glow-btn" style={{ borderRadius: 2 }}>
+                  <div className="w-16 h-16 rounded-full gold-grad flex items-center justify-center mx-auto mb-6">
+                    <Icon name="Check" size={28} className="text-white" />
                   </div>
-                  <h3 className="font-display text-3xl font-light mb-3" style={{ color: "hsl(32 60% 18%)" }}>Заявка принята</h3>
-                  <p className="text-sm leading-relaxed font-body font-light" style={{ color: "hsl(30 15% 45%)" }}>
+                  <h3 className="font-display text-3xl font-light mb-3 text-white">Заявка принята</h3>
+                  <p className="text-sm font-body font-light leading-relaxed" style={{ color: "rgba(255,255,255,0.5)" }}>
                     Олеся свяжется с вами в течение 2 часов для подтверждения записи на{" "}
-                    <strong className="font-light" style={{ color: "hsl(32 60% 22%)" }}>
-                      {selectedDay} {MONTHS[calMonth]}, {selectedTime}
-                    </strong>
+                    <span style={{ color: "hsl(42 80% 62%)" }}>{day} {MONTHS_SHORT[month]}, {time}</span>
                   </p>
                 </div>
               </Reveal>
             ) : (
-              <div className="grid md:grid-cols-2 gap-12">
+              <div className="grid lg:grid-cols-2 gap-10">
+
+                {/* Calendar */}
                 <Reveal>
-                  <div className="bg-white border border-amber-100 p-6 shadow-sm">
-                    <div className="flex items-center justify-between mb-6">
-                      <button onClick={prevMonth} className="p-2 hover:bg-amber-50 transition-colors rounded" style={{ color: "hsl(30 30% 50%)" }}>
-                        <Icon name="ChevronLeft" size={18} />
+                  <div className="glass p-7" style={{ borderRadius: 2 }}>
+                    <div className="flex items-center justify-between mb-7">
+                      <button onClick={prevM} className="w-9 h-9 flex items-center justify-center transition-all duration-200 hover:bg-white/8 rounded" style={{ color: "rgba(255,255,255,0.45)" }}>
+                        <Icon name="ChevronLeft" size={17} />
                       </button>
-                      <span className="font-display text-xl font-light" style={{ color: "hsl(32 60% 18%)" }}>
-                        {MONTHS[calMonth]} {calYear}
-                      </span>
-                      <button onClick={nextMonth} className="p-2 hover:bg-amber-50 transition-colors rounded" style={{ color: "hsl(30 30% 50%)" }}>
-                        <Icon name="ChevronRight" size={18} />
+                      <span className="font-display text-xl font-light text-white">{MONTHS[month]} {year}</span>
+                      <button onClick={nextM} className="w-9 h-9 flex items-center justify-center transition-all duration-200 hover:bg-white/8 rounded" style={{ color: "rgba(255,255,255,0.45)" }}>
+                        <Icon name="ChevronRight" size={17} />
                       </button>
                     </div>
-                    <div className="grid grid-cols-7 mb-2">
+                    <div className="grid grid-cols-7 mb-3">
                       {["Пн","Вт","Ср","Чт","Пт","Сб","Вс"].map(d => (
-                        <div key={d} className="text-center text-xs tracking-widest uppercase py-2 font-body" style={{ color: "hsl(30 15% 60%)" }}>{d}</div>
+                        <div key={d} className="text-center text-xs py-1.5 font-body tracking-widest" style={{ color: "rgba(255,255,255,0.25)" }}>{d}</div>
                       ))}
                     </div>
                     <div className="grid grid-cols-7 gap-1">
-                      {Array.from({ length: firstDay }).map((_,i) => <div key={`e${i}`} />)}
-                      {Array.from({ length: daysInMonth }).map((_,i) => {
-                        const day = i + 1;
-                        const past = isPast(day);
-                        const isWeekend = (firstDay + i) % 7 >= 5;
-                        const selected = selectedDay === day;
+                      {Array.from({ length: first }).map((_,i) => <div key={`e${i}`} />)}
+                      {Array.from({ length: days }).map((_,i) => {
+                        const d = i + 1, past = isPast(d), wknd = (first+i)%7 >= 5, sel = day === d;
                         return (
-                          <button key={day} disabled={past || isWeekend}
-                            onClick={() => { setSelectedDay(day); setSelectedTime(null); }}
-                            className={`aspect-square text-sm font-body font-light transition-all duration-200 rounded-sm
-                              ${selected ? "text-white shadow-lg" : ""}
-                              ${!selected && !past && !isWeekend ? "hover:bg-amber-50" : ""}
-                              ${past || isWeekend ? "cursor-not-allowed" : "cursor-pointer"}
-                            `}
-                            style={{
-                              background: selected ? "linear-gradient(135deg, hsl(38 75% 35%), hsl(42 80% 45%))" : undefined,
-                              color: past || isWeekend ? "hsl(30 10% 75%)" : selected ? "white" : "hsl(32 40% 20%)",
-                            }}>
-                            {day}
+                          <button key={d} disabled={past||wknd} onClick={() => { setDay(d); setTime(null); }}
+                            className="aspect-square text-sm font-body font-light transition-all duration-150 rounded-sm"
+                            style={{ background: sel ? "linear-gradient(135deg,hsl(32 65% 30%),hsl(42 80% 46%))" : "transparent", color: sel ? "white" : past||wknd ? "rgba(255,255,255,0.18)" : "rgba(255,255,255,0.75)", cursor: past||wknd ? "not-allowed" : "none", boxShadow: sel ? "0 0 16px rgba(212,170,90,0.3)" : "none" }}>
+                            {d}
                           </button>
                         );
                       })}
                     </div>
-                    {selectedDay && (
-                      <div className="mt-6 border-t border-amber-100 pt-6">
-                        <p className="text-xs tracking-widest uppercase mb-3 font-body" style={{ color: "hsl(30 15% 55%)" }}>
-                          Выберите время
-                        </p>
+                    {day && (
+                      <div className="mt-7 pt-6" style={{ borderTop: "1px solid rgba(212,170,90,0.12)" }}>
+                        <p className="text-xs tracking-widest uppercase mb-4 font-body" style={{ color: "rgba(255,255,255,0.3)" }}>Время</p>
                         <div className="grid grid-cols-3 gap-2">
                           {TIMES.map(t => (
-                            <button key={t} onClick={() => setSelectedTime(t)}
-                              className="py-2 text-xs font-body font-light tracking-wide border transition-all duration-200"
-                              style={{
-                                borderColor: selectedTime === t ? "hsl(38 75% 38%)" : "hsl(38 30% 85%)",
-                                background: selectedTime === t ? "linear-gradient(135deg, hsl(38 75% 35%), hsl(42 80% 45%))" : "transparent",
-                                color: selectedTime === t ? "white" : "hsl(30 25% 35%)",
-                              }}>
+                            <button key={t} onClick={() => setTime(t)}
+                              className="py-2.5 text-xs font-body font-light tracking-wide transition-all duration-200"
+                              style={{ border: `1px solid ${time===t ? "hsl(42 80% 50%)" : "rgba(212,170,90,0.18)"}`, background: time===t ? "linear-gradient(135deg,hsl(32 65% 28%),hsl(42 80% 44%))" : "transparent", color: time===t ? "white" : "rgba(255,255,255,0.55)", boxShadow: time===t ? "0 0 12px rgba(212,170,90,0.25)" : "none" }}>
                               {t}
                             </button>
                           ))}
@@ -1003,49 +722,40 @@ export default function Index() {
                   </div>
                 </Reveal>
 
-                <Reveal delay={200}>
-                  <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-                    {[
-                      { label: "Ваше имя *", key: "name", placeholder: "Иван Иванов", type: "text" },
-                      { label: "Телефон *", key: "phone", placeholder: "+7 (___) ___-__-__", type: "tel" },
-                    ].map(f => (
-                      <div key={f.key}>
-                        <label className="text-xs tracking-widest uppercase font-body block mb-2" style={{ color: "hsl(30 15% 55%)" }}>
-                          {f.label}
-                        </label>
-                        <input value={form[f.key as keyof typeof form]}
-                          onChange={e => setForm(prev => ({ ...prev, [f.key]: e.target.value }))}
-                          required={f.label.includes("*")} type={f.type} placeholder={f.placeholder}
-                          className="w-full border bg-white px-4 py-3 text-sm font-body font-light outline-none transition-all duration-300 placeholder:opacity-30"
-                          style={{ borderColor: "hsl(38 30% 85%)", color: "hsl(30 35% 20%)" }}
-                          onFocus={e => (e.target.style.borderColor = "hsl(38 75% 38%)")}
-                          onBlur={e => (e.target.style.borderColor = "hsl(38 30% 85%)")} />
+                {/* Form */}
+                <Reveal delay={180}>
+                  <form onSubmit={submit} className="flex flex-col gap-5">
+                    {[{l:"Ваше имя *",k:"name",p:"Иван Иванов",t:"text"},{l:"Телефон *",k:"phone",p:"+7 (___) ___-__-__",t:"tel"}].map(f => (
+                      <div key={f.k}>
+                        <label className="block text-xs tracking-widest uppercase mb-2 font-body" style={{ color: "rgba(255,255,255,0.3)" }}>{f.l}</label>
+                        <input value={form[f.k as keyof typeof form]} onChange={e => setForm(p => ({...p,[f.k]:e.target.value}))}
+                          required={f.l.includes("*")} type={f.t} placeholder={f.p}
+                          className="w-full px-4 py-3.5 text-sm font-body font-light outline-none transition-all duration-300"
+                          style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(212,170,90,0.18)", color: "rgba(255,255,255,0.85)", borderRadius: 0 }}
+                          onFocus={e => e.target.style.borderColor = "hsl(42 80% 50%)"}
+                          onBlur={e => e.target.style.borderColor = "rgba(212,170,90,0.18)"} />
                       </div>
                     ))}
                     <div>
-                      <label className="text-xs tracking-widest uppercase font-body block mb-2" style={{ color: "hsl(30 15% 55%)" }}>
-                        Комментарий
-                      </label>
-                      <textarea value={form.comment} onChange={e => setForm(f => ({ ...f, comment: e.target.value }))}
-                        rows={4} placeholder="Кратко опишите ваш запрос..."
-                        className="w-full border bg-white px-4 py-3 text-sm font-body font-light outline-none transition-all duration-300 resize-none placeholder:opacity-30"
-                        style={{ borderColor: "hsl(38 30% 85%)", color: "hsl(30 35% 20%)" }}
-                        onFocus={e => (e.target.style.borderColor = "hsl(38 75% 38%)")}
-                        onBlur={e => (e.target.style.borderColor = "hsl(38 30% 85%)")} />
+                      <label className="block text-xs tracking-widest uppercase mb-2 font-body" style={{ color: "rgba(255,255,255,0.3)" }}>Комментарий</label>
+                      <textarea value={form.comment} onChange={e => setForm(p => ({...p,comment:e.target.value}))} rows={4}
+                        placeholder="Кратко опишите ваш запрос..."
+                        className="w-full px-4 py-3.5 text-sm font-body font-light outline-none transition-all duration-300 resize-none"
+                        style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(212,170,90,0.18)", color: "rgba(255,255,255,0.85)", borderRadius: 0 }}
+                        onFocus={e => e.target.style.borderColor = "hsl(42 80% 50%)"}
+                        onBlur={e => e.target.style.borderColor = "rgba(212,170,90,0.18)"} />
                     </div>
-                    {selectedDay && selectedTime && (
-                      <div className="px-4 py-3 text-sm font-body font-light flex items-center gap-2 border border-amber-200 bg-amber-50">
-                        <Icon name="CalendarCheck" size={14} className="text-gold" />
-                        <span style={{ color: "hsl(32 60% 22%)" }}>{selectedDay} {MONTHS[calMonth]}, {selectedTime}</span>
+                    {day && time && (
+                      <div className="flex items-center gap-3 px-4 py-3 text-sm font-body font-light" style={{ background: "rgba(212,170,90,0.08)", border: "1px solid rgba(212,170,90,0.2)" }}>
+                        <Icon name="CalendarCheck" size={15} className="text-gold flex-shrink-0" />
+                        <span style={{ color: "hsl(42 80% 65%)" }}>{day} {MONTHS_SHORT[month]}, {time}</span>
                       </div>
                     )}
-                    <RippleBtn type="submit"
-                      disabled={!selectedDay || !selectedTime || !form.name || !form.phone}
-                      className="btn-gold-fill relative text-white text-xs tracking-widest uppercase px-8 py-4 font-body font-light disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 hover:scale-[1.02] mt-2"
-                      style={{ background: "linear-gradient(135deg, hsl(32 65% 28%), hsl(38 75% 42%), hsl(42 80% 48%))" }}>
+                    <Btn type="submit" disabled={!day || !time || !form.name || !form.phone}
+                      className="gold-grad glow-btn text-white text-xs tracking-[0.28em] uppercase px-8 py-4 font-body font-light disabled:opacity-25 disabled:cursor-not-allowed hover:brightness-110 transition-all duration-300 mt-1">
                       Отправить заявку
-                    </RippleBtn>
-                    <p className="text-xs font-body font-light" style={{ color: "hsl(30 10% 65%)" }}>
+                    </Btn>
+                    <p className="text-xs font-body font-light" style={{ color: "rgba(255,255,255,0.2)" }}>
                       Нажимая кнопку, вы соглашаетесь с обработкой персональных данных
                     </p>
                   </form>
@@ -1055,38 +765,40 @@ export default function Index() {
           </div>
         </section>
 
-        {/* FAQ */}
-        <section id="faq" className="py-24 bg-white relative overflow-hidden">
-          <div className="absolute top-1/2 right-0 w-80 h-80 pointer-events-none"
-            style={{ background: "radial-gradient(circle, rgba(212,170,90,0.05) 0%, transparent 70%)", transform: "translate(30%, -50%)" }} />
-          <div className="max-w-6xl mx-auto px-6 relative z-10">
+        {/* ── FAQ ── */}
+        <section id="faq" className="py-28 relative overflow-hidden" style={{ background: "hsl(40 35% 96%)" }}>
+          <div className="absolute top-1/2 right-0 w-80 h-80 pointer-events-none" style={{ background: "radial-gradient(circle,rgba(212,170,90,0.06) 0%,transparent 70%)", transform: "translate(30%,-50%)" }} />
+          <div className="max-w-7xl mx-auto px-6">
             <Reveal>
-              <div className="mb-16">
-                <p className="text-gold text-xs tracking-[0.3em] uppercase font-body font-light mb-4 flex items-center gap-3">
-                  <span className="w-6 h-px bg-gold" />FAQ
+              <div className="mb-14">
+                <p className="flex items-center gap-3 text-xs tracking-[0.35em] uppercase font-body font-light mb-5" style={{ color: "hsl(38 70% 40%)" }}>
+                  <span className="w-6 h-px bg-gold/80 line-grow inline-block" />FAQ
                 </p>
-                <h2 className="font-display text-4xl md:text-5xl font-light gold-line" style={{ color: "hsl(32 60% 18%)" }}>
+                <h2 className="font-display font-light" style={{ fontSize: "clamp(2.2rem,5vw,3.5rem)", color: "hsl(28 60% 16%)" }}>
                   Частые вопросы
                 </h2>
+                <div className="w-14 h-0.5 mt-4 rounded-full" style={{ background: "linear-gradient(90deg,hsl(38 75% 42%),transparent)" }} />
               </div>
             </Reveal>
-            <div className="max-w-3xl border-t border-amber-100">
+            <div className="max-w-3xl">
               {faqs.map((item, i) => (
-                <Reveal key={i} delay={i * 100}>
-                  <div className="border-b border-amber-100">
-                    <button onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                      className="w-full py-6 flex items-center justify-between text-left group">
-                      <span className="font-display text-lg md:text-xl font-light group-hover:text-gold transition-colors pr-6 duration-300" style={{ color: "hsl(32 60% 18%)" }}>
+                <Reveal key={i} delay={i * 80}>
+                  <div className="faq-item px-2">
+                    <button onClick={() => setFaq(faq === i ? null : i)}
+                      className="w-full py-6 flex items-center justify-between text-left group gap-6">
+                      <span className="font-display text-lg md:text-xl font-light transition-colors duration-200 group-hover:text-grad"
+                        style={{ color: faq === i ? "hsl(38 65% 35%)" : "hsl(28 55% 18%)" }}>
                         {item.q}
                       </span>
-                      <div className={`w-8 h-8 border border-amber-200 flex items-center justify-center flex-shrink-0 transition-all duration-300 ${openFaq === i ? "bg-gold border-gold rotate-45" : "group-hover:border-gold"}`}>
-                        <Icon name="Plus" size={14} className={openFaq === i ? "text-white" : "text-gold"} />
+                      <div className={`w-8 h-8 flex items-center justify-center flex-shrink-0 transition-all duration-300 ${faq === i ? "gold-grad rotate-45" : ""}`}
+                        style={{ border: faq === i ? "none" : "1px solid rgba(212,170,90,0.4)" }}>
+                        <Icon name="Plus" size={14} className={faq === i ? "text-white" : ""} style={{ color: faq === i ? "white" : "hsl(38 65% 40%)" }} />
                       </div>
                     </button>
-                    {openFaq === i && (
-                      <div className="pb-6 text-sm leading-relaxed font-body font-light" style={{ color: "hsl(30 15% 45%)", animation: "fadeSlideUp 0.4s ease forwards" }}>
+                    {faq === i && (
+                      <p className="pb-6 text-sm leading-[1.85] font-body font-light" style={{ color: "hsl(28 15% 42%)", animation: "fadeIn .35s ease" }}>
                         {item.a}
-                      </div>
+                      </p>
                     )}
                   </div>
                 </Reveal>
@@ -1095,86 +807,80 @@ export default function Index() {
           </div>
         </section>
 
-        {/* CTA */}
-        <section className="py-32 relative overflow-hidden noise-bg"
-          style={{ background: "linear-gradient(135deg, hsl(30 65% 12%) 0%, hsl(35 60% 22%) 50%, hsl(30 65% 12%) 100%)" }}>
-          <FloatingOrbs />
-          <div className="absolute inset-0 pointer-events-none" style={{
-            background: `radial-gradient(800px circle at ${mousePos.x * 100}% ${mousePos.y * 100}%, rgba(212,170,90,0.1), transparent 60%)`,
-          }} />
-          {/* Decorative lines */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-24 bg-gradient-to-b from-transparent via-gold/30 to-transparent" />
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-px h-24 bg-gradient-to-b from-transparent via-gold/30 to-transparent" />
-          <div className="relative max-w-6xl mx-auto px-6 text-center z-10">
+        {/* ── CTA ── */}
+        <section className="py-36 relative overflow-hidden" style={{ background: "linear-gradient(145deg,hsl(28 70% 10%) 0%,hsl(33 65% 17%) 50%,hsl(28 70% 10%) 100%)" }}>
+          <ParticleCanvas count={60} />
+          <div className="absolute inset-0 pointer-events-none" style={{ background: `radial-gradient(900px circle at ${mouse.x*100}% ${mouse.y*100}%,rgba(212,170,90,0.09),transparent 60%)` }} />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-24 bg-gradient-to-b from-transparent via-gold/25 to-transparent" />
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-px h-24 bg-gradient-to-b from-transparent via-gold/25 to-transparent" />
+
+          <div className="relative max-w-7xl mx-auto px-6 text-center z-10">
             <Reveal>
-              <p className="text-gold text-xs tracking-[0.4em] uppercase font-body font-light mb-6">Первый шаг</p>
-              <h2 className="font-display text-white text-4xl md:text-6xl font-light mb-8 leading-tight">
-                Готовы к <span className="shimmer-text italic">переменам?</span>
+              <p className="text-xs tracking-[0.4em] uppercase font-body font-light mb-7" style={{ color: "rgba(212,170,90,0.7)" }}>Первый шаг</p>
+              <h2 className="font-display font-light mb-8 leading-tight" style={{ fontSize: "clamp(2.5rem,6vw,5rem)", color: "white" }}>
+                Готовы к <span className="shimmer italic">переменам?</span>
               </h2>
-              <p className="text-white/45 text-sm font-body font-light max-w-lg mx-auto mb-12 leading-relaxed">
-                Запишитесь на первую консультацию. Это безопасно, конфиденциально
-                и может стать началом новой главы вашей жизни.
+              <p className="text-sm font-body font-light max-w-md mx-auto mb-12 leading-[1.85]" style={{ color: "rgba(255,255,255,0.38)" }}>
+                Запишитесь на первую консультацию. Безопасно, конфиденциально и может стать началом новой главы вашей жизни.
               </p>
-              <RippleBtn onClick={() => scrollTo("booking")}
-                className="btn-gold-fill mag-btn relative text-white text-xs tracking-widest uppercase px-12 py-5 font-body font-light glow-border"
-                style={{ background: "linear-gradient(135deg, hsl(32 65% 28%), hsl(38 75% 42%), hsl(42 80% 48%))" }}>
+              <Btn onClick={() => go("booking")}
+                className="gold-grad glow-btn text-white text-xs tracking-[0.3em] uppercase px-14 py-5 font-body font-light hover:brightness-110 transition-all duration-300">
                 Записаться на консультацию
-              </RippleBtn>
+              </Btn>
             </Reveal>
           </div>
         </section>
 
-        {/* FOOTER */}
-        <footer className="py-12" style={{ background: "hsl(28 50% 9%)" }}>
-          <div className="max-w-6xl mx-auto px-6">
-            <div className="grid md:grid-cols-3 gap-8 mb-10">
+        {/* ── FOOTER ── */}
+        <footer className="py-14" style={{ background: "hsl(24 50% 7%)", borderTop: "1px solid rgba(212,170,90,0.1)" }}>
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="grid md:grid-cols-3 gap-10 mb-10">
               <div>
-                <p className="font-display text-white text-xl font-light tracking-widest uppercase mb-3">
-                  Олеся Гудкова
-                </p>
-                <p className="text-white/25 text-xs font-body font-light leading-relaxed">
+                <p className="font-display text-white text-xl font-light tracking-[0.2em] uppercase mb-3">Олеся Гудкова</p>
+                <p className="text-xs font-body font-light leading-relaxed" style={{ color: "rgba(255,255,255,0.22)" }}>
                   Клинический психолог<br />Проводник энергии света
                 </p>
               </div>
               <div>
-                <p className="text-white/35 text-xs tracking-widest uppercase mb-4 font-body">Контакты</p>
-                <div className="space-y-2">
-                  {[
-                    { icon: "Phone", text: "+7 (999) 123-45-67", href: "tel:+79991234567" },
-                    { icon: "Mail", text: "hello@olesyagoode.com", href: "mailto:hello@olesyagoode.com" },
-                  ].map(c => (
-                    <a key={c.href} href={c.href} className="flex items-center gap-2 text-white/50 hover:text-gold text-sm font-body font-light transition-colors duration-300 group">
-                      <Icon name={c.icon} size={14} className="text-gold/50 group-hover:text-gold transition-colors" />
-                      {c.text}
+                <p className="text-xs tracking-widest uppercase mb-5 font-body" style={{ color: "rgba(255,255,255,0.28)" }}>Контакты</p>
+                <div className="space-y-3">
+                  {[{i:"Phone",t:"+7 (999) 123-45-67",h:"tel:+79991234567"},{i:"Mail",t:"hello@olesyagoode.com",h:"mailto:hello@olesyagoode.com"}].map(c => (
+                    <a key={c.h} href={c.h} className="flex items-center gap-2.5 text-sm font-body font-light transition-colors duration-200 group" style={{ color: "rgba(255,255,255,0.42)" }}>
+                      <Icon name={c.i} size={13} className="group-hover:text-gold transition-colors" style={{ color: "rgba(212,170,90,0.5)" }} />
+                      <span className="group-hover:text-gold transition-colors">{c.t}</span>
                     </a>
                   ))}
-                  <div className="flex items-center gap-2 text-white/50 text-sm font-body font-light">
-                    <Icon name="Globe" size={14} className="text-gold/50" />
+                  <div className="flex items-center gap-2.5 text-sm font-body font-light" style={{ color: "rgba(255,255,255,0.42)" }}>
+                    <Icon name="Globe" size={13} style={{ color: "rgba(212,170,90,0.5)" }} />
                     По всему миру — онлайн
                   </div>
                 </div>
               </div>
               <div>
-                <p className="text-white/35 text-xs tracking-widest uppercase mb-4 font-body">Социальные сети</p>
+                <p className="text-xs tracking-widest uppercase mb-5 font-body" style={{ color: "rgba(255,255,255,0.28)" }}>Соцсети</p>
                 <div className="flex gap-3">
-                  {[{ icon: "MessageCircle", label: "Telegram" }, { icon: "Instagram", label: "Instagram" }, { icon: "Youtube", label: "YouTube" }].map(s => (
-                    <button key={s.label}
-                      className="w-9 h-9 border border-white/10 flex items-center justify-center text-white/35 hover:border-gold hover:text-gold transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-gold/10">
-                      <Icon name={s.icon} size={15} />
+                  {[{i:"MessageCircle",l:"TG"},{i:"Instagram",l:"IG"},{i:"Youtube",l:"YT"}].map(s => (
+                    <button key={s.l} className="w-10 h-10 flex items-center justify-center transition-all duration-300 hover:scale-110"
+                      style={{ border: "1px solid rgba(212,170,90,0.18)", color: "rgba(255,255,255,0.35)" }}
+                      onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = "hsl(42 80% 50%)"; (e.currentTarget as HTMLElement).style.color = "hsl(42 80% 60%)"; }}
+                      onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(212,170,90,0.18)"; (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.35)"; }}>
+                      <Icon name={s.i} size={15} />
                     </button>
                   ))}
                 </div>
               </div>
             </div>
-            <div className="border-t border-white/8 pt-6 flex flex-col md:flex-row items-center justify-between gap-3">
-              <p className="text-white/15 text-xs font-body font-light">© 2024 Олеся Гудкова. Все права защищены.</p>
-              <button onClick={() => scrollTo("booking")}
-                className="text-white/15 hover:text-gold text-xs tracking-widest uppercase font-body transition-colors duration-300">
-                Записаться на консультацию ↑
+            <div className="flex flex-col md:flex-row items-center justify-between gap-3 pt-8" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+              <p className="text-xs font-body font-light" style={{ color: "rgba(255,255,255,0.14)" }}>© 2024 Олеся Гудкова. Все права защищены.</p>
+              <button onClick={() => go("booking")} className="text-xs tracking-widest uppercase font-body transition-colors duration-200" style={{ color: "rgba(255,255,255,0.14)" }}
+                onMouseEnter={e => (e.currentTarget.style.color = "hsl(42 80% 55%)")}
+                onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.14)")}>
+                Записаться ↑
               </button>
             </div>
           </div>
         </footer>
+
       </div>
     </>
   );
