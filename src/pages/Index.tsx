@@ -70,18 +70,14 @@ function ParticleCanvas({ count = 80 }: { count?: number }) {
 /* ═══ DIAMOND CURSOR ═══ */
 function CustomCursor() {
   const svgRef = useRef<SVGSVGElement>(null);
-  const ringRef = useRef<HTMLDivElement>(null);
   const pos = useRef({ x: -200, y: -200 });
-  const lag = useRef({ x: -200, y: -200 });
   const raf = useRef(0);
   useEffect(() => {
     const onMove = (e: MouseEvent) => { pos.current = { x: e.clientX, y: e.clientY }; };
     window.addEventListener("mousemove", onMove);
     const loop = () => {
-      const { x, y } = pos.current; const l = lag.current;
-      l.x += (x - l.x) * 0.09; l.y += (y - l.y) * 0.09;
+      const { x, y } = pos.current;
       if (svgRef.current) svgRef.current.style.transform = `translate(${x + 4}px,${y - 16}px)`;
-      if (ringRef.current) ringRef.current.style.transform = `translate(${l.x - 20}px,${l.y - 20}px)`;
       raf.current = requestAnimationFrame(loop);
     };
     loop();
@@ -111,8 +107,7 @@ function CustomCursor() {
         <line x1="28" y1="11" x2="18" y2="17" stroke="rgba(255,255,255,0.3)" strokeWidth="0.5"/>
         <polygon points="10,8 22,8 24,10 8,10" fill="rgba(255,255,255,0.35)"/>
       </svg>
-      <div ref={ringRef} className="fixed top-0 left-0 z-[9997] pointer-events-none hidden md:block w-10 h-10 rounded-full"
-        style={{ willChange: "transform", border: "1px solid rgba(245,200,66,0.2)", background: "radial-gradient(circle,rgba(245,200,66,0.05) 0%,transparent 70%)" }}/>
+
     </>
   );
 }
