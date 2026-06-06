@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import Icon from "@/components/ui/icon";
 
-const PHOTO_URL = "https://cdn.poehali.dev/projects/6725aecc-6f9c-4bb1-9cad-3cce49e60509/files/cba1f3e8-a18b-4b75-8839-a91d2390aaba.jpg";
+const PHOTO_URL = "https://thb.tildacdn.com/tild3337-3066-4432-b163-363536663837/-/resize/504x/post0101.png";
 
 const services = [
   { title: "Индивидуальная консультация", desc: "Работа с тревогой, страхами, депрессией, кризисными состояниями. Глубокий анализ ситуации и выработка стратегии.", duration: "60 мин", price: "5 000 ₽" },
