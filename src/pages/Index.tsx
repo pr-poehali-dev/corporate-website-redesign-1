@@ -517,11 +517,7 @@ export default function Index() {
             </div>
           </div>
 
-          {/* Scroll hint */}
-          <div className="absolute bottom-20 right-8 hidden md:flex flex-col items-center gap-2" style={{ opacity: 0.45 }}>
-            <span className="text-xs tracking-widest uppercase font-body" style={{ color: "hsl(42 70% 58%)", writingMode: "vertical-rl" }}>scroll</span>
-            <div className="w-px h-10 bg-gradient-to-b from-gold/50 to-transparent" />
-          </div>
+
         </section>
 
         {/* ── ABOUT ── */}

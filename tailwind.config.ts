@@ -21,7 +21,7 @@ export default {
 		extend: {
 			fontFamily: {
 				display: ['Cormorant', 'serif'],
-				body: ['IBM Plex Sans', 'sans-serif'],
+				body: ['Raleway', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
