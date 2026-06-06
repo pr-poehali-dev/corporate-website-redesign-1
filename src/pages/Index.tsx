@@ -69,24 +69,38 @@ function ParticleCanvas({ count = 80 }: { count?: number }) {
 
 /* ═══ DIAMOND CURSOR ═══ */
 function CustomCursor() {
-  const svgRef = useRef<SVGSVGElement>(null);
+  const wrapRef = useRef<HTMLDivElement>(null);
   const pos = useRef({ x: -200, y: -200 });
+  const angle = useRef(0);
+  const scale = useRef(1);
   const raf = useRef(0);
+
   useEffect(() => {
     const onMove = (e: MouseEvent) => { pos.current = { x: e.clientX, y: e.clientY }; };
+    const onClick = () => {
+      scale.current = 2.2;
+      setTimeout(() => { scale.current = 1; }, 400);
+    };
     window.addEventListener("mousemove", onMove);
+    window.addEventListener("click", onClick);
     const loop = () => {
+      angle.current = (angle.current + 2.2) % 360;
       const { x, y } = pos.current;
-      if (svgRef.current) svgRef.current.style.transform = `translate(${x + 4}px,${y - 16}px)`;
+      const scaleX = Math.abs(Math.cos(angle.current * Math.PI / 180));
+      if (wrapRef.current) {
+        wrapRef.current.style.transform = `translate(${x - 18}px,${y - 16}px) scale(${scale.current}) scaleX(${scaleX})`;
+      }
       raf.current = requestAnimationFrame(loop);
     };
     loop();
-    return () => { window.removeEventListener("mousemove", onMove); cancelAnimationFrame(raf.current); };
+    return () => { window.removeEventListener("mousemove", onMove); window.removeEventListener("click", onClick); cancelAnimationFrame(raf.current); };
   }, []);
+
   return (
     <>
-      <svg ref={svgRef} className="fixed top-0 left-0 z-[9999] pointer-events-none hidden md:block" width="36" height="32" viewBox="0 0 36 32"
-        style={{ willChange: "transform", filter: "drop-shadow(0 0 6px rgba(245,200,66,0.9)) drop-shadow(0 0 14px rgba(212,150,30,0.6))" }}>
+      <div ref={wrapRef} className="fixed top-0 left-0 z-[9999] pointer-events-none hidden md:block"
+        style={{ willChange: "transform", width: 36, height: 32, transition: "scale 0.35s cubic-bezier(0.34,1.56,0.64,1)", filter: "drop-shadow(0 0 6px rgba(245,200,66,0.9)) drop-shadow(0 0 14px rgba(212,150,30,0.6))" }}>
+      <svg width="36" height="32" viewBox="0 0 36 32">
         <defs>
           <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#fff9d0"/><stop offset="40%" stopColor="#f5d060"/><stop offset="100%" stopColor="#c8860a"/></linearGradient>
           <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#e8b830"/><stop offset="100%" stopColor="#8a5500"/></linearGradient>
@@ -107,7 +121,7 @@ function CustomCursor() {
         <line x1="28" y1="11" x2="18" y2="17" stroke="rgba(255,255,255,0.3)" strokeWidth="0.5"/>
         <polygon points="10,8 22,8 24,10 8,10" fill="rgba(255,255,255,0.35)"/>
       </svg>
-
+      </div>
     </>
   );
 }
