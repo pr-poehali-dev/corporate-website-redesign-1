@@ -33,12 +33,14 @@ export default function CubeNav({ faces, currentFace, onFaceChange }: Props) {
   const touchStartY = useRef(0);
   const isAnimating = useRef(false);
 
-  // Адаптивный размер куба
+  // Адаптивный размер куба — с отступом 120px сверху (хедер) и 80px снизу
   useEffect(() => {
     const update = () => {
       const w = window.innerWidth;
       const h = window.innerHeight;
-      setSize(Math.min(w, h, 700));
+      const maxH = h - 120 - 80; // хедер + нижний UI
+      const maxW = w - 120;      // боковые стрелки + точки
+      setSize(Math.min(maxW, maxH, 620));
     };
     update();
     window.addEventListener("resize", update);
@@ -122,7 +124,7 @@ export default function CubeNav({ faces, currentFace, onFaceChange }: Props) {
       }} />
 
       {/* 3D Scene */}
-      <div style={{ perspective: `${size * 2.5}px`, perspectiveOrigin: "50% 50%" }}>
+      <div style={{ perspective: `${size * 2.5}px`, perspectiveOrigin: "50% 50%", marginTop: "64px" }}>
         <div
           style={{
             width: size,

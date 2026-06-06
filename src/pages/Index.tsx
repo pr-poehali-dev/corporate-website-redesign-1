@@ -388,52 +388,51 @@ export default function Index() {
       id: "services",
       label: "Услуги",
       content: (
-        <div className="w-full min-h-full py-24 px-8 relative overflow-hidden" style={{ background: "hsl(28 25% 10%)" }}>
-          <ParticleCanvas count={40} />
+        <div className="w-full h-full py-6 px-6 relative overflow-hidden" style={{ background: "hsl(28 25% 10%)" }}>
+          <ParticleCanvas count={30} />
           <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at 20% 60%,rgba(212,150,30,0.06) 0%,transparent 55%)" }} />
-          <div className="max-w-5xl mx-auto relative z-10 pt-8">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+          <div className="max-w-4xl mx-auto relative z-10">
+            <div className="flex items-center justify-between gap-4 mb-4">
               <div>
-                <p className="flex items-center gap-3 text-xs tracking-[0.35em] uppercase font-body font-light mb-5" style={{ color: "rgba(212,170,90,0.75)" }}>
-                  <span className="w-6 h-px inline-block" style={{ background: "rgba(212,170,90,0.7)" }} />Услуги
+                <p className="flex items-center gap-2 text-xs tracking-[0.3em] uppercase font-body font-light mb-2" style={{ color: "rgba(212,170,90,0.75)" }}>
+                  <span className="w-4 h-px inline-block" style={{ background: "rgba(212,170,90,0.7)" }} />Услуги
                 </p>
-                <h2 className="font-display font-light" style={{ fontSize: "clamp(2rem,4vw,3rem)", color: "white" }}>Направления работы</h2>
-                <div className="w-14 h-0.5 mt-4 rounded-full" style={{ background: "linear-gradient(90deg,hsl(42 80% 50%),transparent)" }} />
+                <h2 className="font-display font-light" style={{ fontSize: "clamp(1.3rem,2.5vw,2rem)", color: "white" }}>Направления работы</h2>
               </div>
-              <Btn onClick={() => onFaceChange(5)} className="self-start text-xs tracking-[0.28em] uppercase px-6 py-3 font-body font-light transition-all duration-300 hover:brightness-110" style={{ border: "1px solid rgba(212,170,90,0.45)", color: "hsl(42 80% 60%)" }}>Записаться</Btn>
+              <Btn onClick={() => onFaceChange(5)} className="text-xs tracking-[0.2em] uppercase px-4 py-2 font-body font-light transition-all duration-300 hover:brightness-110 whitespace-nowrap" style={{ border: "1px solid rgba(212,170,90,0.45)", color: "hsl(42 80% 60%)" }}>Записаться</Btn>
             </div>
-            <div className="flex gap-1 mb-8 overflow-x-auto pb-1">
+            <div className="flex gap-1 mb-4 overflow-x-auto pb-1">
               {services.map((s, i) => (
                 <button key={i} onClick={() => setActiveService(i)}
-                  className={`service-tab text-xs tracking-[0.2em] uppercase px-5 py-3 font-body font-light whitespace-nowrap transition-all duration-300 ${activeService === i ? "active" : ""}`}
-                  style={{ color: activeService === i ? "hsl(42 80% 62%)" : "rgba(255,255,255,0.38)", background: activeService === i ? "rgba(212,170,90,0.1)" : "transparent", borderBottom: activeService === i ? "2px solid hsl(42 80% 50%)" : "2px solid transparent" }}>
+                  className={`service-tab text-xs tracking-[0.15em] uppercase px-3 py-2 font-body font-light whitespace-nowrap transition-all duration-300 ${activeService === i ? "active" : ""}`}
+                  style={{ color: activeService === i ? "hsl(42 80% 62%)" : "rgba(255,255,255,0.38)", background: activeService === i ? "rgba(212,170,90,0.1)" : "transparent", borderBottom: activeService === i ? "2px solid hsl(42 80% 50%)" : "2px solid transparent", fontSize: "0.65rem" }}>
                   {s.title}
                 </button>
               ))}
             </div>
             <TiltCard>
-              <div className="glass p-8 md:p-12 relative overflow-hidden" style={{ borderRadius: 2 }}>
+              <div className="glass p-5 relative overflow-hidden" style={{ borderRadius: 2 }}>
                 <div className="absolute top-0 left-0 right-0 h-px" style={{ background: "linear-gradient(90deg,transparent,rgba(212,170,90,0.3),transparent)" }} />
-                <div className="grid md:grid-cols-2 gap-10 items-center relative z-10">
+                <div className="grid md:grid-cols-2 gap-6 items-center relative z-10">
                   <div>
-                    <div className="flex items-center gap-4 mb-6">
-                      <div className="w-12 h-12 flex items-center justify-center rounded-full gold-grad">
-                        <Icon name={services[activeService].icon} size={20} className="text-white" />
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-8 h-8 flex items-center justify-center rounded-full gold-grad flex-shrink-0">
+                        <Icon name={services[activeService].icon} size={15} className="text-white" />
                       </div>
-                      <span className="font-display text-6xl font-light opacity-15 select-none" style={{ color: "hsl(42 80% 58%)" }}>{String(activeService + 1).padStart(2, "0")}</span>
+                      <span className="font-display text-4xl font-light opacity-15 select-none" style={{ color: "hsl(42 80% 58%)" }}>{String(activeService + 1).padStart(2, "0")}</span>
                     </div>
-                    <h3 className="font-display font-light mb-4" style={{ fontSize: "clamp(1.4rem,3vw,2.2rem)", color: "white" }}>{services[activeService].title}</h3>
-                    <p className="text-sm leading-[1.8] font-body font-light mb-6" style={{ color: "rgba(255,255,255,0.55)" }}>{services[activeService].desc}</p>
-                    <div className="flex items-center gap-2 text-xs tracking-widest uppercase font-body font-light" style={{ color: "rgba(212,170,90,0.7)" }}>
-                      <Icon name="Clock" size={12} />{services[activeService].duration}
+                    <h3 className="font-display font-light mb-2" style={{ fontSize: "clamp(1rem,2vw,1.4rem)", color: "white" }}>{services[activeService].title}</h3>
+                    <p className="leading-[1.7] font-body font-light mb-3" style={{ fontSize: "0.78rem", color: "rgba(255,255,255,0.55)" }}>{services[activeService].desc}</p>
+                    <div className="flex items-center gap-2 font-body font-light" style={{ fontSize: "0.7rem", color: "rgba(212,170,90,0.7)" }}>
+                      <Icon name="Clock" size={11} />{services[activeService].duration}
                     </div>
                   </div>
-                  <div className="flex flex-col items-center md:items-end gap-6">
+                  <div className="flex flex-col items-center md:items-end gap-4">
                     <div>
-                      <p className="text-xs tracking-widest uppercase font-body font-light mb-1 text-center md:text-right" style={{ color: "rgba(255,255,255,0.3)" }}>Стоимость</p>
-                      <p className="font-display font-light" style={{ fontSize: "3rem", color: "hsl(42 80% 60%)" }}>{services[activeService].price}</p>
+                      <p className="font-body font-light mb-1 text-center md:text-right" style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.3)" }}>Стоимость</p>
+                      <p className="font-display font-light" style={{ fontSize: "2.2rem", color: "hsl(42 80% 60%)" }}>{services[activeService].price}</p>
                     </div>
-                    <Btn onClick={() => onFaceChange(5)} className="gold-grad glow-btn text-white text-xs tracking-[0.28em] uppercase px-8 py-4 font-body font-light hover:brightness-110 transition-all">Записаться</Btn>
+                    <Btn onClick={() => onFaceChange(5)} className="gold-grad glow-btn text-white tracking-[0.2em] uppercase px-6 py-3 font-body font-light hover:brightness-110 transition-all" style={{ fontSize: "0.7rem" }}>Записаться</Btn>
                   </div>
                 </div>
               </div>
