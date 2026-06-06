@@ -67,62 +67,154 @@ function ParticleCanvas({ count = 80 }: { count?: number }) {
 
 
 
-/* ═══ DIAMOND CURSOR ═══ */
+/* ═══ DIAMOND CURSOR 3D ═══ */
 function CustomCursor() {
-  const wrapRef = useRef<HTMLDivElement>(null);
+  const posRef = useRef<HTMLDivElement>(null);
+  const innerRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const pos = useRef({ x: -200, y: -200 });
   const angle = useRef(0);
-  const scale = useRef(1);
+  const scaleAnim = useRef(1);
+  const targetScale = useRef(1);
   const raf = useRef(0);
 
   useEffect(() => {
-    const onMove = (e: MouseEvent) => { pos.current = { x: e.clientX, y: e.clientY }; };
-    const onClick = () => {
-      scale.current = 2.2;
-      setTimeout(() => { scale.current = 1; }, 400);
+    const SIZE = 52;
+    const cx = SIZE / 2, cy = SIZE / 2;
+
+    // 3D vertices of a brilliant-cut diamond (normalized, then projected)
+    // Crown: top table octagon + girdle, Pavilion: cone to culet
+    const project = (x: number, y: number, z: number, angleY: number) => {
+      const cosA = Math.cos(angleY), sinA = Math.sin(angleY);
+      const rx = x * cosA - z * sinA;
+      const rz = x * sinA + z * cosA;
+      const fov = 160;
+      const scale = fov / (fov + rz + 20);
+      return { sx: cx + rx * scale, sy: cy + y * scale, z: rz, visible: true };
     };
+
+    // Diamond geometry: R=crown radius, r=table radius, h=crown height, ph=pavilion height
+    const R = 18, r = 11, crownH = 7, pavH = 18, girdleY = 4;
+    const N = 8; // octagonal facets
+    const tableY = girdleY - crownH;
+    const culetY = girdleY + pavH;
+
+    // Build vertices
+    const tableVerts = Array.from({ length: N }, (_, i) => {
+      const a = (i / N) * Math.PI * 2 + Math.PI / N;
+      return { x: r * Math.cos(a), y: tableY, z: r * Math.sin(a) };
+    });
+    const girdleVerts = Array.from({ length: N }, (_, i) => {
+      const a = (i / N) * Math.PI * 2;
+      return { x: R * Math.cos(a), y: girdleY, z: R * Math.sin(a) };
+    });
+    const culet = { x: 0, y: culetY, z: 0 };
+
+    // Face colors [light, mid, dark] — gold palette
+    const crownColors = ["#fff3a0","#f5d060","#d4960a","#c8820a","#e8b830","#ffeaa0","#d4960a","#f5d060"];
+    const pavColors   = ["#8a5500","#c8820a","#d4960a","#f5d060","#8a5500","#c8820a","#d4960a","#f5d060"];
+
+    const canvas = canvasRef.current!;
+    canvas.width = SIZE; canvas.height = SIZE;
+    const ctx = canvas.getContext("2d")!;
+
+    const drawDiamond = (angleY: number) => {
+      ctx.clearRect(0, 0, SIZE, SIZE);
+
+      // Project all vertices
+      const tp = tableVerts.map(v => project(v.x, v.y, v.z, angleY));
+      const gp = girdleVerts.map(v => project(v.x, v.y, v.z, angleY));
+      const cp = project(culet.x, culet.y, culet.z, angleY);
+
+      type Face = { pts: {sx:number,sy:number,z:number}[]; color: string; alpha: number; bright: number };
+      const faces: Face[] = [];
+
+      // Table face (top flat octagon)
+      faces.push({ pts: tp, color: "#fff9c0", alpha: 0.95, bright: 1 });
+
+      // Crown facets: table edge → girdle edge
+      for (let i = 0; i < N; i++) {
+        const j = (i + 1) % N;
+        const pts = [tp[i], tp[j], gp[j], gp[i]];
+        const avgZ = pts.reduce((s, p) => s + p.z, 0) / 4;
+        const bright = 0.55 + 0.45 * Math.sin(Math.PI / N * i + angleY * 0.5);
+        faces.push({ pts, color: crownColors[i % crownColors.length], alpha: 0.92, bright });
+      }
+
+      // Pavilion facets: girdle → culet
+      for (let i = 0; i < N; i++) {
+        const j = (i + 1) % N;
+        const pts = [gp[i], gp[j], cp];
+        const bright = 0.4 + 0.6 * Math.abs(Math.cos((i / N) * Math.PI * 2 + angleY));
+        faces.push({ pts, color: pavColors[i % pavColors.length], alpha: 0.95, bright });
+      }
+
+      // Sort back-to-front by average Z
+      faces.sort((a, b) => {
+        const za = a.pts.reduce((s, p) => s + p.z, 0) / a.pts.length;
+        const zb = b.pts.reduce((s, p) => s + p.z, 0) / b.pts.length;
+        return za - zb;
+      });
+
+      // Draw faces
+      faces.forEach(f => {
+        if (f.pts.length < 2) return;
+        ctx.beginPath();
+        ctx.moveTo(f.pts[0].sx, f.pts[0].sy);
+        f.pts.slice(1).forEach(p => ctx.lineTo(p.sx, p.sy));
+        ctx.closePath();
+
+        // Parse hex color and apply brightness
+        const hex = f.color.replace("#","");
+        const rr = parseInt(hex.slice(0,2),16), gg = parseInt(hex.slice(2,4),16), bb = parseInt(hex.slice(4,6),16);
+        const br = f.bright;
+        ctx.fillStyle = `rgba(${Math.min(255,rr*br|0)},${Math.min(255,gg*br|0)},${Math.min(255,bb*br|0)},${f.alpha})`;
+        ctx.fill();
+
+        // Edge highlight
+        ctx.strokeStyle = "rgba(255,240,150,0.2)";
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+      });
+
+      // Center sparkle
+      const sp = project(0, tableY - 1, 0, angleY);
+      const grad = ctx.createRadialGradient(sp.sx, sp.sy, 0, sp.sx, sp.sy, 5);
+      grad.addColorStop(0, "rgba(255,255,255,0.9)");
+      grad.addColorStop(1, "rgba(255,255,255,0)");
+      ctx.beginPath(); ctx.arc(sp.sx, sp.sy, 5, 0, Math.PI*2);
+      ctx.fillStyle = grad; ctx.fill();
+    };
+
+    const onMove = (e: MouseEvent) => { pos.current = { x: e.clientX, y: e.clientY }; };
+    const onClick = () => { targetScale.current = 2.0; setTimeout(() => { targetScale.current = 1; }, 380); };
     window.addEventListener("mousemove", onMove);
     window.addEventListener("click", onClick);
+
     const loop = () => {
-      angle.current = (angle.current + 2.2) % 360;
+      angle.current += 0.032;
+      scaleAnim.current += (targetScale.current - scaleAnim.current) * 0.18;
+
       const { x, y } = pos.current;
-      const scaleX = Math.abs(Math.cos(angle.current * Math.PI / 180));
-      if (wrapRef.current) {
-        wrapRef.current.style.transform = `translate(${x - 18}px,${y - 16}px) scale(${scale.current}) scaleX(${scaleX})`;
+      drawDiamond(angle.current);
+
+      if (posRef.current) {
+        posRef.current.style.transform = `translate(${x - SIZE/2}px,${y - SIZE/2}px) scale(${scaleAnim.current})`;
       }
       raf.current = requestAnimationFrame(loop);
     };
     loop();
+
     return () => { window.removeEventListener("mousemove", onMove); window.removeEventListener("click", onClick); cancelAnimationFrame(raf.current); };
   }, []);
 
   return (
-    <>
-      <div ref={wrapRef} className="fixed top-0 left-0 z-[9999] pointer-events-none hidden md:block"
-        style={{ willChange: "transform", width: 36, height: 32, transition: "scale 0.35s cubic-bezier(0.34,1.56,0.64,1)", filter: "drop-shadow(0 0 6px rgba(245,200,66,0.9)) drop-shadow(0 0 14px rgba(212,150,30,0.6))" }}>
-      <svg width="36" height="32" viewBox="0 0 36 32">
-        <defs>
-          <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#fff9d0"/><stop offset="40%" stopColor="#f5d060"/><stop offset="100%" stopColor="#c8860a"/></linearGradient>
-          <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#e8b830"/><stop offset="100%" stopColor="#8a5500"/></linearGradient>
-          <linearGradient id="g3" x1="100%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stopColor="#ffeaa0"/><stop offset="100%" stopColor="#b07010"/></linearGradient>
-          <linearGradient id="g4" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#d4960a"/><stop offset="100%" stopColor="#7a4400"/></linearGradient>
-        </defs>
-        <polygon points="8,11 28,11 32,6 4,6" fill="url(#g1)" opacity="0.95"/>
-        <polygon points="4,6 8,11 2,14" fill="url(#g2)" opacity="0.85"/>
-        <polygon points="32,6 28,11 34,14" fill="url(#g3)" opacity="0.9"/>
-        <polygon points="2,14 8,11 6,17" fill="#c8860a" opacity="0.7"/>
-        <polygon points="34,14 28,11 30,17" fill="#f0c040" opacity="0.7"/>
-        <polygon points="8,11 28,11 30,17 6,17" fill="url(#g3)" opacity="0.8"/>
-        <polygon points="6,17 2,14 18,28" fill="url(#g2)" opacity="0.9"/>
-        <polygon points="30,17 34,14 18,28" fill="url(#g3)" opacity="0.85"/>
-        <polygon points="6,17 30,17 18,28" fill="url(#g4)" opacity="0.9"/>
-        <line x1="18" y1="11" x2="18" y2="17" stroke="rgba(255,255,255,0.5)" strokeWidth="0.5"/>
-        <line x1="8" y1="11" x2="18" y2="17" stroke="rgba(255,255,255,0.3)" strokeWidth="0.5"/>
-        <line x1="28" y1="11" x2="18" y2="17" stroke="rgba(255,255,255,0.3)" strokeWidth="0.5"/>
-        <polygon points="10,8 22,8 24,10 8,10" fill="rgba(255,255,255,0.35)"/>
-      </svg>
+    <div ref={posRef} className="fixed top-0 left-0 z-[9999] pointer-events-none hidden md:block"
+      style={{ willChange: "transform", filter: "drop-shadow(0 0 8px rgba(245,200,66,0.8)) drop-shadow(0 0 20px rgba(212,150,30,0.5))" }}>
+      <div ref={innerRef}>
+        <canvas ref={canvasRef} style={{ display: "block" }} />
       </div>
-    </>
+    </div>
   );
 }
 
