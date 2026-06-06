@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import Icon from "@/components/ui/icon";
 
 const PHOTO_URL = "https://cdn.poehali.dev/projects/6725aecc-6f9c-4bb1-9cad-3cce49e60509/files/cba1f3e8-a18b-4b75-8839-a91d2390aaba.jpg";
@@ -118,27 +118,144 @@ function useReveal() {
   return { ref, visible };
 }
 
-/* ── Custom Cursor ── */
-function CustomCursor() {
-  const dotRef = useRef<HTMLDivElement>(null);
-  const ringRef = useRef<HTMLDivElement>(null);
+/* ── Spark Trail ── */
+function SparkTrail() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   useEffect(() => {
-    let rx = 0, ry = 0;
-    const move = (e: MouseEvent) => {
-      const { clientX: x, clientY: y } = e;
-      if (dotRef.current) { dotRef.current.style.transform = `translate(${x - 4}px, ${y - 4}px)`; }
-      rx += (x - rx) * 0.12; ry += (y - ry) * 0.12;
-      if (ringRef.current) { ringRef.current.style.transform = `translate(${rx - 16}px, ${ry - 16}px)`; }
+    const canvas = canvasRef.current; if (!canvas) return;
+    const ctx = canvas.getContext("2d")!;
+    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+    window.addEventListener("resize", () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
+    const sparks: { x: number; y: number; vx: number; vy: number; life: number; maxLife: number; size: number; hue: number }[] = [];
+    let mx = -999, my = -999;
+    window.addEventListener("mousemove", e => { mx = e.clientX; my = e.clientY; });
+    let raf: number;
+    const tick = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < 3; i++) {
+        sparks.push({
+          x: mx + (Math.random() - 0.5) * 8,
+          y: my + (Math.random() - 0.5) * 8,
+          vx: (Math.random() - 0.5) * 2.5,
+          vy: (Math.random() - 0.5) * 2.5 - 0.5,
+          life: 1, maxLife: 1,
+          size: Math.random() * 3 + 1,
+          hue: 35 + Math.random() * 20,
+        });
+      }
+      for (let i = sparks.length - 1; i >= 0; i--) {
+        const s = sparks[i];
+        s.x += s.vx; s.y += s.vy; s.vy += 0.05;
+        s.life -= 0.04;
+        if (s.life <= 0) { sparks.splice(i, 1); continue; }
+        const alpha = s.life;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.size * s.life, 0, Math.PI * 2);
+        ctx.fillStyle = `hsla(${s.hue}, 90%, 65%, ${alpha})`;
+        ctx.shadowBlur = 8; ctx.shadowColor = `hsla(${s.hue}, 90%, 65%, 0.8)`;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+      raf = requestAnimationFrame(tick);
     };
-    const raf = () => { requestAnimationFrame(raf); };
-    window.addEventListener("mousemove", move);
-    return () => window.removeEventListener("mousemove", move);
+    tick();
+    return () => cancelAnimationFrame(raf);
   }, []);
+  return <canvas ref={canvasRef} className="fixed inset-0 z-[9998] pointer-events-none hidden md:block" style={{ mixBlendMode: "screen" }} />;
+}
+
+/* ── Diamond Cursor ── */
+function CustomCursor() {
+  const cursorRef = useRef<HTMLDivElement>(null);
+  const trailRef = useRef<HTMLDivElement>(null);
+  const posRef = useRef({ x: -100, y: -100 });
+  const trailPosRef = useRef({ x: -100, y: -100 });
+  const rafRef = useRef<number>(0);
+
+  useEffect(() => {
+    const move = (e: MouseEvent) => { posRef.current = { x: e.clientX, y: e.clientY }; };
+    window.addEventListener("mousemove", move);
+    const animate = () => {
+      const { x, y } = posRef.current;
+      const t = trailPosRef.current;
+      t.x += (x - t.x) * 0.1; t.y += (y - t.y) * 0.1;
+      if (cursorRef.current) cursorRef.current.style.transform = `translate(${x}px, ${y}px) rotate(45deg) translate(-50%, -50%)`;
+      if (trailRef.current) trailRef.current.style.transform = `translate(${t.x}px, ${t.y}px) rotate(45deg) translate(-50%, -50%)`;
+      rafRef.current = requestAnimationFrame(animate);
+    };
+    animate();
+    return () => { window.removeEventListener("mousemove", move); cancelAnimationFrame(rafRef.current); };
+  }, []);
+
   return (
     <>
-      <div ref={dotRef} className="fixed top-0 left-0 w-2 h-2 rounded-full z-[9999] pointer-events-none hidden md:block" style={{ background: "hsl(42 80% 55%)", transition: "transform 0.05s linear" }} />
-      <div ref={ringRef} className="fixed top-0 left-0 w-8 h-8 rounded-full border border-gold/60 z-[9999] pointer-events-none hidden md:block" style={{ transition: "transform 0.18s ease" }} />
+      {/* Inner diamond */}
+      <div ref={cursorRef} className="fixed top-0 left-0 z-[9999] pointer-events-none hidden md:block"
+        style={{ width: 14, height: 14, willChange: "transform" }}>
+        <div style={{
+          width: "100%", height: "100%",
+          background: "linear-gradient(135deg, #fff9e0 0%, #f5c842 40%, #d4891a 70%, #fff3b0 100%)",
+          boxShadow: "0 0 6px rgba(245,200,66,0.9), 0 0 14px rgba(212,150,30,0.6), inset 0 0 4px rgba(255,255,255,0.5)",
+          clipPath: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)",
+        }} />
+        {/* facet lines */}
+        <div style={{ position: "absolute", inset: 0, clipPath: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)", overflow: "hidden" }}>
+          <div style={{ position: "absolute", top: "50%", left: 0, right: 0, height: 1, background: "rgba(255,255,255,0.6)" }} />
+          <div style={{ position: "absolute", left: "50%", top: 0, bottom: 0, width: 1, background: "rgba(255,255,255,0.6)" }} />
+        </div>
+      </div>
+      {/* Trailing ring diamond */}
+      <div ref={trailRef} className="fixed top-0 left-0 z-[9997] pointer-events-none hidden md:block"
+        style={{ width: 30, height: 30, willChange: "transform" }}>
+        <div style={{
+          width: "100%", height: "100%",
+          border: "1.5px solid rgba(245,200,66,0.5)",
+          clipPath: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)",
+          boxShadow: "0 0 10px rgba(212,170,90,0.3)",
+        }} />
+      </div>
     </>
+  );
+}
+
+/* ── Tilt Card ── */
+function TiltCard({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const el = ref.current; if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    el.style.transform = `perspective(600px) rotateY(${x * 12}deg) rotateX(${-y * 12}deg) translateZ(6px)`;
+  };
+  const handleLeave = () => { if (ref.current) ref.current.style.transform = "perspective(600px) rotateY(0deg) rotateX(0deg) translateZ(0px)"; };
+  return (
+    <div ref={ref} className={`tilt-card ${className}`} onMouseMove={handleMove} onMouseLeave={handleLeave} style={{ transition: "transform 0.15s ease" }}>
+      {children}
+    </div>
+  );
+}
+
+/* ── Ripple Button ── */
+function RippleBtn({ children, className = "", onClick, style, disabled = false, type = "button" }: {
+  children: React.ReactNode; className?: string; onClick?: () => void;
+  style?: React.CSSProperties; disabled?: boolean; type?: "button" | "submit";
+}) {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const btn = e.currentTarget;
+    const circle = document.createElement("span");
+    const diameter = Math.max(btn.clientWidth, btn.clientHeight);
+    const rect = btn.getBoundingClientRect();
+    circle.className = "ripple-effect";
+    circle.style.cssText = `width:${diameter}px;height:${diameter}px;left:${e.clientX - rect.left - diameter/2}px;top:${e.clientY - rect.top - diameter/2}px`;
+    btn.querySelector(".ripple-effect")?.remove();
+    btn.appendChild(circle);
+    if (onClick) onClick();
+  };
+  return (
+    <button type={type} className={`ripple-btn ${className}`} onClick={handleClick} style={style} disabled={disabled}>
+      {children}
+    </button>
   );
 }
 
@@ -302,9 +419,154 @@ export default function Index() {
           opacity: 0;
           animation: countUp 0.8s ease forwards;
         }
+
+        /* ── Aurora background ── */
+        @keyframes aurora1 {
+          0%, 100% { transform: translateX(-20%) translateY(0%) rotate(0deg) scale(1); }
+          33% { transform: translateX(10%) translateY(-15%) rotate(15deg) scale(1.1); }
+          66% { transform: translateX(-5%) translateY(10%) rotate(-8deg) scale(0.95); }
+        }
+        @keyframes aurora2 {
+          0%, 100% { transform: translateX(20%) translateY(10%) rotate(0deg) scale(1); }
+          33% { transform: translateX(-15%) translateY(-5%) rotate(-12deg) scale(1.15); }
+          66% { transform: translateX(8%) translateY(15%) rotate(6deg) scale(0.9); }
+        }
+        .aurora-1 { animation: aurora1 18s ease-in-out infinite; }
+        .aurora-2 { animation: aurora2 22s ease-in-out infinite; }
+
+        /* ── Glitch text ── */
+        @keyframes glitch1 {
+          0%, 90%, 100% { clip-path: inset(0 0 100% 0); transform: translate(0); }
+          92% { clip-path: inset(20% 0 60% 0); transform: translate(-4px, 2px); }
+          94% { clip-path: inset(50% 0 30% 0); transform: translate(4px, -2px); }
+          96% { clip-path: inset(70% 0 10% 0); transform: translate(-2px, 1px); }
+          98% { clip-path: inset(10% 0 80% 0); transform: translate(3px, -1px); }
+        }
+        @keyframes glitch2 {
+          0%, 90%, 100% { clip-path: inset(0 0 100% 0); transform: translate(0); }
+          93% { clip-path: inset(40% 0 40% 0); transform: translate(4px, -2px); color: #ffd700; }
+          95% { clip-path: inset(15% 0 70% 0); transform: translate(-3px, 1px); color: #ff9900; }
+          97% { clip-path: inset(80% 0 5% 0); transform: translate(2px, 3px); color: #ffd700; }
+        }
+        .glitch-wrap { position: relative; display: inline-block; }
+        .glitch-wrap::before, .glitch-wrap::after {
+          content: attr(data-text);
+          position: absolute; top: 0; left: 0;
+          font-family: inherit; font-size: inherit; font-weight: inherit; font-style: inherit;
+          color: inherit;
+        }
+        .glitch-wrap::before { animation: glitch1 8s infinite; color: #d4aa5a; }
+        .glitch-wrap::after { animation: glitch2 8s infinite 0.1s; color: #ffcc44; }
+
+        /* ── Tilt card ── */
+        .tilt-card { transform-style: preserve-3d; transition: transform 0.15s ease; }
+        .tilt-card-inner { transform: translateZ(20px); }
+
+        /* ── Ripple ── */
+        .ripple-btn { position: relative; overflow: hidden; }
+        .ripple-btn .ripple-effect {
+          position: absolute; border-radius: 50%;
+          background: rgba(255,255,255,0.25);
+          transform: scale(0);
+          animation: rippleAnim 0.7s linear;
+          pointer-events: none;
+        }
+        @keyframes rippleAnim {
+          to { transform: scale(4); opacity: 0; }
+        }
+
+        /* ── Magnetic hover ── */
+        .mag-btn { transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+
+        /* ── Number counter ── */
+        @keyframes flipNum {
+          from { transform: rotateX(-90deg) translateY(-20px); opacity: 0; }
+          to { transform: rotateX(0deg) translateY(0); opacity: 1; }
+        }
+        .flip-num { animation: flipNum 0.6s cubic-bezier(0.16,1,0.3,1) forwards; perspective: 400px; }
+
+        /* ── Scan line sweep ── */
+        @keyframes scanSweep {
+          0% { top: -10%; opacity: 0.6; }
+          100% { top: 110%; opacity: 0; }
+        }
+        .scan-line {
+          position: absolute; left: 0; right: 0; height: 2px;
+          background: linear-gradient(90deg, transparent, rgba(212,170,90,0.4), transparent);
+          animation: scanSweep 4s linear infinite;
+          pointer-events: none;
+          z-index: 5;
+        }
+
+        /* ── Gold dust ── */
+        @keyframes dustFloat {
+          0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+          10% { opacity: 0.7; }
+          90% { opacity: 0.5; }
+          100% { transform: translateY(-20px) rotate(720deg); opacity: 0; }
+        }
+        .dust-particle {
+          position: absolute; width: 3px; height: 3px;
+          background: rgba(212,180,80,0.8);
+          animation: dustFloat linear infinite;
+          clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+        }
+
+        /* ── Section divider wave ── */
+        .wave-divider { position: relative; overflow: hidden; }
+        .wave-divider::after {
+          content: '';
+          position: absolute; bottom: -1px; left: 0; right: 0; height: 60px;
+          background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 60'%3E%3Cpath fill='%23fdf8ef' d='M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z'/%3E%3C/svg%3E") no-repeat bottom;
+          background-size: cover;
+          pointer-events: none;
+        }
+
+        /* ── Spotlight hover ── */
+        .spotlight-card {
+          position: relative;
+          overflow: hidden;
+        }
+        .spotlight-card::before {
+          content: '';
+          position: absolute;
+          width: 200px; height: 200px;
+          background: radial-gradient(circle, rgba(212,170,90,0.12) 0%, transparent 70%);
+          border-radius: 50%;
+          pointer-events: none;
+          transform: translate(-50%, -50%);
+          transition: opacity 0.3s;
+          opacity: 0;
+          z-index: 0;
+        }
+        .spotlight-card:hover::before { opacity: 1; }
+
+        /* ── Text gradient reveal ── */
+        @keyframes gradReveal {
+          from { background-position: 100% 0; }
+          to { background-position: 0% 0; }
+        }
+        .grad-reveal {
+          background: linear-gradient(90deg, hsl(32 60% 18%) 50%, transparent 50%);
+          background-size: 200% 100%;
+          background-clip: text;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+        .grad-reveal.visible {
+          animation: gradReveal 1s ease forwards;
+        }
+
+        /* ── Floating badge ── */
+        @keyframes badgeFloat {
+          0%, 100% { transform: translateY(0) rotate(-2deg); }
+          50% { transform: translateY(-8px) rotate(2deg); }
+        }
+        .badge-float { animation: badgeFloat 4s ease-in-out infinite; }
       `}</style>
 
       <CustomCursor />
+      <SparkTrail />
 
       <div className="min-h-screen bg-background font-body text-foreground" style={{ cursor: "none" }}>
 
@@ -351,6 +613,29 @@ export default function Index() {
           <ParticleCanvas />
           <FloatingOrbs />
 
+          {/* Aurora layers */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="aurora-1 absolute w-[900px] h-[500px] rounded-full opacity-30"
+              style={{ top: "10%", left: "-10%", background: "radial-gradient(ellipse, rgba(212,150,30,0.25) 0%, rgba(180,100,20,0.1) 40%, transparent 70%)", filter: "blur(60px)" }} />
+            <div className="aurora-2 absolute w-[700px] h-[400px] rounded-full opacity-25"
+              style={{ bottom: "5%", right: "-5%", background: "radial-gradient(ellipse, rgba(255,200,80,0.2) 0%, rgba(200,130,30,0.08) 40%, transparent 70%)", filter: "blur(50px)" }} />
+          </div>
+
+          {/* Gold dust particles */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            {Array.from({ length: 12 }).map((_, i) => (
+              <div key={i} className="dust-particle" style={{
+                left: `${(i * 8.3) % 100}%`,
+                animationDuration: `${8 + (i % 5) * 2}s`,
+                animationDelay: `${i * 0.8}s`,
+                width: i % 3 === 0 ? 4 : 2, height: i % 3 === 0 ? 4 : 2,
+              }} />
+            ))}
+          </div>
+
+          {/* Scan line */}
+          <div className="scan-line" />
+
           {/* Decorative rotating rings */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
             <div className="rotate-slow w-[700px] h-[700px] rounded-full border border-gold/5" />
@@ -376,7 +661,7 @@ export default function Index() {
               <h1 className="font-display text-5xl md:text-7xl font-light leading-[1.05] mb-8">
                 <span className="hero-title-word text-white" style={{ animationDelay: "0.3s" }}>Меняю</span>
                 <br />
-                <span className="hero-title-word shimmer-text italic text-6xl md:text-8xl" style={{ animationDelay: "0.5s" }}>судьбы</span>
+                <span className="hero-title-word shimmer-text italic text-6xl md:text-8xl glitch-wrap" data-text="судьбы" style={{ animationDelay: "0.5s" }}>судьбы</span>
                 <br />
                 <span className="hero-title-word text-white" style={{ animationDelay: "0.7s" }}>людей</span>
               </h1>
@@ -386,14 +671,15 @@ export default function Index() {
                 Индивидуальный подход к каждому клиенту.
               </p>
               <div className="flex flex-col sm:flex-row gap-4" style={{ opacity: 0, animation: "fadeSlideUp 0.9s 1.1s ease forwards" }}>
-                <button onClick={() => scrollTo("booking")}
-                  className="btn-gold-fill relative bg-gradient-to-r from-amber-600 to-yellow-500 text-white text-xs tracking-widest uppercase px-8 py-4 font-body font-light glow-border hover:scale-105 transition-transform duration-300">
+                <RippleBtn onClick={() => scrollTo("booking")}
+                  className="btn-gold-fill mag-btn relative text-white text-xs tracking-widest uppercase px-8 py-4 font-body font-light glow-border"
+                  style={{ background: "linear-gradient(135deg, hsl(32 65% 28%), hsl(38 75% 42%), hsl(42 80% 48%))" }}>
                   Записаться на консультацию
-                </button>
-                <button onClick={() => scrollTo("about")}
-                  className="border border-white/20 text-white text-xs tracking-widest uppercase px-8 py-4 hover:border-gold/50 hover:bg-white/5 transition-all font-body font-light duration-300">
+                </RippleBtn>
+                <RippleBtn onClick={() => scrollTo("about")}
+                  className="mag-btn border border-white/20 text-white text-xs tracking-widest uppercase px-8 py-4 hover:border-gold/50 hover:bg-white/5 transition-all font-body font-light duration-300">
                   Узнать больше
-                </button>
+                </RippleBtn>
               </div>
             </div>
 
@@ -418,6 +704,14 @@ export default function Index() {
                 {/* Scanline overlay */}
                 <div className="absolute inset-0 z-20 pointer-events-none"
                   style={{ backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.03) 3px, rgba(0,0,0,0.03) 4px)" }} />
+                {/* Floating badges */}
+                <div className="badge-float absolute -left-16 top-1/4 z-30 hidden md:block"
+                  style={{ background: "rgba(0,0,0,0.5)", backdropFilter: "blur(10px)", border: "1px solid rgba(212,170,90,0.3)", padding: "8px 14px", whiteSpace: "nowrap" }}>
+                  <p className="text-gold text-xs font-body tracking-widest">✦ 10+ лет</p>
+                </div>
+                <div className="badge-float absolute -right-14 bottom-1/3 z-30 hidden md:block" style={{ animationDelay: "2s", background: "rgba(0,0,0,0.5)", backdropFilter: "blur(10px)", border: "1px solid rgba(212,170,90,0.3)", padding: "8px 14px", whiteSpace: "nowrap" }}>
+                  <p className="text-gold text-xs font-body tracking-widest">✦ 500+ клиентов</p>
+                </div>
               </div>
             </div>
           </div>
@@ -513,23 +807,26 @@ export default function Index() {
             <div className="grid md:grid-cols-2 gap-4">
               {services.map((s, i) => (
                 <Reveal key={i} delay={i * 120}>
-                  <div className="service-card bg-white border border-amber-100 p-8 group relative overflow-hidden cursor-pointer">
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                      style={{ background: "linear-gradient(135deg, rgba(212,170,90,0.04) 0%, transparent 60%)" }} />
-                    <div className="absolute top-0 left-0 w-0 h-0.5 bg-gradient-to-r from-gold to-amber-400 group-hover:w-full transition-all duration-500" />
-                    <div className="flex items-start justify-between mb-4 relative z-10">
-                      <span className="font-display text-gold text-5xl font-light opacity-15 group-hover:opacity-40 transition-opacity duration-300 select-none">
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-                      <span className="font-display text-2xl font-light" style={{ color: "hsl(32 60% 22%)" }}>{s.price}</span>
+                  <TiltCard>
+                    <div className="spotlight-card service-card bg-white border border-amber-100 p-8 group relative overflow-hidden cursor-pointer h-full">
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                        style={{ background: "linear-gradient(135deg, rgba(212,170,90,0.05) 0%, transparent 60%)" }} />
+                      <div className="absolute top-0 left-0 w-0 h-0.5 bg-gradient-to-r from-gold to-amber-400 group-hover:w-full transition-all duration-500" />
+                      <div className="absolute bottom-0 right-0 w-0 h-0.5 bg-gradient-to-l from-gold/40 to-transparent group-hover:w-full transition-all duration-700" />
+                      <div className="flex items-start justify-between mb-4 relative z-10">
+                        <span className="font-display text-gold text-5xl font-light opacity-15 group-hover:opacity-50 transition-opacity duration-300 select-none">
+                          {String(i + 1).padStart(2, "0")}
+                        </span>
+                        <span className="font-display text-2xl font-light" style={{ color: "hsl(32 60% 22%)" }}>{s.price}</span>
+                      </div>
+                      <h3 className="font-display text-2xl font-light mb-3 relative z-10" style={{ color: "hsl(32 60% 18%)" }}>{s.title}</h3>
+                      <p className="text-sm leading-relaxed font-body font-light mb-4 relative z-10" style={{ color: "hsl(30 15% 45%)" }}>{s.desc}</p>
+                      <div className="flex items-center gap-2 text-gold text-xs tracking-widest uppercase font-body font-light relative z-10">
+                        <Icon name="Clock" size={12} />
+                        <span>{s.duration}</span>
+                      </div>
                     </div>
-                    <h3 className="font-display text-2xl font-light mb-3 relative z-10" style={{ color: "hsl(32 60% 18%)" }}>{s.title}</h3>
-                    <p className="text-sm leading-relaxed font-body font-light mb-4 relative z-10" style={{ color: "hsl(30 15% 45%)" }}>{s.desc}</p>
-                    <div className="flex items-center gap-2 text-gold text-xs tracking-widest uppercase font-body font-light relative z-10">
-                      <Icon name="Clock" size={12} />
-                      <span>{s.duration}</span>
-                    </div>
-                  </div>
+                  </TiltCard>
                 </Reveal>
               ))}
             </div>
@@ -706,12 +1003,12 @@ export default function Index() {
                         <span style={{ color: "hsl(32 60% 22%)" }}>{selectedDay} {MONTHS[calMonth]}, {selectedTime}</span>
                       </div>
                     )}
-                    <button type="submit"
+                    <RippleBtn type="submit"
                       disabled={!selectedDay || !selectedTime || !form.name || !form.phone}
                       className="btn-gold-fill relative text-white text-xs tracking-widest uppercase px-8 py-4 font-body font-light disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 hover:scale-[1.02] mt-2"
                       style={{ background: "linear-gradient(135deg, hsl(32 65% 28%), hsl(38 75% 42%), hsl(42 80% 48%))" }}>
                       Отправить заявку
-                    </button>
+                    </RippleBtn>
                     <p className="text-xs font-body font-light" style={{ color: "hsl(30 10% 65%)" }}>
                       Нажимая кнопку, вы соглашаетесь с обработкой персональных данных
                     </p>
@@ -782,11 +1079,11 @@ export default function Index() {
                 Запишитесь на первую консультацию. Это безопасно, конфиденциально
                 и может стать началом новой главы вашей жизни.
               </p>
-              <button onClick={() => scrollTo("booking")}
-                className="btn-gold-fill relative text-white text-xs tracking-widest uppercase px-12 py-5 font-body font-light hover:scale-105 transition-transform duration-300 glow-border"
+              <RippleBtn onClick={() => scrollTo("booking")}
+                className="btn-gold-fill mag-btn relative text-white text-xs tracking-widest uppercase px-12 py-5 font-body font-light glow-border"
                 style={{ background: "linear-gradient(135deg, hsl(32 65% 28%), hsl(38 75% 42%), hsl(42 80% 48%))" }}>
                 Записаться на консультацию
-              </button>
+              </RippleBtn>
             </Reveal>
           </div>
         </section>
