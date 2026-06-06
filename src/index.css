@@ -129,4 +129,57 @@
     background: hsl(var(--gold));
     margin: 16px auto 0;
   }
+
+  /* ── DEPTH SYSTEM ── */
+  .glass {
+    background: rgba(255, 255, 255, 0.04) !important;
+    backdrop-filter: blur(20px) !important;
+    border: 1px solid rgba(212, 170, 90, 0.14) !important;
+    box-shadow:
+      0 2px 4px rgba(0, 0, 0, 0.3),
+      0 8px 24px rgba(0, 0, 0, 0.35),
+      0 24px 64px rgba(0, 0, 0, 0.25),
+      inset 0 1px 0 rgba(255, 220, 100, 0.08),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.2) !important;
+  }
+
+  .glass:hover {
+    box-shadow:
+      0 4px 8px rgba(0, 0, 0, 0.35),
+      0 16px 40px rgba(0, 0, 0, 0.4),
+      0 32px 80px rgba(0, 0, 0, 0.3),
+      0 0 40px rgba(212, 170, 90, 0.06),
+      inset 0 1px 0 rgba(255, 220, 100, 0.12),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.25) !important;
+    border-color: rgba(212, 170, 90, 0.22) !important;
+  }
+
+  .gold-grad {
+    background: linear-gradient(
+      135deg,
+      hsl(42 90% 58%) 0%,
+      hsl(38 85% 45%) 50%,
+      hsl(34 80% 38%) 100%
+    ) !important;
+    box-shadow:
+      0 4px 16px rgba(180, 120, 20, 0.4),
+      0 1px 0 rgba(255, 220, 100, 0.3) inset !important;
+  }
+
+  .glow-btn {
+    box-shadow:
+      0 4px 20px rgba(180, 120, 20, 0.35),
+      0 0 40px rgba(180, 120, 20, 0.15),
+      0 1px 0 rgba(255, 220, 100, 0.25) inset !important;
+    transition:
+      box-shadow 0.3s ease,
+      filter 0.3s ease !important;
+  }
+
+  .glow-btn:hover {
+    box-shadow:
+      0 6px 30px rgba(180, 120, 20, 0.55),
+      0 0 60px rgba(180, 120, 20, 0.25),
+      0 1px 0 rgba(255, 220, 100, 0.3) inset !important;
+  }
 }

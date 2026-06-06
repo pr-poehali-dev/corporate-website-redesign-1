@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import Icon from "@/components/ui/icon";
 
-const PHOTO_URL = "https://thb.tildacdn.com/tild3337-3066-4432-b163-363536663837/-/resize/504x/post0101.png";
+const PHOTO_URL = "https://cdn.poehali.dev/projects/6725aecc-6f9c-4bb1-9cad-3cce49e60509/files/0dc71764-d8aa-4cdd-a077-ac546ecdeec8.jpg";
 
 const services = [
   { title: "Индивидуальная консультация", desc: "Работа с тревогой, страхами, депрессией, кризисными состояниями. Глубокий анализ и выработка стратегии.", duration: "60 мин", price: "5 000 ₽", icon: "Brain" },
@@ -474,30 +474,43 @@ export default function Index() {
 
             {/* Right — Photo */}
             <div className="flex justify-center lg:justify-end" style={{ opacity: 0, animation: "fadeIn 1s .4s ease forwards" }}>
-              <div className="relative float-y">
-                {/* Glow halo */}
-                <div className="absolute inset-0 scale-125 blur-3xl rounded-full pointer-events-none"
-                  style={{ background: "radial-gradient(circle,rgba(212,170,90,0.22) 0%,transparent 70%)" }} />
-                {/* Corner brackets */}
-                {["-top-3 -left-3 border-t-2 border-l-2","-top-3 -right-3 border-t-2 border-r-2","-bottom-3 -left-3 border-b-2 border-l-2","-bottom-3 -right-3 border-b-2 border-r-2"].map((cls,i) => (
-                  <div key={i} className={`absolute ${cls} w-7 h-7 border-gold/70`} />
-                ))}
+              <div className="relative float-y" style={{ perspective: "1000px" }}>
+
+                {/* Deep ambient glow layers */}
+                <div className="absolute pointer-events-none" style={{ inset: "-60px", background: "radial-gradient(ellipse at 50% 60%, rgba(212,170,90,0.28) 0%, rgba(180,110,20,0.12) 40%, transparent 70%)", filter: "blur(40px)", borderRadius: "50%" }} />
+                <div className="absolute pointer-events-none" style={{ inset: "-20px -30px", background: "radial-gradient(ellipse at 30% 40%, rgba(255,220,100,0.12) 0%, transparent 60%)", filter: "blur(25px)" }} />
+
+                {/* Photo frame with 3D depth */}
+                <div className="relative" style={{
+                  boxShadow: "0 4px 20px rgba(0,0,0,0.5), 0 20px 60px rgba(0,0,0,0.6), 0 40px 100px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,220,100,0.15)",
+                  transform: "rotateY(-4deg) rotateX(2deg)",
+                  transformStyle: "preserve-3d",
+                }}>
+                  {/* Gold frame border */}
+                  <div className="absolute inset-0 z-30 pointer-events-none" style={{ border: "1px solid rgba(212,170,90,0.35)", boxShadow: "inset 0 0 30px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,220,100,0.2)" }} />
+
+                  {/* Corner brackets */}
+                  {["-top-3 -left-3 border-t-2 border-l-2","-top-3 -right-3 border-t-2 border-r-2","-bottom-3 -left-3 border-b-2 border-l-2","-bottom-3 -right-3 border-b-2 border-r-2"].map((cls,i) => (
+                    <div key={i} className={`absolute ${cls} w-8 h-8 z-40`} style={{ borderColor: "rgba(212,170,90,0.8)", filter: "drop-shadow(0 0 4px rgba(212,170,90,0.5))" }} />
+                  ))}
+
+                  <img src={PHOTO_URL} alt="Олеся Гудкова"
+                    className="relative z-10 block object-cover transition-all duration-1000"
+                    style={{ width: "min(300px,72vw)", display: "block", filter: "contrast(1.08) brightness(0.97)" }} />
+
+                  {/* Light sweep overlay */}
+                  <div className="absolute inset-0 z-20 pointer-events-none" style={{ background: "linear-gradient(135deg, rgba(255,220,100,0.08) 0%, transparent 40%, rgba(0,0,0,0.15) 100%)" }} />
+                </div>
+
                 {/* Spinning rings */}
-                <div className="rot-l absolute -inset-8 rounded-full pointer-events-none" style={{ border: "1px solid rgba(212,170,90,0.12)" }} />
-                <div className="rot-r absolute -inset-14 rounded-full pointer-events-none" style={{ border: "1px dashed rgba(212,170,90,0.07)" }} />
-
-                <img src={PHOTO_URL} alt="Олеся Гудкова"
-                  className="relative z-10 object-cover grayscale hover:grayscale-0 transition-all duration-1000"
-                  style={{ width: "min(280px,70vw)", filter: "sepia(15%) contrast(1.05)" }} />
-
-                {/* Scanlines */}
-                <div className="absolute inset-0 z-20 pointer-events-none" style={{ backgroundImage: "repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.025) 3px,rgba(0,0,0,0.025) 4px)" }} />
+                <div className="rot-l absolute -inset-10 rounded-full pointer-events-none" style={{ border: "1px solid rgba(212,170,90,0.14)", filter: "blur(0.5px)" }} />
+                <div className="rot-r absolute -inset-16 rounded-full pointer-events-none" style={{ border: "1px dashed rgba(212,170,90,0.08)" }} />
 
                 {/* Floating badges */}
-                <div className="badge absolute -left-20 top-1/4 z-30 hidden lg:block glass px-3.5 py-2 rounded-lg">
+                <div className="badge absolute -left-24 top-1/4 z-30 hidden lg:block px-4 py-2.5" style={{ background: "rgba(20,12,3,0.85)", backdropFilter: "blur(16px)", border: "1px solid rgba(212,170,90,0.25)", boxShadow: "0 8px 32px rgba(0,0,0,0.4), 0 0 12px rgba(212,170,90,0.1)", borderRadius: 2 }}>
                   <p className="text-xs font-body tracking-widest" style={{ color: "hsl(42 80% 65%)" }}>✦ 10+ лет</p>
                 </div>
-                <div className="badge absolute -right-20 bottom-1/3 z-30 hidden lg:block glass px-3.5 py-2 rounded-lg" style={{ animationDelay: "2.1s" }}>
+                <div className="badge absolute -right-24 bottom-1/3 z-30 hidden lg:block px-4 py-2.5" style={{ animationDelay: "2.1s", background: "rgba(20,12,3,0.85)", backdropFilter: "blur(16px)", border: "1px solid rgba(212,170,90,0.25)", boxShadow: "0 8px 32px rgba(0,0,0,0.4), 0 0 12px rgba(212,170,90,0.1)", borderRadius: 2 }}>
                   <p className="text-xs font-body tracking-widest" style={{ color: "hsl(42 80% 65%)" }}>✦ 500+ клиентов</p>
                 </div>
               </div>
