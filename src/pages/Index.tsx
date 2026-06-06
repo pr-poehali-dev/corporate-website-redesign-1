@@ -408,6 +408,18 @@ export default function Index() {
         <section id="hero" className="relative min-h-screen flex items-center overflow-hidden"
           style={{ background: "linear-gradient(145deg, hsl(28 70% 10%) 0%, hsl(33 65% 17%) 45%, hsl(28 70% 10%) 100%)" }}>
 
+          {/* Background video */}
+          <video
+            autoPlay muted loop playsInline
+            className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+            style={{ opacity: 0.22, mixBlendMode: "luminosity" }}
+          >
+            <source src="https://videos.pexels.com/video-files/3129671/3129671-uhd_2560_1440_30fps.mp4" type="video/mp4" />
+          </video>
+
+          {/* Dark overlay over video */}
+          <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(145deg, rgba(18,8,2,0.72) 0%, rgba(30,16,4,0.55) 50%, rgba(18,8,2,0.72) 100%)" }} />
+
           <ParticleCanvas count={90} />
 
           {/* Aurora */}
