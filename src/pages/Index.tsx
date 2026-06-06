@@ -65,36 +65,7 @@ function ParticleCanvas({ count = 80 }: { count?: number }) {
   return <canvas ref={ref} className="absolute inset-0 w-full h-full pointer-events-none" />;
 }
 
-/* ═══ SPARK TRAIL ═══ */
-function SparkTrail() {
-  const ref = useRef<HTMLCanvasElement>(null);
-  useEffect(() => {
-    const c = ref.current; if (!c) return;
-    const ctx = c.getContext("2d")!;
-    c.width = window.innerWidth; c.height = window.innerHeight;
-    window.addEventListener("resize", () => { c.width = window.innerWidth; c.height = window.innerHeight; });
-    type Spark = { x: number; y: number; vx: number; vy: number; life: number; size: number; hue: number };
-    const sparks: Spark[] = [];
-    let mx = -999, my = -999;
-    window.addEventListener("mousemove", e => { mx = e.clientX; my = e.clientY; });
-    let raf: number;
-    const tick = () => {
-      ctx.clearRect(0, 0, c.width, c.height);
-      for (let i = 0; i < 2; i++) sparks.push({ x: mx + (Math.random()-.5)*6, y: my + (Math.random()-.5)*6, vx: (Math.random()-.5)*2, vy: (Math.random()-.5)*2-.4, life: 1, size: Math.random()*2.5+0.5, hue: 35+Math.random()*20 });
-      for (let i = sparks.length - 1; i >= 0; i--) {
-        const s = sparks[i]; s.x += s.vx; s.y += s.vy; s.vy += 0.04; s.life -= 0.035;
-        if (s.life <= 0) { sparks.splice(i, 1); continue; }
-        ctx.beginPath(); ctx.arc(s.x, s.y, s.size * s.life, 0, Math.PI * 2);
-        ctx.fillStyle = `hsla(${s.hue},90%,65%,${s.life})`; ctx.shadowBlur = 6;
-        ctx.shadowColor = `hsla(${s.hue},90%,65%,0.8)`; ctx.fill(); ctx.shadowBlur = 0;
-      }
-      raf = requestAnimationFrame(tick);
-    };
-    tick();
-    return () => cancelAnimationFrame(raf);
-  }, []);
-  return <canvas ref={ref} className="fixed inset-0 z-[9998] pointer-events-none hidden md:block" style={{ mixBlendMode: "screen" }} />;
-}
+
 
 /* ═══ DIAMOND CURSOR ═══ */
 function CustomCursor() {
@@ -292,7 +263,6 @@ export default function Index() {
       `}</style>
 
       <CustomCursor />
-      <SparkTrail />
 
       <div className="min-h-screen font-body" style={{ background: "hsl(30 20% 97%)" }}>
 
