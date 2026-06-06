@@ -166,10 +166,10 @@ function SparkTrail() {
 
 /* ── Diamond Cursor ── */
 function CustomCursor() {
-  const cursorRef = useRef<HTMLDivElement>(null);
+  const cursorRef = useRef<SVGSVGElement>(null);
   const trailRef = useRef<HTMLDivElement>(null);
-  const posRef = useRef({ x: -100, y: -100 });
-  const trailPosRef = useRef({ x: -100, y: -100 });
+  const posRef = useRef({ x: -200, y: -200 });
+  const trailPosRef = useRef({ x: -200, y: -200 });
   const rafRef = useRef<number>(0);
 
   useEffect(() => {
@@ -178,9 +178,9 @@ function CustomCursor() {
     const animate = () => {
       const { x, y } = posRef.current;
       const t = trailPosRef.current;
-      t.x += (x - t.x) * 0.1; t.y += (y - t.y) * 0.1;
-      if (cursorRef.current) cursorRef.current.style.transform = `translate(${x}px, ${y}px) rotate(45deg) translate(-50%, -50%)`;
-      if (trailRef.current) trailRef.current.style.transform = `translate(${t.x}px, ${t.y}px) rotate(45deg) translate(-50%, -50%)`;
+      t.x += (x - t.x) * 0.08; t.y += (y - t.y) * 0.08;
+      if (cursorRef.current) cursorRef.current.style.transform = `translate(${x}px, ${y}px)`;
+      if (trailRef.current) trailRef.current.style.transform = `translate(${t.x - 20}px, ${t.y - 20}px)`;
       rafRef.current = requestAnimationFrame(animate);
     };
     animate();
@@ -189,31 +189,67 @@ function CustomCursor() {
 
   return (
     <>
-      {/* Inner diamond */}
-      <div ref={cursorRef} className="fixed top-0 left-0 z-[9999] pointer-events-none hidden md:block"
-        style={{ width: 14, height: 14, willChange: "transform" }}>
-        <div style={{
-          width: "100%", height: "100%",
-          background: "linear-gradient(135deg, #fff9e0 0%, #f5c842 40%, #d4891a 70%, #fff3b0 100%)",
-          boxShadow: "0 0 6px rgba(245,200,66,0.9), 0 0 14px rgba(212,150,30,0.6), inset 0 0 4px rgba(255,255,255,0.5)",
-          clipPath: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)",
-        }} />
-        {/* facet lines */}
-        <div style={{ position: "absolute", inset: 0, clipPath: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)", overflow: "hidden" }}>
-          <div style={{ position: "absolute", top: "50%", left: 0, right: 0, height: 1, background: "rgba(255,255,255,0.6)" }} />
-          <div style={{ position: "absolute", left: "50%", top: 0, bottom: 0, width: 1, background: "rgba(255,255,255,0.6)" }} />
-        </div>
-      </div>
-      {/* Trailing ring diamond */}
+      {/* Side-view diamond SVG */}
+      <svg
+        ref={cursorRef}
+        className="fixed top-0 left-0 z-[9999] pointer-events-none hidden md:block"
+        width="36" height="32"
+        viewBox="0 0 36 32"
+        style={{ willChange: "transform", marginLeft: 4, marginTop: -16, filter: "drop-shadow(0 0 6px rgba(245,200,66,0.9)) drop-shadow(0 0 14px rgba(212,150,30,0.6))" }}
+      >
+        <defs>
+          <linearGradient id="dTop" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#fff9d0" />
+            <stop offset="40%" stopColor="#f5d060" />
+            <stop offset="100%" stopColor="#c8860a" />
+          </linearGradient>
+          <linearGradient id="dLeft" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#e8b830" />
+            <stop offset="100%" stopColor="#8a5500" />
+          </linearGradient>
+          <linearGradient id="dRight" x1="100%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#ffeaa0" />
+            <stop offset="100%" stopColor="#b07010" />
+          </linearGradient>
+          <linearGradient id="dBot" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#d4960a" />
+            <stop offset="100%" stopColor="#7a4400" />
+          </linearGradient>
+        </defs>
+        {/* Crown (top flat face) */}
+        <polygon points="8,11 28,11 32,6 4,6" fill="url(#dTop)" opacity="0.95" />
+        {/* Crown left facet */}
+        <polygon points="4,6 8,11 2,14" fill="url(#dLeft)" opacity="0.85" />
+        {/* Crown right facet */}
+        <polygon points="32,6 28,11 34,14" fill="url(#dRight)" opacity="0.9" />
+        {/* Girdle left */}
+        <polygon points="2,14 8,11 6,17" fill="#c8860a" opacity="0.7" />
+        {/* Girdle right */}
+        <polygon points="34,14 28,11 30,17" fill="#f0c040" opacity="0.7" />
+        {/* Pavilion top */}
+        <polygon points="8,11 28,11 30,17 6,17" fill="url(#dRight)" opacity="0.8" />
+        {/* Pavilion left */}
+        <polygon points="6,17 2,14 18,28" fill="url(#dLeft)" opacity="0.9" />
+        {/* Pavilion right */}
+        <polygon points="30,17 34,14 18,28" fill="url(#dRight)" opacity="0.85" />
+        {/* Pavilion center */}
+        <polygon points="6,17 30,17 18,28" fill="url(#dBot)" opacity="0.9" />
+        {/* Inner sparkle lines */}
+        <line x1="18" y1="11" x2="18" y2="17" stroke="rgba(255,255,255,0.5)" strokeWidth="0.5" />
+        <line x1="8" y1="11" x2="18" y2="17" stroke="rgba(255,255,255,0.3)" strokeWidth="0.5" />
+        <line x1="28" y1="11" x2="18" y2="17" stroke="rgba(255,255,255,0.3)" strokeWidth="0.5" />
+        {/* Top highlight */}
+        <polygon points="10,8 22,8 24,10 8,10" fill="rgba(255,255,255,0.35)" />
+      </svg>
+
+      {/* Trailing soft glow ring */}
       <div ref={trailRef} className="fixed top-0 left-0 z-[9997] pointer-events-none hidden md:block"
-        style={{ width: 30, height: 30, willChange: "transform" }}>
-        <div style={{
-          width: "100%", height: "100%",
-          border: "1.5px solid rgba(245,200,66,0.5)",
-          clipPath: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)",
-          boxShadow: "0 0 10px rgba(212,170,90,0.3)",
+        style={{ width: 40, height: 40, willChange: "transform",
+          borderRadius: "50%",
+          border: "1px solid rgba(245,200,66,0.25)",
+          boxShadow: "0 0 12px rgba(212,170,90,0.15)",
+          background: "radial-gradient(circle, rgba(245,200,66,0.06) 0%, transparent 70%)",
         }} />
-      </div>
     </>
   );
 }
