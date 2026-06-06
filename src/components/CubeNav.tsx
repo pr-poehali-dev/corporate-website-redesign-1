@@ -152,6 +152,7 @@ export default function CubeNav({ faces, currentFace, onFaceChange }: Props) {
                   : "inset 0 1px 0 rgba(255,220,100,0.05)",
                 background: "rgba(18,10,2,0.92)",
                 backdropFilter: "blur(20px)",
+                pointerEvents: i === currentFace ? "auto" : "none",
               }}
             >
               {/* Edge glow on active face */}

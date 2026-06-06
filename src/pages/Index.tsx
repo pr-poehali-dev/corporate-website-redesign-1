@@ -404,8 +404,8 @@ export default function Index() {
             <div className="flex gap-1 mb-4 overflow-x-auto pb-1">
               {services.map((s, i) => (
                 <button key={i} onClick={() => setActiveService(i)}
-                  className={`service-tab text-xs tracking-[0.15em] uppercase px-3 py-2 font-body font-light whitespace-nowrap transition-all duration-300 ${activeService === i ? "active" : ""}`}
-                  style={{ color: activeService === i ? "hsl(42 80% 62%)" : "rgba(255,255,255,0.38)", background: activeService === i ? "rgba(212,170,90,0.1)" : "transparent", borderBottom: activeService === i ? "2px solid hsl(42 80% 50%)" : "2px solid transparent", fontSize: "0.65rem" }}>
+                  className={`service-tab tracking-[0.08em] uppercase px-2 py-1.5 font-body font-light whitespace-nowrap transition-all duration-300 ${activeService === i ? "active" : ""}`}
+                  style={{ color: activeService === i ? "hsl(42 80% 62%)" : "rgba(255,255,255,0.38)", background: activeService === i ? "rgba(212,170,90,0.1)" : "transparent", borderBottom: activeService === i ? "2px solid hsl(42 80% 50%)" : "2px solid transparent", fontSize: "0.58rem" }}>
                   {s.title}
                 </button>
               ))}
