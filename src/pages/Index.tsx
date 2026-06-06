@@ -169,7 +169,7 @@ export default function Index() {
         <div className="relative max-w-6xl mx-auto px-6 pt-24 pb-32 w-full grid md:grid-cols-2 gap-12 items-center">
           <div className="animate-fade-up">
             <p className="text-gold text-xs tracking-[0.3em] uppercase font-body font-light mb-6">
-              Клинический психолог · Москва
+              Клинический психолог · Онлайн по всему миру
             </p>
             <h1 className="font-display text-white text-5xl md:text-7xl font-light leading-[1.1] mb-8">
               Меняю<br />
@@ -241,7 +241,7 @@ export default function Index() {
               { icon: "GraduationCap", title: "Образование", desc: "МГУ, кафедра клинической психологии. Повышение квалификации — Австрия, Израиль." },
               { icon: "Award", title: "Сертификаты", desc: "Международная сертификация по когнитивно-поведенческой терапии, психоанализу." },
               { icon: "Users", title: "Подход", desc: "Интегративный метод. Работа с сознанием, подсознанием и энергетическим телом." },
-              { icon: "Globe", title: "Формат", desc: "Очно в Москве и онлайн для клиентов по всему миру." },
+              { icon: "Globe", title: "Формат", desc: "Онлайн-консультации для клиентов по всему миру." },
             ].map(item => (
               <div key={item.title} className="bg-white p-6 border border-border/50 hover:border-gold/40 transition-colors">
                 <Icon name={item.icon} size={20} className="text-gold mb-3" />
@@ -533,8 +533,8 @@ export default function Index() {
                   hello@olesyagoode.com
                 </a>
                 <div className="flex items-center gap-2 text-white/60 text-sm font-body font-light">
-                  <Icon name="MapPin" size={14} className="text-gold/60" />
-                  Москва
+                  <Icon name="Globe" size={14} className="text-gold/60" />
+                  По всему миру — онлайн
                 </div>
               </div>
             </div>
