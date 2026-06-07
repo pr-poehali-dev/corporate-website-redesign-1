@@ -346,23 +346,23 @@ export default function Index() {
       id: "about",
       label: "Обо мне",
       content: (
-        <div className="w-full min-h-full py-24 px-8 relative overflow-hidden" style={{ background: "hsl(40 35% 96%)" }}>
+        <div className="w-full py-6 px-6 relative overflow-hidden" style={{ background: "hsl(40 35% 96%)" }}>
           <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full pointer-events-none" style={{ background: "radial-gradient(circle,rgba(212,170,90,0.07) 0%,transparent 70%)" }} />
-          <div className="max-w-5xl mx-auto grid lg:grid-cols-2 gap-16 items-center pt-8">
+          <div className="max-w-5xl mx-auto grid lg:grid-cols-2 gap-8 items-center">
             <div>
-              <p className="flex items-center gap-3 text-xs tracking-[0.35em] uppercase font-body font-light mb-5" style={{ color: "hsl(38 70% 40%)" }}>
-                <span className="w-6 h-px bg-gold/80 inline-block" />Обо мне
+              <p className="flex items-center gap-2 text-xs tracking-[0.3em] uppercase font-body font-light mb-3" style={{ color: "hsl(38 70% 40%)" }}>
+                <span className="w-4 h-px bg-gold/80 inline-block" />Обо мне
               </p>
-              <h2 className="font-display font-light leading-tight mb-2" style={{ fontSize: "clamp(2.4rem,5vw,3.8rem)", color: "hsl(28 60% 16%)" }}>Олеся Гудкова</h2>
-              <div className="w-14 h-0.5 mt-4 mb-8 rounded-full" style={{ background: "linear-gradient(90deg,hsl(38 75% 42%),transparent)" }} />
-              <div className="space-y-4 text-sm leading-[1.85] font-body font-light" style={{ color: "hsl(28 20% 32%)" }}>
+              <h2 className="font-display font-light leading-tight mb-2" style={{ fontSize: "clamp(1.5rem,3vw,2.2rem)", color: "hsl(28 60% 16%)" }}>Олеся Гудкова</h2>
+              <div className="w-10 h-0.5 mt-2 mb-4 rounded-full" style={{ background: "linear-gradient(90deg,hsl(38 75% 42%),transparent)" }} />
+              <div className="space-y-2 font-body font-light" style={{ fontSize: "0.78rem", lineHeight: 1.75, color: "hsl(28 20% 32%)" }}>
                 {["Клинический психолог с опытом более 10 лет. Работаю с тревогой, депрессией, кризисными состояниями, отношениями и личностным ростом.",
                   "Моя миссия — менять судьбы людей. Помогаю клиентам выйти из замкнутого круга повторяющихся сценариев и обрести внутреннюю свободу.",
                   "Работаю с более чем 200 энергиями. Синтез классической психологии и работы с энергетическими состояниями даёт глубокие и устойчивые результаты."
                 ].map((t, i) => <p key={i}>{t}</p>)}
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-3">
               {[
                 { icon: "GraduationCap", title: "Образование", desc: "МГУ, кафедра клинической психологии. Повышение квалификации — Австрия, Израиль." },
                 { icon: "Award", title: "Сертификаты", desc: "Международная сертификация по КПТ и психоанализу." },
@@ -370,12 +370,12 @@ export default function Index() {
                 { icon: "Globe", title: "Формат", desc: "Онлайн-консультации для клиентов по всему миру." },
               ].map((c, i) => (
                 <TiltCard key={i} className="h-full">
-                  <div className="glass-light p-6 h-full hover:shadow-xl transition-all duration-300 group" style={{ borderRadius: 2 }}>
-                    <div className="w-9 h-9 rounded-full flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110" style={{ background: "linear-gradient(135deg,hsl(38 75% 42%),hsl(44 82% 52%))" }}>
-                      <Icon name={c.icon} size={16} className="text-white" />
+                  <div className="glass-light p-4 h-full hover:shadow-xl transition-all duration-300 group" style={{ borderRadius: 2 }}>
+                    <div className="w-7 h-7 rounded-full flex items-center justify-center mb-2 transition-transform duration-300 group-hover:scale-110" style={{ background: "linear-gradient(135deg,hsl(38 75% 42%),hsl(44 82% 52%))" }}>
+                      <Icon name={c.icon} size={13} className="text-white" />
                     </div>
-                    <h4 className="font-display text-lg font-light mb-2" style={{ color: "hsl(28 60% 16%)" }}>{c.title}</h4>
-                    <p className="text-xs leading-relaxed font-body font-light" style={{ color: "hsl(28 15% 45%)" }}>{c.desc}</p>
+                    <h4 className="font-display font-light mb-1" style={{ fontSize: "0.85rem", color: "hsl(28 60% 16%)" }}>{c.title}</h4>
+                    <p className="font-body font-light" style={{ fontSize: "0.7rem", lineHeight: 1.6, color: "hsl(28 15% 45%)" }}>{c.desc}</p>
                   </div>
                 </TiltCard>
               ))}
@@ -445,29 +445,29 @@ export default function Index() {
       id: "reviews",
       label: "Отзывы",
       content: (
-        <div className="w-full min-h-full py-24 px-8 relative overflow-hidden" style={{ background: "hsl(40 35% 96%)" }}>
+        <div className="w-full py-6 px-6 relative overflow-hidden" style={{ background: "hsl(40 35% 96%)" }}>
           <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at 70% 40%,rgba(212,170,90,0.06) 0%,transparent 55%)" }} />
-          <div className="max-w-5xl mx-auto relative z-10 pt-8">
-            <div className="mb-14">
-              <p className="flex items-center gap-3 text-xs tracking-[0.35em] uppercase font-body font-light mb-5" style={{ color: "hsl(38 70% 40%)" }}>
-                <span className="w-6 h-px bg-gold/80 inline-block" />Отзывы
+          <div className="max-w-5xl mx-auto relative z-10">
+            <div className="mb-5">
+              <p className="flex items-center gap-2 text-xs tracking-[0.3em] uppercase font-body font-light mb-2" style={{ color: "hsl(38 70% 40%)" }}>
+                <span className="w-4 h-px bg-gold/80 inline-block" />Отзывы
               </p>
-              <h2 className="font-display font-light" style={{ fontSize: "clamp(2rem,4vw,3rem)", color: "hsl(28 60% 16%)" }}>Истории клиентов</h2>
-              <div className="w-14 h-0.5 mt-4 rounded-full" style={{ background: "linear-gradient(90deg,hsl(38 75% 42%),transparent)" }} />
+              <h2 className="font-display font-light" style={{ fontSize: "clamp(1.5rem,3vw,2.2rem)", color: "hsl(28 60% 16%)" }}>Истории клиентов</h2>
+              <div className="w-10 h-0.5 mt-2 rounded-full" style={{ background: "linear-gradient(90deg,hsl(38 75% 42%),transparent)" }} />
             </div>
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid md:grid-cols-3 gap-4">
               {reviews.map((r, i) => (
                 <TiltCard key={i} className="h-full">
-                  <div className="review-card glass-light p-8 h-full flex flex-col" style={{ borderRadius: 2 }}>
-                    <div className="flex gap-1 mb-5">
+                  <div className="review-card glass-light p-4 h-full flex flex-col" style={{ borderRadius: 2 }}>
+                    <div className="flex gap-1 mb-3">
                       {Array.from({length:5}).map((_,k) => (
-                        <svg key={k} width="13" height="13" viewBox="0 0 24 24" fill="hsl(42 80% 52%)"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <svg key={k} width="10" height="10" viewBox="0 0 24 24" fill="hsl(42 80% 52%)"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                       ))}
                     </div>
-                    <p className="text-sm leading-[1.85] font-body font-light italic flex-1 mb-6" style={{ color: "hsl(28 20% 32%)" }}>"{r.text}"</p>
-                    <div className="flex items-center gap-3 pt-5" style={{ borderTop: "1px solid rgba(212,170,90,0.15)" }}>
-                      <div className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 text-sm font-display text-white gold-grad">{r.avatar}</div>
-                      <span className="font-body font-light text-sm" style={{ color: "hsl(28 40% 22%)" }}>{r.name}</span>
+                    <p className="font-body font-light italic flex-1 mb-3" style={{ fontSize: "0.72rem", lineHeight: 1.75, color: "hsl(28 20% 32%)" }}>"{r.text}"</p>
+                    <div className="flex items-center gap-2 pt-3" style={{ borderTop: "1px solid rgba(212,170,90,0.15)" }}>
+                      <div className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 font-display text-white gold-grad" style={{ fontSize: "0.7rem" }}>{r.avatar}</div>
+                      <span className="font-body font-light" style={{ fontSize: "0.72rem", color: "hsl(28 40% 22%)" }}>{r.name}</span>
                     </div>
                   </div>
                 </TiltCard>
@@ -481,25 +481,25 @@ export default function Index() {
       id: "faq",
       label: "FAQ",
       content: (
-        <div className="w-full min-h-full py-24 px-8 relative overflow-hidden" style={{ background: "hsl(40 35% 96%)" }}>
-          <div className="max-w-3xl mx-auto pt-8">
-            <div className="mb-12">
-              <p className="flex items-center gap-3 text-xs tracking-[0.35em] uppercase font-body font-light mb-5" style={{ color: "hsl(38 70% 40%)" }}>
-                <span className="w-6 h-px bg-gold/80 inline-block" />FAQ
+        <div className="w-full py-6 px-6 relative overflow-hidden" style={{ background: "hsl(40 35% 96%)" }}>
+          <div className="max-w-3xl mx-auto">
+            <div className="mb-5">
+              <p className="flex items-center gap-2 text-xs tracking-[0.3em] uppercase font-body font-light mb-2" style={{ color: "hsl(38 70% 40%)" }}>
+                <span className="w-4 h-px bg-gold/80 inline-block" />FAQ
               </p>
-              <h2 className="font-display font-light" style={{ fontSize: "clamp(2rem,4vw,3rem)", color: "hsl(28 60% 16%)" }}>Частые вопросы</h2>
-              <div className="w-14 h-0.5 mt-4 rounded-full" style={{ background: "linear-gradient(90deg,hsl(38 75% 42%),transparent)" }} />
+              <h2 className="font-display font-light" style={{ fontSize: "clamp(1.5rem,3vw,2.2rem)", color: "hsl(28 60% 16%)" }}>Частые вопросы</h2>
+              <div className="w-10 h-0.5 mt-2 rounded-full" style={{ background: "linear-gradient(90deg,hsl(38 75% 42%),transparent)" }} />
             </div>
             {faqs.map((item, i) => (
-              <div key={i} className="faq-item px-2">
-                <button onClick={() => setFaq(faq === i ? null : i)} className="w-full py-6 flex items-center justify-between text-left group gap-6">
-                  <span className="font-display text-lg md:text-xl font-light transition-colors duration-200" style={{ color: faq === i ? "hsl(38 65% 35%)" : "hsl(28 55% 18%)" }}>{item.q}</span>
-                  <div className={`w-8 h-8 flex items-center justify-center flex-shrink-0 transition-all duration-300 ${faq === i ? "gold-grad rotate-45" : ""}`} style={{ border: faq === i ? "none" : "1px solid rgba(212,170,90,0.4)" }}>
-                    <Icon name="Plus" size={14} style={{ color: faq === i ? "white" : "hsl(38 65% 40%)" }} />
+              <div key={i} className="faq-item px-1">
+                <button onClick={() => setFaq(faq === i ? null : i)} className="w-full py-3 flex items-center justify-between text-left group gap-4">
+                  <span className="font-display font-light transition-colors duration-200" style={{ fontSize: "0.85rem", color: faq === i ? "hsl(38 65% 35%)" : "hsl(28 55% 18%)" }}>{item.q}</span>
+                  <div className={`w-6 h-6 flex items-center justify-center flex-shrink-0 transition-all duration-300 ${faq === i ? "gold-grad rotate-45" : ""}`} style={{ border: faq === i ? "none" : "1px solid rgba(212,170,90,0.4)" }}>
+                    <Icon name="Plus" size={11} style={{ color: faq === i ? "white" : "hsl(38 65% 40%)" }} />
                   </div>
                 </button>
                 {faq === i && (
-                  <p className="pb-6 text-sm leading-[1.85] font-body font-light" style={{ color: "hsl(28 15% 42%)", animation: "fadeIn .35s ease" }}>{item.a}</p>
+                  <p className="pb-3 font-body font-light" style={{ fontSize: "0.75rem", lineHeight: 1.8, color: "hsl(28 15% 42%)", animation: "fadeIn .35s ease" }}>{item.a}</p>
                 )}
               </div>
             ))}
@@ -511,15 +511,15 @@ export default function Index() {
       id: "booking",
       label: "Запись",
       content: (
-        <div className="w-full min-h-full py-24 px-8 relative overflow-hidden" style={{ background: "hsl(28 25% 10%)" }}>
+        <div className="w-full py-6 px-6 relative overflow-hidden" style={{ background: "hsl(28 25% 10%)" }}>
           <ParticleCanvas count={30} />
-          <div className="max-w-5xl mx-auto relative z-10 pt-8">
-            <div className="mb-12">
-              <p className="flex items-center gap-3 text-xs tracking-[0.35em] uppercase font-body font-light mb-5" style={{ color: "rgba(212,170,90,0.75)" }}>
-                <span className="w-6 h-px inline-block" style={{ background: "rgba(212,170,90,0.7)" }} />Запись
+          <div className="max-w-5xl mx-auto relative z-10">
+            <div className="mb-5">
+              <p className="flex items-center gap-2 text-xs tracking-[0.3em] uppercase font-body font-light mb-2" style={{ color: "rgba(212,170,90,0.75)" }}>
+                <span className="w-4 h-px inline-block" style={{ background: "rgba(212,170,90,0.7)" }} />Запись
               </p>
-              <h2 className="font-display font-light" style={{ fontSize: "clamp(2rem,4vw,3rem)", color: "white" }}>Онлайн-запись</h2>
-              <div className="w-14 h-0.5 mt-4 rounded-full" style={{ background: "linear-gradient(90deg,hsl(42 80% 50%),transparent)" }} />
+              <h2 className="font-display font-light" style={{ fontSize: "clamp(1.5rem,3vw,2.2rem)", color: "white" }}>Онлайн-запись</h2>
+              <div className="w-10 h-0.5 mt-2 rounded-full" style={{ background: "linear-gradient(90deg,hsl(42 80% 50%),transparent)" }} />
             </div>
             {sent ? (
               <div className="max-w-md glass p-14 text-center glow-btn" style={{ borderRadius: 2 }}>
@@ -533,30 +533,30 @@ export default function Index() {
                 </p>
               </div>
             ) : (
-              <div className="grid lg:grid-cols-2 gap-10">
-                <div className="glass p-7" style={{ borderRadius: 2 }}>
-                  <div className="flex items-center justify-between mb-7">
-                    <button onClick={prevM} className="w-9 h-9 flex items-center justify-center transition-all duration-200 hover:bg-white/8 rounded" style={{ color: "rgba(255,255,255,0.45)" }}>
-                      <Icon name="ChevronLeft" size={17} />
+              <div className="grid lg:grid-cols-2 gap-5">
+                <div className="glass p-4" style={{ borderRadius: 2 }}>
+                  <div className="flex items-center justify-between mb-4">
+                    <button onClick={prevM} className="w-7 h-7 flex items-center justify-center transition-all duration-200 rounded" style={{ color: "rgba(255,255,255,0.45)" }}>
+                      <Icon name="ChevronLeft" size={14} />
                     </button>
-                    <span className="font-display text-xl font-light text-white">{MONTHS[month]} {year}</span>
-                    <button onClick={nextM} className="w-9 h-9 flex items-center justify-center transition-all duration-200 hover:bg-white/8 rounded" style={{ color: "rgba(255,255,255,0.45)" }}>
-                      <Icon name="ChevronRight" size={17} />
+                    <span className="font-display font-light text-white" style={{ fontSize: "0.85rem" }}>{MONTHS[month]} {year}</span>
+                    <button onClick={nextM} className="w-7 h-7 flex items-center justify-center transition-all duration-200 rounded" style={{ color: "rgba(255,255,255,0.45)" }}>
+                      <Icon name="ChevronRight" size={14} />
                     </button>
                   </div>
-                  <div className="grid grid-cols-7 gap-1 mb-3">
+                  <div className="grid grid-cols-7 gap-0.5 mb-1">
                     {["Пн","Вт","Ср","Чт","Пт","Сб","Вс"].map(d => (
-                      <div key={d} className="text-center text-xs font-body py-1" style={{ color: "rgba(255,255,255,0.22)" }}>{d}</div>
+                      <div key={d} className="text-center font-body py-0.5" style={{ fontSize: "0.6rem", color: "rgba(255,255,255,0.22)" }}>{d}</div>
                     ))}
                   </div>
-                  <div className="grid grid-cols-7 gap-1">
+                  <div className="grid grid-cols-7 gap-0.5">
                     {Array.from({length: first}).map((_,i) => <div key={`e${i}`} />)}
                     {Array.from({length: days}).map((_,i) => {
                       const d = i+1; const past = isPast(d);
                       return (
                         <button key={d} onClick={() => !past && setDay(d)} disabled={past}
-                          className="aspect-square flex items-center justify-center text-sm font-body font-light transition-all duration-200"
-                          style={{ background: day===d ? "linear-gradient(135deg,hsl(32 65% 28%),hsl(42 80% 44%))" : "transparent", color: past ? "rgba(255,255,255,0.12)" : day===d ? "white" : "rgba(255,255,255,0.6)", border: day===d ? "none" : "1px solid transparent", boxShadow: day===d ? "0 0 12px rgba(212,170,90,0.3)" : "none" }}
+                          className="aspect-square flex items-center justify-center font-body font-light transition-all duration-200"
+                          style={{ fontSize: "0.7rem", background: day===d ? "linear-gradient(135deg,hsl(32 65% 28%),hsl(42 80% 44%))" : "transparent", color: past ? "rgba(255,255,255,0.12)" : day===d ? "white" : "rgba(255,255,255,0.6)", border: day===d ? "none" : "1px solid transparent", boxShadow: day===d ? "0 0 12px rgba(212,170,90,0.3)" : "none" }}
                           onMouseEnter={e => { if (!past && day!==d) (e.currentTarget as HTMLElement).style.background = "rgba(212,170,90,0.1)"; }}
                           onMouseLeave={e => { if (day!==d) (e.currentTarget as HTMLElement).style.background = "transparent"; }}>
                           {d}
@@ -565,12 +565,12 @@ export default function Index() {
                     })}
                   </div>
                   {day && (
-                    <div className="mt-7 pt-6" style={{ borderTop: "1px solid rgba(212,170,90,0.12)" }}>
-                      <p className="text-xs tracking-widest uppercase mb-4 font-body" style={{ color: "rgba(255,255,255,0.3)" }}>Время</p>
-                      <div className="grid grid-cols-3 gap-2">
+                    <div className="mt-4 pt-3" style={{ borderTop: "1px solid rgba(212,170,90,0.12)" }}>
+                      <p className="font-body uppercase mb-2" style={{ fontSize: "0.6rem", color: "rgba(255,255,255,0.3)" }}>Время</p>
+                      <div className="grid grid-cols-3 gap-1.5">
                         {TIMES.map(t => (
-                          <button key={t} onClick={() => setTime(t)} className="py-2.5 text-xs font-body font-light tracking-wide transition-all duration-200"
-                            style={{ border: `1px solid ${time===t ? "hsl(42 80% 50%)" : "rgba(212,170,90,0.18)"}`, background: time===t ? "linear-gradient(135deg,hsl(32 65% 28%),hsl(42 80% 44%))" : "transparent", color: time===t ? "white" : "rgba(255,255,255,0.55)", boxShadow: time===t ? "0 0 12px rgba(212,170,90,0.25)" : "none" }}>
+                          <button key={t} onClick={() => setTime(t)} className="py-1.5 font-body font-light transition-all duration-200"
+                            style={{ fontSize: "0.7rem", border: `1px solid ${time===t ? "hsl(42 80% 50%)" : "rgba(212,170,90,0.18)"}`, background: time===t ? "linear-gradient(135deg,hsl(32 65% 28%),hsl(42 80% 44%))" : "transparent", color: time===t ? "white" : "rgba(255,255,255,0.55)" }}>
                             {t}
                           </button>
                         ))}
@@ -578,38 +578,39 @@ export default function Index() {
                     </div>
                   )}
                 </div>
-                <form onSubmit={submit} className="flex flex-col gap-5">
+                <form onSubmit={submit} className="flex flex-col gap-3">
                   {[{l:"Ваше имя *",k:"name",p:"Иван Иванов",t:"text"},{l:"Телефон *",k:"phone",p:"+7 (___) ___-__-__",t:"tel"}].map(f => (
                     <div key={f.k}>
-                      <label className="block text-xs tracking-widest uppercase mb-2 font-body" style={{ color: "rgba(255,255,255,0.3)" }}>{f.l}</label>
+                      <label className="block uppercase mb-1 font-body" style={{ fontSize: "0.6rem", color: "rgba(255,255,255,0.3)" }}>{f.l}</label>
                       <input value={form[f.k as keyof typeof form]} onChange={e => setForm(p => ({...p,[f.k]:e.target.value}))}
                         required={f.l.includes("*")} type={f.t} placeholder={f.p}
-                        className="w-full px-4 py-3.5 text-sm font-body font-light outline-none transition-all duration-300"
-                        style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(212,170,90,0.18)", color: "rgba(255,255,255,0.85)", borderRadius: 0 }}
+                        className="w-full px-3 py-2 font-body font-light outline-none transition-all duration-300"
+                        style={{ fontSize: "0.75rem", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(212,170,90,0.18)", color: "rgba(255,255,255,0.85)", borderRadius: 0 }}
                         onFocus={e => e.target.style.borderColor = "hsl(42 80% 50%)"}
                         onBlur={e => e.target.style.borderColor = "rgba(212,170,90,0.18)"} />
                     </div>
                   ))}
                   <div>
-                    <label className="block text-xs tracking-widest uppercase mb-2 font-body" style={{ color: "rgba(255,255,255,0.3)" }}>Комментарий</label>
-                    <textarea value={form.comment} onChange={e => setForm(p => ({...p,comment:e.target.value}))} rows={3}
+                    <label className="block uppercase mb-1 font-body" style={{ fontSize: "0.6rem", color: "rgba(255,255,255,0.3)" }}>Комментарий</label>
+                    <textarea value={form.comment} onChange={e => setForm(p => ({...p,comment:e.target.value}))} rows={2}
                       placeholder="Кратко опишите ваш запрос..."
-                      className="w-full px-4 py-3.5 text-sm font-body font-light outline-none transition-all duration-300 resize-none"
-                      style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(212,170,90,0.18)", color: "rgba(255,255,255,0.85)", borderRadius: 0 }}
+                      className="w-full px-3 py-2 font-body font-light outline-none transition-all duration-300 resize-none"
+                      style={{ fontSize: "0.75rem", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(212,170,90,0.18)", color: "rgba(255,255,255,0.85)", borderRadius: 0 }}
                       onFocus={e => e.target.style.borderColor = "hsl(42 80% 50%)"}
                       onBlur={e => e.target.style.borderColor = "rgba(212,170,90,0.18)"} />
                   </div>
                   {day && time && (
-                    <div className="flex items-center gap-3 px-4 py-3 text-sm font-body font-light" style={{ background: "rgba(212,170,90,0.08)", border: "1px solid rgba(212,170,90,0.2)" }}>
-                      <Icon name="CalendarCheck" size={15} className="text-gold flex-shrink-0" />
+                    <div className="flex items-center gap-2 px-3 py-2 font-body font-light" style={{ fontSize: "0.72rem", background: "rgba(212,170,90,0.08)", border: "1px solid rgba(212,170,90,0.2)" }}>
+                      <Icon name="CalendarCheck" size={13} className="text-gold flex-shrink-0" />
                       <span style={{ color: "hsl(42 80% 65%)" }}>{day} {MONTHS_SHORT[month]}, {time}</span>
                     </div>
                   )}
                   <Btn type="submit" disabled={!day || !time || !form.name || !form.phone}
-                    className="gold-grad glow-btn text-white text-xs tracking-[0.28em] uppercase px-8 py-4 font-body font-light disabled:opacity-25 disabled:cursor-not-allowed hover:brightness-110 transition-all duration-300 mt-1">
+                    className="gold-grad glow-btn text-white tracking-[0.2em] uppercase px-6 py-3 font-body font-light disabled:opacity-25 disabled:cursor-not-allowed hover:brightness-110 transition-all duration-300"
+                    style={{ fontSize: "0.7rem" }}>
                     Отправить заявку
                   </Btn>
-                  <p className="text-xs font-body font-light" style={{ color: "rgba(255,255,255,0.2)" }}>Нажимая кнопку, вы соглашаетесь с обработкой персональных данных</p>
+                  <p className="font-body font-light" style={{ fontSize: "0.6rem", color: "rgba(255,255,255,0.2)" }}>Нажимая кнопку, вы соглашаетесь с обработкой персональных данных</p>
                 </form>
               </div>
             )}
