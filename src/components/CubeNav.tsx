@@ -12,34 +12,20 @@ interface Props {
   onFaceChange: (index: number) => void;
 }
 
-// Настоящий 3D куб: 6 граней
-// front, right, back, left, top, bottom
-// Позиции граней фиксированы — вращается сам куб
-const CUBE_FACE_TRANSFORMS = [
-  `translateZ(var(--half))`,                        // 0: front
-  `rotateY(-90deg) translateZ(var(--half))`,        // 1: right
-  `rotateY(180deg) translateZ(var(--half))`,        // 2: back
-  `rotateY(90deg)  translateZ(var(--half))`,        // 3: left
-  `rotateX(-90deg) translateZ(var(--half))`,        // 4: top
-  `rotateX(90deg)  translateZ(var(--half))`,        // 5: bottom
-];
-
-// Чтобы показать грань i — нужно повернуть куб в обратную сторону
-const CUBE_ROTATIONS = [
-  { x: 0,   y: 0   },   // 0: front
-  { x: 0,   y: 90  },   // 1: right
-  { x: 0,   y: 180 },   // 2: back
-  { x: 0,   y: -90 },   // 3: left
-  { x: 90,  y: 0   },   // 4: top
-  { x: -90, y: 0   },   // 5: bottom
-];
+// 6 граней — все по оси Y с шагом 60°
+// Куб вращается — активная грань всегда смотрит на зрителя
+// r = половина стороны / tan(30°) = half / 0.577 = half * 1.732
+// Это даёт правильный радиус для призмы с 6 сторонами
 
 export default function CubeNav({ faces, currentFace, onFaceChange }: Props) {
-  const [size, setSize] = useState(500);
+  const [size, setSize] = useState(480);
   const containerRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef(0);
   const touchStartY = useRef(0);
   const isAnimating = useRef(false);
+  // Накапливаемый угол, чтобы не было прыжков при переходе через 360°
+  const totalRotY = useRef(0);
+  const prevFace = useRef(0);
 
   useEffect(() => {
     const update = () => {
@@ -47,12 +33,25 @@ export default function CubeNav({ faces, currentFace, onFaceChange }: Props) {
       const h = window.innerHeight;
       const maxH = h - 140 - 80;
       const maxW = w - 140;
-      setSize(Math.min(maxW, maxH, 560));
+      setSize(Math.min(maxW, maxH, 520));
     };
     update();
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
   }, []);
+
+  // Вычисляем направление вращения (кратчайший путь)
+  useEffect(() => {
+    const step = 60;
+    const diff = currentFace - prevFace.current;
+    const n = faces.length;
+    // Кратчайший путь по кругу
+    let delta = diff;
+    if (delta > n / 2) delta -= n;
+    if (delta < -n / 2) delta += n;
+    totalRotY.current -= delta * step;
+    prevFace.current = currentFace;
+  }, [currentFace, faces.length]);
 
   useEffect(() => {
     let lastScroll = 0;
@@ -100,8 +99,8 @@ export default function CubeNav({ faces, currentFace, onFaceChange }: Props) {
     return () => clearTimeout(t);
   }, [currentFace]);
 
-  const half = size / 2;
-  const rot = CUBE_ROTATIONS[currentFace];
+  // Радиус призмы: грань шириной size, 6 сторон
+  const radius = Math.round(size / (2 * Math.tan(Math.PI / 6)));
 
   return (
     <div
@@ -114,19 +113,19 @@ export default function CubeNav({ faces, currentFace, onFaceChange }: Props) {
       }} />
 
       {/* 3D Scene */}
-      <div style={{ perspective: `${size * 3}px`, perspectiveOrigin: "50% 50%", marginTop: "64px" }}>
+      <div style={{ perspective: `${size * 3}px`, perspectiveOrigin: "50% 50%", marginTop: "56px" }}>
         <div
           style={{
             width: size,
             height: size,
             position: "relative",
             transformStyle: "preserve-3d",
-            transform: `rotateX(${rot.x}deg) rotateY(${rot.y}deg)`,
+            transform: `rotateY(${totalRotY.current}deg)`,
             transition: "transform 0.85s cubic-bezier(0.65, 0, 0.35, 1)",
           }}
         >
           {faces.map((face, i) => {
-            const transformStr = CUBE_FACE_TRANSFORMS[i].replace(/var\(--half\)/g, `${half}px`);
+            const angleY = i * 60;
             const isActive = i === currentFace;
             return (
               <div
@@ -136,7 +135,7 @@ export default function CubeNav({ faces, currentFace, onFaceChange }: Props) {
                   inset: 0,
                   width: size,
                   height: size,
-                  transform: transformStr,
+                  transform: `rotateY(${angleY}deg) translateZ(${radius}px)`,
                   backfaceVisibility: "hidden",
                   WebkitBackfaceVisibility: "hidden",
                   overflow: "hidden",
@@ -144,7 +143,7 @@ export default function CubeNav({ faces, currentFace, onFaceChange }: Props) {
                   boxShadow: isActive
                     ? "0 0 80px rgba(212,170,90,0.15), inset 0 1px 0 rgba(255,220,100,0.1)"
                     : "inset 0 1px 0 rgba(255,220,100,0.05)",
-                  background: "rgba(18,10,2,0.92)",
+                  background: "rgba(18,10,2,0.95)",
                   backdropFilter: "blur(20px)",
                   pointerEvents: isActive ? "auto" : "none",
                 }}
@@ -212,7 +211,6 @@ export default function CubeNav({ faces, currentFace, onFaceChange }: Props) {
         </span>
       </div>
 
-      {/* Swipe hint (mobile) */}
       <div className="fixed bottom-8 right-6 z-50 md:hidden">
         <span className="text-xs tracking-widest uppercase font-light" style={{ color: "rgba(212,170,90,0.3)" }}>свайп</span>
       </div>

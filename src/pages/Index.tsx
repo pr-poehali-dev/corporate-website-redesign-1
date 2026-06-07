@@ -319,20 +319,20 @@ export default function Index() {
           <div className="absolute inset-0" style={{ background: "linear-gradient(145deg,rgba(18,8,2,0.7) 0%,rgba(30,16,4,0.5) 50%,rgba(18,8,2,0.7) 100%)" }} />
           <ParticleCanvas count={60} />
           <div className="scan" />
-          <div className="relative z-10 max-w-7xl mx-auto px-8 pt-20 pb-24 w-full">
-            <p className="flex items-center gap-3 text-xs tracking-[0.4em] uppercase font-body font-light mb-8" style={{ color: "rgba(212,170,90,0.7)", opacity: 0, animation: "fadeIn 1s .2s ease forwards" }}>
-              <span className="w-8 h-px inline-block" style={{ background: "rgba(212,170,90,0.6)" }} />Клинический психолог
+          <div className="relative z-10 max-w-7xl mx-auto px-8 pt-12 pb-12 w-full">
+            <p className="flex items-center gap-2 font-body font-light mb-4" style={{ fontSize: "0.6rem", letterSpacing: "0.35em", color: "rgba(212,170,90,0.7)", opacity: 0, animation: "fadeIn 1s .2s ease forwards" }}>
+              <span className="w-6 h-px inline-block" style={{ background: "rgba(212,170,90,0.6)" }} />Клинический психолог
             </p>
-            <h1 className="font-display font-light leading-[1.05] mb-10" style={{ fontSize: "clamp(3rem,7vw,6rem)", color: "white", opacity: 0, animation: "up60 1s .35s ease forwards" }}>
+            <h1 className="font-display font-light leading-[1.05] mb-5" style={{ fontSize: "clamp(1.8rem,4vw,3.5rem)", color: "white", opacity: 0, animation: "up60 1s .35s ease forwards" }}>
               <span className="glitch shimmer" data-text="Олеся">Олеся</span><br />
               <span style={{ color: "rgba(255,255,255,0.55)" }}>Гудкова</span>
             </h1>
-            <p className="font-body font-light leading-[1.85] mb-12 max-w-md" style={{ fontSize: "clamp(0.9rem,1.5vw,1.05rem)", color: "rgba(255,255,255,0.45)", opacity: 0, animation: "fadeIn 1s .6s ease forwards" }}>
+            <p className="font-body font-light mb-7 max-w-md" style={{ fontSize: "0.78rem", lineHeight: 1.75, color: "rgba(255,255,255,0.45)", opacity: 0, animation: "fadeIn 1s .6s ease forwards" }}>
               Помогаю людям обрести внутреннюю свободу и изменить жизнь. 10+ лет практики, 500+ клиентов.
             </p>
-            <div className="flex flex-wrap gap-4" style={{ opacity: 0, animation: "fadeIn 1s .8s ease forwards" }}>
-              <Btn onClick={() => onFaceChange(5)} className="gold-grad glow-btn text-white text-xs tracking-[0.3em] uppercase px-10 py-4 font-body font-light hover:brightness-110 transition-all">Записаться</Btn>
-              <Btn onClick={() => onFaceChange(1)} className="text-xs tracking-[0.3em] uppercase px-8 py-4 font-body font-light transition-all hover:bg-white/5" style={{ border: "1px solid rgba(255,255,255,0.2)", color: "rgba(255,255,255,0.65)" }}>Обо мне</Btn>
+            <div className="flex flex-wrap gap-3" style={{ opacity: 0, animation: "fadeIn 1s .8s ease forwards" }}>
+              <Btn onClick={() => onFaceChange(5)} className="gold-grad glow-btn text-white font-body font-light hover:brightness-110 transition-all" style={{ fontSize: "0.65rem", letterSpacing: "0.25em", padding: "10px 28px" }}>Записаться</Btn>
+              <Btn onClick={() => onFaceChange(1)} className="font-body font-light transition-all hover:bg-white/5" style={{ fontSize: "0.65rem", letterSpacing: "0.25em", padding: "10px 22px", border: "1px solid rgba(255,255,255,0.2)", color: "rgba(255,255,255,0.65)" }}>Обо мне</Btn>
             </div>
           </div>
           <div className="absolute bottom-6 right-8 flex flex-col items-center gap-2 z-10" style={{ opacity: 0, animation: "fadeIn 1s 1.2s ease forwards" }}>
@@ -353,9 +353,9 @@ export default function Index() {
               <p className="flex items-center gap-2 text-xs tracking-[0.3em] uppercase font-body font-light mb-3" style={{ color: "hsl(38 70% 40%)" }}>
                 <span className="w-4 h-px bg-gold/80 inline-block" />Обо мне
               </p>
-              <h2 className="font-display font-light leading-tight mb-2" style={{ fontSize: "clamp(1.5rem,3vw,2.2rem)", color: "hsl(28 60% 16%)" }}>Олеся Гудкова</h2>
-              <div className="w-10 h-0.5 mt-2 mb-4 rounded-full" style={{ background: "linear-gradient(90deg,hsl(38 75% 42%),transparent)" }} />
-              <div className="space-y-2 font-body font-light" style={{ fontSize: "0.78rem", lineHeight: 1.75, color: "hsl(28 20% 32%)" }}>
+              <h2 className="font-display font-light leading-tight mb-1" style={{ fontSize: "clamp(1.2rem,2.5vw,1.7rem)", color: "hsl(28 60% 16%)" }}>Олеся Гудкова</h2>
+              <div className="w-8 h-0.5 mt-1.5 mb-3 rounded-full" style={{ background: "linear-gradient(90deg,hsl(38 75% 42%),transparent)" }} />
+              <div className="space-y-1.5 font-body font-light" style={{ fontSize: "0.68rem", lineHeight: 1.7, color: "hsl(28 20% 32%)" }}>
                 {["Клинический психолог с опытом более 10 лет. Работаю с тревогой, депрессией, кризисными состояниями, отношениями и личностным ростом.",
                   "Моя миссия — менять судьбы людей. Помогаю клиентам выйти из замкнутого круга повторяющихся сценариев и обрести внутреннюю свободу.",
                   "Работаю с более чем 200 энергиями. Синтез классической психологии и работы с энергетическими состояниями даёт глубокие и устойчивые результаты."
@@ -397,7 +397,7 @@ export default function Index() {
                 <p className="flex items-center gap-2 text-xs tracking-[0.3em] uppercase font-body font-light mb-2" style={{ color: "rgba(212,170,90,0.75)" }}>
                   <span className="w-4 h-px inline-block" style={{ background: "rgba(212,170,90,0.7)" }} />Услуги
                 </p>
-                <h2 className="font-display font-light" style={{ fontSize: "clamp(1.3rem,2.5vw,2rem)", color: "white" }}>Направления работы</h2>
+                <h2 className="font-display font-light" style={{ fontSize: "clamp(1rem,2vw,1.4rem)", color: "white" }}>Направления работы</h2>
               </div>
               <Btn onClick={() => onFaceChange(5)} className="text-xs tracking-[0.2em] uppercase px-4 py-2 font-body font-light transition-all duration-300 hover:brightness-110 whitespace-nowrap" style={{ border: "1px solid rgba(212,170,90,0.45)", color: "hsl(42 80% 60%)" }}>Записаться</Btn>
             </div>
@@ -421,18 +421,18 @@ export default function Index() {
                       </div>
                       <span className="font-display text-4xl font-light opacity-15 select-none" style={{ color: "hsl(42 80% 58%)" }}>{String(activeService + 1).padStart(2, "0")}</span>
                     </div>
-                    <h3 className="font-display font-light mb-2" style={{ fontSize: "clamp(1rem,2vw,1.4rem)", color: "white" }}>{services[activeService].title}</h3>
-                    <p className="leading-[1.7] font-body font-light mb-3" style={{ fontSize: "0.78rem", color: "rgba(255,255,255,0.55)" }}>{services[activeService].desc}</p>
-                    <div className="flex items-center gap-2 font-body font-light" style={{ fontSize: "0.7rem", color: "rgba(212,170,90,0.7)" }}>
-                      <Icon name="Clock" size={11} />{services[activeService].duration}
+                    <h3 className="font-display font-light mb-1.5" style={{ fontSize: "0.9rem", color: "white" }}>{services[activeService].title}</h3>
+                    <p className="font-body font-light mb-2" style={{ fontSize: "0.65rem", lineHeight: 1.65, color: "rgba(255,255,255,0.55)" }}>{services[activeService].desc}</p>
+                    <div className="flex items-center gap-1.5 font-body font-light" style={{ fontSize: "0.6rem", color: "rgba(212,170,90,0.7)" }}>
+                      <Icon name="Clock" size={10} />{services[activeService].duration}
                     </div>
                   </div>
-                  <div className="flex flex-col items-center md:items-end gap-4">
+                  <div className="flex flex-col items-center md:items-end gap-3">
                     <div>
-                      <p className="font-body font-light mb-1 text-center md:text-right" style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.3)" }}>Стоимость</p>
-                      <p className="font-display font-light" style={{ fontSize: "2.2rem", color: "hsl(42 80% 60%)" }}>{services[activeService].price}</p>
+                      <p className="font-body font-light mb-0.5 text-center md:text-right" style={{ fontSize: "0.55rem", color: "rgba(255,255,255,0.3)" }}>Стоимость</p>
+                      <p className="font-display font-light" style={{ fontSize: "1.6rem", color: "hsl(42 80% 60%)" }}>{services[activeService].price}</p>
                     </div>
-                    <Btn onClick={() => onFaceChange(5)} className="gold-grad glow-btn text-white tracking-[0.2em] uppercase px-6 py-3 font-body font-light hover:brightness-110 transition-all" style={{ fontSize: "0.7rem" }}>Записаться</Btn>
+                    <Btn onClick={() => onFaceChange(5)} className="gold-grad glow-btn text-white tracking-[0.2em] uppercase px-5 py-2 font-body font-light hover:brightness-110 transition-all" style={{ fontSize: "0.6rem" }}>Записаться</Btn>
                   </div>
                 </div>
               </div>
@@ -452,7 +452,7 @@ export default function Index() {
               <p className="flex items-center gap-2 text-xs tracking-[0.3em] uppercase font-body font-light mb-2" style={{ color: "hsl(38 70% 40%)" }}>
                 <span className="w-4 h-px bg-gold/80 inline-block" />Отзывы
               </p>
-              <h2 className="font-display font-light" style={{ fontSize: "clamp(1.5rem,3vw,2.2rem)", color: "hsl(28 60% 16%)" }}>Истории клиентов</h2>
+              <h2 className="font-display font-light" style={{ fontSize: "clamp(1.1rem,2vw,1.5rem)", color: "hsl(28 60% 16%)" }}>Истории клиентов</h2>
               <div className="w-10 h-0.5 mt-2 rounded-full" style={{ background: "linear-gradient(90deg,hsl(38 75% 42%),transparent)" }} />
             </div>
             <div className="grid md:grid-cols-3 gap-4">
@@ -487,7 +487,7 @@ export default function Index() {
               <p className="flex items-center gap-2 text-xs tracking-[0.3em] uppercase font-body font-light mb-2" style={{ color: "hsl(38 70% 40%)" }}>
                 <span className="w-4 h-px bg-gold/80 inline-block" />FAQ
               </p>
-              <h2 className="font-display font-light" style={{ fontSize: "clamp(1.5rem,3vw,2.2rem)", color: "hsl(28 60% 16%)" }}>Частые вопросы</h2>
+              <h2 className="font-display font-light" style={{ fontSize: "clamp(1.1rem,2vw,1.5rem)", color: "hsl(28 60% 16%)" }}>Частые вопросы</h2>
               <div className="w-10 h-0.5 mt-2 rounded-full" style={{ background: "linear-gradient(90deg,hsl(38 75% 42%),transparent)" }} />
             </div>
             {faqs.map((item, i) => (
@@ -518,7 +518,7 @@ export default function Index() {
               <p className="flex items-center gap-2 text-xs tracking-[0.3em] uppercase font-body font-light mb-2" style={{ color: "rgba(212,170,90,0.75)" }}>
                 <span className="w-4 h-px inline-block" style={{ background: "rgba(212,170,90,0.7)" }} />Запись
               </p>
-              <h2 className="font-display font-light" style={{ fontSize: "clamp(1.5rem,3vw,2.2rem)", color: "white" }}>Онлайн-запись</h2>
+              <h2 className="font-display font-light" style={{ fontSize: "clamp(1.1rem,2vw,1.5rem)", color: "white" }}>Онлайн-запись</h2>
               <div className="w-10 h-0.5 mt-2 rounded-full" style={{ background: "linear-gradient(90deg,hsl(42 80% 50%),transparent)" }} />
             </div>
             {sent ? (
