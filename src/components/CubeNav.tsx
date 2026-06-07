@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export interface CubeFace {
   id: string;
@@ -12,42 +12,48 @@ interface Props {
   onFaceChange: (index: number) => void;
 }
 
-// Порядок граней куба по горизонтальной оси Y:
-// 0=front, 1=right, 2=back, 3=left + top/bottom отдельно
-// Мы используем 6 граней через ось Y (4 стороны) + верх/низ
-// Но так как у нас 6 разделов — используем carousel по Y-оси, зацикленный
+// Настоящий 3D куб: 6 граней
+// front, right, back, left, top, bottom
+// Позиции граней фиксированы — вращается сам куб
+const CUBE_FACE_TRANSFORMS = [
+  `translateZ(var(--half))`,                        // 0: front
+  `rotateY(-90deg) translateZ(var(--half))`,        // 1: right
+  `rotateY(180deg) translateZ(var(--half))`,        // 2: back
+  `rotateY(90deg)  translateZ(var(--half))`,        // 3: left
+  `rotateX(-90deg) translateZ(var(--half))`,        // 4: top
+  `rotateX(90deg)  translateZ(var(--half))`,        // 5: bottom
+];
 
-const FACE_ROTATIONS = [
-  { rotX: 0, rotY: 0    },   // 0
-  { rotX: 0, rotY: -60  },   // 1
-  { rotX: 0, rotY: -120 },   // 2
-  { rotX: 0, rotY: -180 },   // 3
-  { rotX: 0, rotY: -240 },   // 4
-  { rotX: 0, rotY: -300 },   // 5
+// Чтобы показать грань i — нужно повернуть куб в обратную сторону
+const CUBE_ROTATIONS = [
+  { x: 0,   y: 0   },   // 0: front
+  { x: 0,   y: 90  },   // 1: right
+  { x: 0,   y: 180 },   // 2: back
+  { x: 0,   y: -90 },   // 3: left
+  { x: 90,  y: 0   },   // 4: top
+  { x: -90, y: 0   },   // 5: bottom
 ];
 
 export default function CubeNav({ faces, currentFace, onFaceChange }: Props) {
-  const [size, setSize] = useState(600);
+  const [size, setSize] = useState(500);
   const containerRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef(0);
   const touchStartY = useRef(0);
   const isAnimating = useRef(false);
 
-  // Адаптивный размер куба — с отступом 120px сверху (хедер) и 80px снизу
   useEffect(() => {
     const update = () => {
       const w = window.innerWidth;
       const h = window.innerHeight;
-      const maxH = h - 120 - 80; // хедер + нижний UI
-      const maxW = w - 120;      // боковые стрелки + точки
-      setSize(Math.min(maxW, maxH, 620));
+      const maxH = h - 140 - 80;
+      const maxW = w - 140;
+      setSize(Math.min(maxW, maxH, 560));
     };
     update();
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
   }, []);
 
-  // Скролл для смены грани
   useEffect(() => {
     let lastScroll = 0;
     const onWheel = (e: WheelEvent) => {
@@ -56,18 +62,13 @@ export default function CubeNav({ faces, currentFace, onFaceChange }: Props) {
       const now = Date.now();
       if (now - lastScroll < 800) return;
       lastScroll = now;
-
-      if (e.deltaY > 0) {
-        onFaceChange((currentFace + 1) % faces.length);
-      } else {
-        onFaceChange((currentFace - 1 + faces.length) % faces.length);
-      }
+      if (e.deltaY > 0) onFaceChange((currentFace + 1) % faces.length);
+      else onFaceChange((currentFace - 1 + faces.length) % faces.length);
     };
     window.addEventListener("wheel", onWheel, { passive: false });
     return () => window.removeEventListener("wheel", onWheel);
   }, [currentFace, faces.length, onFaceChange]);
 
-  // Свайп для мобилки
   useEffect(() => {
     const onStart = (e: TouchEvent) => {
       touchStartX.current = e.touches[0].clientX;
@@ -93,25 +94,14 @@ export default function CubeNav({ faces, currentFace, onFaceChange }: Props) {
     };
   }, [currentFace, faces.length, onFaceChange]);
 
-  // Блокируем анимацию на время перехода
   useEffect(() => {
     isAnimating.current = true;
     const t = setTimeout(() => { isAnimating.current = false; }, 900);
     return () => clearTimeout(t);
   }, [currentFace]);
 
-  const rot = FACE_ROTATIONS[currentFace];
-  // Радиус вписанной окружности для правильного шестиугольника: r = size * sqrt(3)/2
-  const radius = Math.round(size * 0.866);
-
-  const facePositions = [
-    { transform: `rotateY(0deg)   translateZ(${radius}px)` },
-    { transform: `rotateY(60deg)  translateZ(${radius}px)` },
-    { transform: `rotateY(120deg) translateZ(${radius}px)` },
-    { transform: `rotateY(180deg) translateZ(${radius}px)` },
-    { transform: `rotateY(240deg) translateZ(${radius}px)` },
-    { transform: `rotateY(300deg) translateZ(${radius}px)` },
-  ];
+  const half = size / 2;
+  const rot = CUBE_ROTATIONS[currentFace];
 
   return (
     <div
@@ -119,56 +109,58 @@ export default function CubeNav({ faces, currentFace, onFaceChange }: Props) {
       className="fixed inset-0 z-10 flex items-center justify-center overflow-hidden"
       style={{ background: "linear-gradient(145deg, hsl(28 70% 8%) 0%, hsl(33 60% 14%) 50%, hsl(28 70% 8%) 100%)" }}
     >
-      {/* Ambient glow */}
       <div className="absolute inset-0 pointer-events-none" style={{
         background: `radial-gradient(ellipse at 50% 50%, rgba(212,170,90,0.08) 0%, transparent 60%)`
       }} />
 
       {/* 3D Scene */}
-      <div style={{ perspective: `${size * 4}px`, perspectiveOrigin: "50% 50%", marginTop: "64px" }}>
+      <div style={{ perspective: `${size * 3}px`, perspectiveOrigin: "50% 50%", marginTop: "64px" }}>
         <div
           style={{
             width: size,
             height: size,
             position: "relative",
             transformStyle: "preserve-3d",
-            transform: `rotateX(${rot.rotX}deg) rotateY(${rot.rotY}deg)`,
+            transform: `rotateX(${rot.x}deg) rotateY(${rot.y}deg)`,
             transition: "transform 0.85s cubic-bezier(0.65, 0, 0.35, 1)",
           }}
         >
-          {faces.map((face, i) => (
-            <div
-              key={face.id}
-              style={{
-                position: "absolute",
-                inset: 0,
-                width: size,
-                height: size,
-                transform: facePositions[i].transform,
-                backfaceVisibility: "hidden",
-                overflow: "hidden",
-                border: "1px solid rgba(212,170,90,0.18)",
-                boxShadow: i === currentFace
-                  ? "0 0 80px rgba(212,170,90,0.15), inset 0 1px 0 rgba(255,220,100,0.1)"
-                  : "inset 0 1px 0 rgba(255,220,100,0.05)",
-                background: "rgba(18,10,2,0.92)",
-                backdropFilter: "blur(20px)",
-                pointerEvents: i === currentFace ? "auto" : "none",
-              }}
-            >
-              {/* Edge glow on active face */}
-              {i === currentFace && (
-                <div className="absolute inset-0 pointer-events-none z-10" style={{
-                  boxShadow: "inset 0 0 60px rgba(212,170,90,0.06)",
-                  border: "1px solid rgba(212,170,90,0.3)",
-                }} />
-              )}
-              {/* Scrollable content */}
-              <div className="w-full h-full overflow-y-auto overflow-x-hidden" style={{ scrollbarWidth: "none" }}>
-                {face.content}
+          {faces.map((face, i) => {
+            const transformStr = CUBE_FACE_TRANSFORMS[i].replace(/var\(--half\)/g, `${half}px`);
+            const isActive = i === currentFace;
+            return (
+              <div
+                key={face.id}
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  width: size,
+                  height: size,
+                  transform: transformStr,
+                  backfaceVisibility: "hidden",
+                  WebkitBackfaceVisibility: "hidden",
+                  overflow: "hidden",
+                  border: "1px solid rgba(212,170,90,0.18)",
+                  boxShadow: isActive
+                    ? "0 0 80px rgba(212,170,90,0.15), inset 0 1px 0 rgba(255,220,100,0.1)"
+                    : "inset 0 1px 0 rgba(255,220,100,0.05)",
+                  background: "rgba(18,10,2,0.92)",
+                  backdropFilter: "blur(20px)",
+                  pointerEvents: isActive ? "auto" : "none",
+                }}
+              >
+                {isActive && (
+                  <div className="absolute inset-0 pointer-events-none z-10" style={{
+                    boxShadow: "inset 0 0 60px rgba(212,170,90,0.06)",
+                    border: "1px solid rgba(212,170,90,0.3)",
+                  }} />
+                )}
+                <div className="w-full h-full overflow-y-auto overflow-x-hidden" style={{ scrollbarWidth: "none" }}>
+                  {face.content}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 
@@ -221,8 +213,8 @@ export default function CubeNav({ faces, currentFace, onFaceChange }: Props) {
       </div>
 
       {/* Swipe hint (mobile) */}
-      <div className="fixed bottom-8 right-6 z-50 md:hidden text-xs tracking-widest uppercase" style={{ color: "rgba(212,170,90,0.35)" }}>
-        свайп ↕
+      <div className="fixed bottom-8 right-6 z-50 md:hidden">
+        <span className="text-xs tracking-widest uppercase font-light" style={{ color: "rgba(212,170,90,0.3)" }}>свайп</span>
       </div>
     </div>
   );
