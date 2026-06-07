@@ -522,31 +522,47 @@ export default function Index() {
               <div className="w-10 h-0.5 mt-2 rounded-full" style={{ background: "linear-gradient(90deg,hsl(42 80% 50%),transparent)" }} />
             </div>
             {sent ? (
-              <div className="max-w-md glass p-14 text-center glow-btn" style={{ borderRadius: 2 }}>
-                <div className="w-16 h-16 rounded-full gold-grad flex items-center justify-center mx-auto mb-6">
-                  <Icon name="Check" size={28} className="text-white" />
+              <div className="glass p-6 text-center" style={{ borderRadius: 2 }}>
+                <div className="w-10 h-10 rounded-full gold-grad flex items-center justify-center mx-auto mb-3">
+                  <Icon name="Check" size={18} className="text-white" />
                 </div>
-                <h3 className="font-display text-3xl font-light mb-3 text-white">Заявка принята</h3>
-                <p className="text-sm font-body font-light leading-relaxed" style={{ color: "rgba(255,255,255,0.5)" }}>
+                <h3 className="font-display font-light mb-1 text-white" style={{ fontSize: "1.1rem" }}>Заявка принята</h3>
+                <p className="font-body font-light" style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.5)" }}>
                   Олеся свяжется с вами в течение 2 часов.{" "}
                   <span style={{ color: "hsl(42 80% 62%)" }}>{day} {MONTHS_SHORT[month]}, {time}</span>
                 </p>
               </div>
             ) : (
-              <div className="grid lg:grid-cols-2 gap-5">
-                <div className="glass p-4" style={{ borderRadius: 2 }}>
-                  <div className="flex items-center justify-between mb-4">
-                    <button onClick={prevM} className="w-7 h-7 flex items-center justify-center transition-all duration-200 rounded" style={{ color: "rgba(255,255,255,0.45)" }}>
-                      <Icon name="ChevronLeft" size={14} />
+              <form onSubmit={submit} className="flex flex-col gap-2">
+                {/* Имя + телефон в строку */}
+                <div className="grid grid-cols-2 gap-2">
+                  {[{l:"Имя *",k:"name",p:"Иван Иванов",t:"text"},{l:"Телефон *",k:"phone",p:"+7 (___) ___-__-__",t:"tel"}].map(f => (
+                    <div key={f.k}>
+                      <label className="block uppercase mb-0.5 font-body" style={{ fontSize: "0.55rem", color: "rgba(255,255,255,0.3)" }}>{f.l}</label>
+                      <input value={form[f.k as keyof typeof form]} onChange={e => setForm(p => ({...p,[f.k]:e.target.value}))}
+                        required type={f.t} placeholder={f.p}
+                        className="w-full px-2 py-1.5 font-body font-light outline-none transition-all duration-300"
+                        style={{ fontSize: "0.7rem", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(212,170,90,0.18)", color: "rgba(255,255,255,0.85)", borderRadius: 0 }}
+                        onFocus={e => e.target.style.borderColor = "hsl(42 80% 50%)"}
+                        onBlur={e => e.target.style.borderColor = "rgba(212,170,90,0.18)"} />
+                    </div>
+                  ))}
+                </div>
+
+                {/* Календарь */}
+                <div className="glass p-3" style={{ borderRadius: 2 }}>
+                  <div className="flex items-center justify-between mb-2">
+                    <button type="button" onClick={prevM} className="w-6 h-6 flex items-center justify-center" style={{ color: "rgba(255,255,255,0.45)" }}>
+                      <Icon name="ChevronLeft" size={12} />
                     </button>
-                    <span className="font-display font-light text-white" style={{ fontSize: "0.85rem" }}>{MONTHS[month]} {year}</span>
-                    <button onClick={nextM} className="w-7 h-7 flex items-center justify-center transition-all duration-200 rounded" style={{ color: "rgba(255,255,255,0.45)" }}>
-                      <Icon name="ChevronRight" size={14} />
+                    <span className="font-display font-light text-white" style={{ fontSize: "0.75rem" }}>{MONTHS[month]} {year}</span>
+                    <button type="button" onClick={nextM} className="w-6 h-6 flex items-center justify-center" style={{ color: "rgba(255,255,255,0.45)" }}>
+                      <Icon name="ChevronRight" size={12} />
                     </button>
                   </div>
-                  <div className="grid grid-cols-7 gap-0.5 mb-1">
+                  <div className="grid grid-cols-7 gap-0.5 mb-0.5">
                     {["Пн","Вт","Ср","Чт","Пт","Сб","Вс"].map(d => (
-                      <div key={d} className="text-center font-body py-0.5" style={{ fontSize: "0.6rem", color: "rgba(255,255,255,0.22)" }}>{d}</div>
+                      <div key={d} className="text-center font-body" style={{ fontSize: "0.5rem", color: "rgba(255,255,255,0.22)", padding: "1px 0" }}>{d}</div>
                     ))}
                   </div>
                   <div className="grid grid-cols-7 gap-0.5">
@@ -554,9 +570,9 @@ export default function Index() {
                     {Array.from({length: days}).map((_,i) => {
                       const d = i+1; const past = isPast(d);
                       return (
-                        <button key={d} onClick={() => !past && setDay(d)} disabled={past}
+                        <button type="button" key={d} onClick={() => !past && setDay(d)} disabled={past}
                           className="aspect-square flex items-center justify-center font-body font-light transition-all duration-200"
-                          style={{ fontSize: "0.7rem", background: day===d ? "linear-gradient(135deg,hsl(32 65% 28%),hsl(42 80% 44%))" : "transparent", color: past ? "rgba(255,255,255,0.12)" : day===d ? "white" : "rgba(255,255,255,0.6)", border: day===d ? "none" : "1px solid transparent", boxShadow: day===d ? "0 0 12px rgba(212,170,90,0.3)" : "none" }}
+                          style={{ fontSize: "0.6rem", background: day===d ? "linear-gradient(135deg,hsl(32 65% 28%),hsl(42 80% 44%))" : "transparent", color: past ? "rgba(255,255,255,0.12)" : day===d ? "white" : "rgba(255,255,255,0.6)" }}
                           onMouseEnter={e => { if (!past && day!==d) (e.currentTarget as HTMLElement).style.background = "rgba(212,170,90,0.1)"; }}
                           onMouseLeave={e => { if (day!==d) (e.currentTarget as HTMLElement).style.background = "transparent"; }}>
                           {d}
@@ -564,55 +580,38 @@ export default function Index() {
                       );
                     })}
                   </div>
-                  {day && (
-                    <div className="mt-4 pt-3" style={{ borderTop: "1px solid rgba(212,170,90,0.12)" }}>
-                      <p className="font-body uppercase mb-2" style={{ fontSize: "0.6rem", color: "rgba(255,255,255,0.3)" }}>Время</p>
-                      <div className="grid grid-cols-3 gap-1.5">
-                        {TIMES.map(t => (
-                          <button key={t} onClick={() => setTime(t)} className="py-1.5 font-body font-light transition-all duration-200"
-                            style={{ fontSize: "0.7rem", border: `1px solid ${time===t ? "hsl(42 80% 50%)" : "rgba(212,170,90,0.18)"}`, background: time===t ? "linear-gradient(135deg,hsl(32 65% 28%),hsl(42 80% 44%))" : "transparent", color: time===t ? "white" : "rgba(255,255,255,0.55)" }}>
-                            {t}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  )}
                 </div>
-                <form onSubmit={submit} className="flex flex-col gap-3">
-                  {[{l:"Ваше имя *",k:"name",p:"Иван Иванов",t:"text"},{l:"Телефон *",k:"phone",p:"+7 (___) ___-__-__",t:"tel"}].map(f => (
-                    <div key={f.k}>
-                      <label className="block uppercase mb-1 font-body" style={{ fontSize: "0.6rem", color: "rgba(255,255,255,0.3)" }}>{f.l}</label>
-                      <input value={form[f.k as keyof typeof form]} onChange={e => setForm(p => ({...p,[f.k]:e.target.value}))}
-                        required={f.l.includes("*")} type={f.t} placeholder={f.p}
-                        className="w-full px-3 py-2 font-body font-light outline-none transition-all duration-300"
-                        style={{ fontSize: "0.75rem", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(212,170,90,0.18)", color: "rgba(255,255,255,0.85)", borderRadius: 0 }}
-                        onFocus={e => e.target.style.borderColor = "hsl(42 80% 50%)"}
-                        onBlur={e => e.target.style.borderColor = "rgba(212,170,90,0.18)"} />
-                    </div>
-                  ))}
-                  <div>
-                    <label className="block uppercase mb-1 font-body" style={{ fontSize: "0.6rem", color: "rgba(255,255,255,0.3)" }}>Комментарий</label>
-                    <textarea value={form.comment} onChange={e => setForm(p => ({...p,comment:e.target.value}))} rows={2}
-                      placeholder="Кратко опишите ваш запрос..."
-                      className="w-full px-3 py-2 font-body font-light outline-none transition-all duration-300 resize-none"
-                      style={{ fontSize: "0.75rem", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(212,170,90,0.18)", color: "rgba(255,255,255,0.85)", borderRadius: 0 }}
-                      onFocus={e => e.target.style.borderColor = "hsl(42 80% 50%)"}
-                      onBlur={e => e.target.style.borderColor = "rgba(212,170,90,0.18)"} />
+
+                {/* Время */}
+                <div>
+                  <p className="font-body uppercase mb-1" style={{ fontSize: "0.55rem", color: "rgba(255,255,255,0.3)" }}>Время сессии</p>
+                  <div className="grid grid-cols-6 gap-1">
+                    {TIMES.map(t => (
+                      <button type="button" key={t} onClick={() => setTime(t)}
+                        className="py-1 font-body font-light transition-all duration-200"
+                        style={{ fontSize: "0.58rem", border: `1px solid ${time===t ? "hsl(42 80% 50%)" : "rgba(212,170,90,0.18)"}`, background: time===t ? "linear-gradient(135deg,hsl(32 65% 28%),hsl(42 80% 44%))" : "transparent", color: time===t ? "white" : "rgba(255,255,255,0.55)" }}>
+                        {t}
+                      </button>
+                    ))}
                   </div>
+                </div>
+
+                {/* Итог + кнопка */}
+                <div className="flex items-center gap-2 mt-1">
                   {day && time && (
-                    <div className="flex items-center gap-2 px-3 py-2 font-body font-light" style={{ fontSize: "0.72rem", background: "rgba(212,170,90,0.08)", border: "1px solid rgba(212,170,90,0.2)" }}>
-                      <Icon name="CalendarCheck" size={13} className="text-gold flex-shrink-0" />
-                      <span style={{ color: "hsl(42 80% 65%)" }}>{day} {MONTHS_SHORT[month]}, {time}</span>
+                    <div className="flex items-center gap-1.5 px-2 py-1.5 font-body font-light flex-1" style={{ fontSize: "0.6rem", background: "rgba(212,170,90,0.08)", border: "1px solid rgba(212,170,90,0.2)", color: "hsl(42 80% 65%)" }}>
+                      <Icon name="CalendarCheck" size={11} className="text-gold flex-shrink-0" />
+                      {day} {MONTHS_SHORT[month]}, {time}
                     </div>
                   )}
                   <Btn type="submit" disabled={!day || !time || !form.name || !form.phone}
-                    className="gold-grad glow-btn text-white tracking-[0.2em] uppercase px-6 py-3 font-body font-light disabled:opacity-25 disabled:cursor-not-allowed hover:brightness-110 transition-all duration-300"
-                    style={{ fontSize: "0.7rem" }}>
-                    Отправить заявку
+                    className="gold-grad glow-btn text-white tracking-[0.15em] uppercase font-body font-light disabled:opacity-25 disabled:cursor-not-allowed hover:brightness-110 transition-all"
+                    style={{ fontSize: "0.6rem", padding: "8px 16px", whiteSpace: "nowrap" }}>
+                    Отправить
                   </Btn>
-                  <p className="font-body font-light" style={{ fontSize: "0.6rem", color: "rgba(255,255,255,0.2)" }}>Нажимая кнопку, вы соглашаетесь с обработкой персональных данных</p>
-                </form>
-              </div>
+                </div>
+                <p className="font-body font-light" style={{ fontSize: "0.5rem", color: "rgba(255,255,255,0.2)" }}>Нажимая кнопку, вы соглашаетесь с обработкой персональных данных</p>
+              </form>
             )}
           </div>
         </div>
